@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>The Glass Residence</title>
+  <meta name="description" content="An immersive, photorealistic walkthrough of a contemporary luxury residence before it is built." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/ui/style.css" />
+</head>
+<body>
+  <canvas id="view"></canvas>
+
+  <div id="loader">
+    <div class="mark">INSPIRA&nbsp;XR</div>
+    <div class="bar"><span></span></div>
+    <div class="status">Preparing the residence</div>
+  </div>
+
+  <div id="intro" class="hidden">
+    <div class="intro-inner">
+      <div class="eyebrow">A private preview</div>
+      <h1>The Glass Residence</h1>
+      <p class="sub">Double-height living &nbsp;·&nbsp; Two bedroom suites &nbsp;·&nbsp; Garden terrace &amp; pool</p>
+      <button id="enter">Enter Experience</button>
+    </div>
+    <div class="intro-foot">INSPIRA&nbsp;XR &nbsp;—&nbsp; Architectural visualisation</div>
+  </div>
+
+  <div id="hud" class="hidden">
+    <div id="brand">INSPIRA&nbsp;XR</div>
+    <div id="top-right">
+      <div id="tod">
+        <button data-mode="day">Day</button>
+        <button data-mode="sunset">Sunset</button>
+        <button data-mode="night">Night</button>
+      </div>
+      <button id="plan-btn" title="Floor plan (P)" aria-label="Floor plan">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.1"><rect x="3.5" y="3.5" width="17" height="17"/><path d="M3.5 11h7v9.5M10.5 3.5V8M14 11h6.5M14 11v4"/></svg>
+      </button>
+    </div>
+    <div id="room-name"><span class="label"></span></div>
+    <nav id="rooms"></nav>
+    <div id="hint">Drag to look &nbsp;·&nbsp; <b>W A S D</b> to walk &nbsp;·&nbsp; Click the floor to move &nbsp;·&nbsp; Click doors, curtains &amp; switches</div>
+    <div id="cursor-label"></div>
+    <div id="toast"></div>
+  </div>
+
+  <div id="plan" class="hidden">
+    <div class="plan-inner">
+      <div class="plan-head">
+        <span>Ground Floor</span>
+        <button id="plan-close" aria-label="Close">Close</button>
+      </div>
+      <svg id="plan-svg"></svg>
+      <div class="plan-foot">Select a room to walk there</div>
+    </div>
+  </div>
+
+  <div id="fade"></div>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

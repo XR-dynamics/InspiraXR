@@ -1,0 +1,138 @@
+:root {
+  --ink: #0b0b0c;
+  --paper: #f2eee8;
+  --muted: rgba(242, 238, 232, 0.62);
+  --faint: rgba(242, 238, 232, 0.34);
+  --line: rgba(242, 238, 232, 0.18);
+  --accent: #c9a46a;
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; height: 100%; overflow: hidden; background: var(--ink); color: var(--paper);
+  font-family: var(--sans); font-weight: 300; -webkit-font-smoothing: antialiased;
+  user-select: none; -webkit-user-select: none; touch-action: none;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+.hidden { opacity: 0; pointer-events: none !important; visibility: hidden; }
+
+#view { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; cursor: grab; outline: none; }
+#view.dragging { cursor: grabbing; }
+#view.pointer { cursor: pointer; }
+
+/* ---- loader -------------------------------------------------------- */
+#loader {
+  position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 26px; background: var(--ink); z-index: 30; transition: opacity 1.4s ease, visibility 1.4s;
+}
+#loader .mark { font-size: 11px; letter-spacing: 0.55em; color: var(--muted); margin-right: -0.55em; }
+#loader .bar { width: 180px; height: 1px; background: var(--line); overflow: hidden; }
+#loader .bar span { display: block; height: 100%; width: 0; background: var(--paper); transition: width 0.4s ease; }
+#loader .status { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--faint); letter-spacing: 0.04em; }
+
+/* ---- intro --------------------------------------------------------- */
+#intro {
+  position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: flex-start;
+  padding: 0 7vw 11vh; transition: opacity 1.6s ease, visibility 1.6s;
+  background: linear-gradient(180deg, rgba(8, 8, 9, 0) 45%, rgba(8, 8, 9, 0.55) 100%);
+}
+.intro-inner { max-width: 640px; }
+.eyebrow { font-size: 11px; letter-spacing: 0.42em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+#intro h1 {
+  font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 6.4vw, 92px); line-height: 0.98;
+  letter-spacing: -0.01em; margin: 0 0 18px;
+}
+.sub { font-size: 13px; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 42px; }
+#enter {
+  position: relative; font-size: 11px; letter-spacing: 0.48em; text-transform: uppercase; padding: 18px 0 18px;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 280px; text-align: left;
+  transition: letter-spacing 0.6s ease, border-color 0.6s ease, color 0.6s;
+}
+#enter::after { content: '→'; position: absolute; right: 0; letter-spacing: 0; transition: transform 0.6s ease; }
+#enter:hover { letter-spacing: 0.56em; border-color: rgba(242, 238, 232, 0.5); }
+#enter:hover::after { transform: translateX(6px); }
+.intro-foot { position: fixed; right: 7vw; bottom: 11vh; font-size: 10px; letter-spacing: 0.32em; color: var(--faint); }
+
+/* ---- hud ----------------------------------------------------------- */
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 10; transition: opacity 1.2s ease, visibility 1.2s; }
+#hud > * { pointer-events: auto; }
+#brand { position: absolute; left: 28px; top: 24px; font-size: 10px; letter-spacing: 0.5em; color: var(--muted); pointer-events: none; text-shadow: 0 1px 12px rgba(0,0,0,0.4); }
+#top-right { position: absolute; right: 24px; top: 18px; display: flex; align-items: center; gap: 18px; }
+#tod { display: flex; gap: 2px; padding: 4px; border-radius: 999px; background: rgba(12, 12, 13, 0.32); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.06); }
+#tod button { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; padding: 7px 13px; border-radius: 999px; color: var(--muted); transition: background 0.5s, color 0.5s; }
+#tod button.active { background: rgba(242, 238, 232, 0.12); color: var(--paper); }
+#tod button:hover { color: var(--paper); }
+#plan-btn { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: var(--muted); background: rgba(12,12,13,0.32); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.06); transition: color 0.4s; }
+#plan-btn:hover { color: var(--paper); }
+
+#room-name { position: absolute; left: 28px; bottom: 26px; pointer-events: none; }
+#room-name .label { font-family: var(--serif); font-size: 24px; font-weight: 300; letter-spacing: 0.02em; text-shadow: 0 1px 18px rgba(0,0,0,0.45); transition: opacity 0.8s; }
+
+#rooms {
+  position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); display: flex; align-items: center;
+  padding: 6px 10px; border-radius: 999px; background: rgba(12, 12, 13, 0.32); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.06); white-space: nowrap; max-width: calc(100vw - 32px); overflow-x: auto; scrollbar-width: none;
+}
+#rooms::-webkit-scrollbar { display: none; }
+#rooms button { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; padding: 8px 12px; color: var(--muted); border-radius: 999px; transition: color 0.4s, background 0.4s; }
+#rooms button:hover { color: var(--paper); }
+#rooms button.active { color: var(--paper); background: rgba(242, 238, 232, 0.1); }
+#rooms .sep { width: 1px; height: 10px; background: var(--line); }
+
+#hint {
+  position: absolute; left: 50%; top: 70px; transform: translateX(-50%); font-size: 11px; letter-spacing: 0.12em; color: var(--muted);
+  pointer-events: none; transition: opacity 1.4s ease; text-shadow: 0 1px 10px rgba(0,0,0,0.5); white-space: nowrap;
+}
+#hint b { font-weight: 400; color: var(--paper); letter-spacing: 0.2em; }
+#cursor-label {
+  position: absolute; left: 0; top: 0; pointer-events: none; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 7px 11px; border-radius: 999px; background: rgba(12,12,13,0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  opacity: 0; transition: opacity 0.35s; white-space: nowrap;
+}
+#cursor-label.on { opacity: 1; }
+#toast {
+  position: absolute; left: 50%; bottom: 82px; transform: translateX(-50%); font-family: var(--serif); font-style: italic; font-size: 18px;
+  opacity: 0; transition: opacity 0.8s; pointer-events: none; text-shadow: 0 1px 14px rgba(0,0,0,0.6);
+}
+#toast.on { opacity: 1; }
+
+/* ---- plan ---------------------------------------------------------- */
+#plan {
+  position: fixed; inset: 0; z-index: 15; display: grid; place-items: center; background: rgba(9, 9, 10, 0.72);
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); transition: opacity 0.8s ease, visibility 0.8s;
+}
+.plan-inner { width: min(1100px, 92vw, calc((100vh - 150px) * 1.42)); }
+.plan-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 18px; font-family: var(--serif); font-size: 26px; font-weight: 300; }
+.plan-head button { font-family: var(--sans); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+.plan-head button:hover { color: var(--paper); }
+#plan-svg { width: 100%; height: auto; max-height: calc(100vh - 150px); display: block; overflow: visible; }
+#plan-svg .room { fill: rgba(242, 238, 232, 0.02); stroke: none; cursor: pointer; transition: fill 0.4s; }
+#plan-svg .room:hover { fill: rgba(201, 164, 106, 0.14); }
+#plan-svg .room.outdoor { fill: rgba(242, 238, 232, 0.0); }
+#plan-svg .wall { fill: rgba(242, 238, 232, 0.82); }
+#plan-svg .glass { stroke: rgba(170, 205, 215, 0.7); stroke-width: 0.05; fill: none; }
+#plan-svg .door { stroke: rgba(242, 238, 232, 0.4); stroke-width: 0.025; fill: none; }
+#plan-svg .pool { fill: rgba(110, 168, 180, 0.18); stroke: rgba(110, 168, 180, 0.5); stroke-width: 0.03; }
+#plan-svg .deck { fill: rgba(242, 238, 232, 0.03); stroke: rgba(242,238,232,0.12); stroke-width: 0.03; stroke-dasharray: 0.15 0.15; }
+#plan-svg text { fill: var(--muted); font-family: var(--sans); font-size: 0.42px; letter-spacing: 0.12px; text-transform: uppercase; pointer-events: none; }
+#plan-svg text.big { font-family: var(--serif); font-size: 0.75px; letter-spacing: 0.02px; text-transform: none; fill: var(--paper); }
+#plan-svg .me { fill: var(--accent); }
+#plan-svg .cone { fill: rgba(201, 164, 106, 0.22); }
+.plan-foot { margin-top: 18px; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--faint); text-align: center; }
+
+#fade { position: fixed; inset: 0; background: #000; pointer-events: none; opacity: 0; z-index: 25; transition: opacity 1.2s ease; }
+
+@media (max-width: 720px) {
+  #brand { left: 16px; top: 18px; }
+  #top-right { right: 16px; top: 12px; gap: 10px; }
+  #tod button { padding: 6px 9px; letter-spacing: 0.16em; }
+  #room-name { left: 16px; bottom: 72px; }
+  #room-name .label { font-size: 20px; }
+  #rooms { bottom: 16px; }
+  #hint { display: none; }
+  #intro { padding: 0 16px 14vh; }
+  .intro-foot { display: none; }
+  #enter { min-width: 0; width: 100%; }
+}

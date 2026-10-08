@@ -13,10 +13,23 @@ const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
 const params = new URLSearchParams(location.search);
 
 const canvas = $('#view');
-const R = new Renderer(canvas);
+const touch = window.matchMedia('(pointer: coarse)').matches;
+// Phones and tablets get a lighter pipeline (no screen-space AO, smaller buffers).
+const low = params.get('quality') === 'low' || (touch && params.get('quality') !== 'high');
+const R = new Renderer(canvas, { low });
 const renderer = R.renderer;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(64, window.innerWidth / window.innerHeight, 0.05, 1500);
+
+// Keep a natural horizontal field of view on portrait screens.
+let userFov = 64;
+function fitFov() {
+  const a = window.innerWidth / window.innerHeight;
+  const hfov = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(userFov) / 2) * Math.max(a, 1));
+  camera.fov = a < 1 ? Math.min(90, THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(Math.min(hfov, 1.25) / 2) / a))) : userFov;
+}
+fitFov();
+window.addEventListener('resize', fitFov);
 
 // Architectural "shift lens": keeps verticals straight while framing upward.
 let lensShift = 0;
@@ -66,6 +79,8 @@ async function init() {
   setProgress(0.75, 'Lighting the interiors');
   await nextFrame();
   R.setup(scene, camera);
+  if (low) { lighting.sun.shadow.mapSize.set(2048, 2048); }
+  if (touch) $('#hint').innerHTML = 'Drag to look &nbsp;·&nbsp; Tap the floor to walk &nbsp;·&nbsp; Tap doors, curtains &amp; switches';
   const startMode = params.get('mode') || 'sunset';
   lighting.setMode(startMode, true);
   lighting.update(10, 0);
@@ -272,7 +287,8 @@ function setupPointer() {
   canvas.addEventListener('pointerleave', () => { pointer.inside = false; });
   canvas.addEventListener('wheel', (e) => {
     if (mode !== 'walk') return;
-    camera.fov = clamp(camera.fov + Math.sign(e.deltaY) * 2, 40, 75);
+    userFov = clamp(userFov + Math.sign(e.deltaY) * 2, 40, 75);
+    fitFov();
     camera.updateProjectionMatrix();
     camera.userData.applyShift();
   }, { passive: true });
@@ -286,7 +302,11 @@ function pick(cx, cy) {
     if (h.distance > 7.5) break;
     const item = h.object.userData.interactive;
     if (!item) continue;
-    if (world.nav.wallBetween(camera.position.x, camera.position.z, h.point.x, h.point.z)) continue;
+    // line of sight to a point just in front of the surface (so a door or a
+    // wall-mounted switch never occludes itself)
+    const d = raycaster.ray.direction;
+    const px = h.point.x - d.x * 0.4, pz = h.point.z - d.z * 0.4;
+    if (world.nav.wallBetween(camera.position.x, camera.position.z, px, pz)) continue;
     return { item, point: h.point };
   }
   return null;
@@ -411,4 +431,4 @@ init().catch((e) => {
 });
 
 // exposed for debugging / automated captures
-window.__residence = { snap: () => { snapAdapt = true; }, step: (n = 1, dt = 1 / 30) => { for (let i = 0; i < n; i++) frame(dt, i === n - 1); }, get player() { return player; }, get lighting() { return lighting; }, get world() { return world; }, camera, setTimeOfDay, goToRoom, scene };
+window.__residence = { get mode() { return mode; }, snap: () => { snapAdapt = true; }, step: (n = 1, dt = 1 / 30, render = true) => { for (let i = 0; i < n; i++) frame(dt, render && i === n - 1); }, get player() { return player; }, get lighting() { return lighting; }, get world() { return world; }, camera, setTimeOfDay, goToRoom, scene };

@@ -136,15 +136,18 @@ export class Player {
     cam.rotation.set(this.pitch, this.yaw, 0, 'YXZ');
   }
 
+  /** Move with wall sliding; returns true when the body actually advanced. */
   _move(step) {
     const nav = this.nav;
+    const eps = 1e-5;
     const nx = this.pos.x + step.x, nz = this.pos.y + step.y;
-    if (nav.free(nx, nz)) { this.pos.set(nx, nz); return true; }
-    let ok = false;
-    if (nav.free(nx, this.pos.y)) { this.pos.x = nx; ok = true; this.vel.y *= 0.5; }
-    else if (nav.free(this.pos.x, nz)) { this.pos.y = nz; ok = true; this.vel.x *= 0.5; }
-    else this.vel.multiplyScalar(0.3);
-    return ok;
+    // never trap the visitor if they somehow start inside an obstacle
+    if (!nav.free(this.pos.x, this.pos.y)) { this.pos.set(nx, nz); return true; }
+    if (nav.free(nx, nz)) { this.pos.set(nx, nz); return step.lengthSq() > eps * eps; }
+    if (Math.abs(step.x) > eps && nav.free(nx, this.pos.y)) { this.pos.x = nx; this.vel.y *= 0.5; return true; }
+    if (Math.abs(step.y) > eps && nav.free(this.pos.x, nz)) { this.pos.y = nz; this.vel.x *= 0.5; return true; }
+    this.vel.multiplyScalar(0.3);
+    return false;
   }
 
   _followRoute(dt) {
@@ -158,7 +161,7 @@ export class Player {
     r.s = Math.min(r.len, r.s + v * dt);
     const p = this._pointAt(r, r.s);
     // open doors on the way
-    for (let ahead = 0.4; ahead <= 1.8; ahead += 0.35) {
+    for (let ahead = 0.3; ahead <= 3.2; ahead += 0.3) {
       const q = this._pointAt(r, Math.min(r.len, r.s + ahead));
       const d = this.nav.doorAt(q.x, q.y);
       if (d >= 0) this.interactions.doorByNav(d)?.set(true);

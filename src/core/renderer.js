@@ -59,7 +59,8 @@ const GrainShader = {
 };
 
 export class Renderer {
-  constructor(canvas) {
+  constructor(canvas, { low = false } = {}) {
+    this.low = low;
     const renderer = new THREE.WebGLRenderer({
       canvas, antialias: false, powerPreference: 'high-performance', stencil: false, alpha: false,
     });
@@ -71,8 +72,8 @@ export class Renderer {
     renderer.shadowMap.autoUpdate = false; // re-rendered on demand (see main loop)
     renderer.shadowMap.needsUpdate = true;
     this.renderer = renderer;
-    this.maxPixelRatio = Math.min(window.devicePixelRatio || 1, 1.75);
-    this.pixelRatio = Math.min(this.maxPixelRatio, 1.25);
+    this.maxPixelRatio = Math.min(window.devicePixelRatio || 1, low ? 1.25 : 1.75);
+    this.pixelRatio = Math.min(this.maxPixelRatio, low ? 1.0 : 1.25);
     this.quality = 1;
     this._frameTimes = [];
   }
@@ -85,7 +86,7 @@ export class Renderer {
     r.setPixelRatio(this.pixelRatio);
     r.setSize(w, h, false);
     const rt = new THREE.WebGLRenderTarget(w * this.pixelRatio, h * this.pixelRatio, {
-      type: THREE.HalfFloatType, samples: 4,
+      type: THREE.HalfFloatType, samples: this.low ? 2 : 4,
     });
     const composer = new EffectComposer(r, rt);
     composer.setPixelRatio(this.pixelRatio);
@@ -99,6 +100,7 @@ export class Renderer {
     gtao.updateGtaoMaterial({ radius: 0.55, distanceExponent: 1.6, thickness: 1.5, scale: 1.15, samples: 16, distanceFallOff: 1.0, screenSpaceRadius: false });
     gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 16 });
     composer.addPass(gtao);
+    gtao.enabled = !this.low;
     this.gtao = gtao;
 
     const bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.22, 0.6, 2.2);

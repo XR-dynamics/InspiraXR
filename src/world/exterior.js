@@ -143,10 +143,22 @@ export function buildExterior(ctx) {
 
 function outdoorChair(ctx, x, z, ry) {
   const { batch: B, M } = ctx;
-  B.addTransformed(roundedBox(0.52, 0.09, 0.5, 0.04, 3), M.linenGrey, { x, y: 0.45, z, ry });
-  const bx = x - Math.sin(ry) * 0.24, bz = z - Math.cos(ry) * 0.24;
-  B.addTransformed(roundedBox(0.52, 0.42, 0.05, 0.02, 2), M.blackAlu, { x: bx, y: 0.72, z: bz, ry, rx: -0.1 });
-  B.addTransformed(roundedBox(0.5, 0.4, 0.04, 0.02, 2), M.blackAlu, { x, y: 0.2, z, ry, rx: Math.PI / 2 });
+  const c = Math.cos(ry), s = Math.sin(ry);
+  const at = (lx, lz) => [x + lx * c + lz * s, z - lx * s + lz * c];
+  // slim powder-coated frame
+  for (const [lx, lz] of [[-0.23, -0.21], [0.23, -0.21], [-0.23, 0.21], [0.23, 0.21]]) {
+    const [px, pz] = at(lx, lz);
+    B.add(new THREE.CylinderGeometry(0.012, 0.012, 0.4, 8).translate(px, 0.2, pz), M.blackAlu);
+  }
+  for (const lx of [-0.23, 0.23]) {
+    const [px, pz] = at(lx, -0.23);
+    B.addTransformed(new THREE.CylinderGeometry(0.011, 0.011, 0.42, 8), M.blackAlu, { x: px, y: 0.62, z: pz, ry, rx: -0.12 });
+  }
+  B.addTransformed(roundedBox(0.5, 0.035, 0.48, 0.012, 2), M.blackAlu, { x, y: 0.41, z, ry });
+  // cushioned seat and woven back
+  B.addTransformed(roundedBox(0.5, 0.08, 0.47, 0.035, 3), M.linenGrey, { x, y: 0.47, z, ry });
+  const [bx, bz] = at(0, -0.225);
+  B.addTransformed(roundedBox(0.46, 0.34, 0.03, 0.012, 2), M.linenDark, { x: bx, y: 0.66, z: bz, ry, rx: -0.12 });
 }
 
 function lounger(ctx, x, z) {

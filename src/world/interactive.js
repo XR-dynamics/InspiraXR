@@ -110,35 +110,25 @@ export class Interactions {
       else openAngle = (hingeAtTo ? -1 : 1) * d.swing * (Math.PI / 2) * 0.96;
       const baseRot = group.rotation.y;
 
-      // nav regions: closed footprint, and the swept leaf when open
-      const closedId = navId++, openId = navId++;
+      // nav region: the doorway is solid until the leaf has swung mostly open
+      const closedId = navId; navId += 2;
       const t = 0.14;
-      if (d.wall === 'x') {
-        nav.registerDoor(closedId, d.from, d.at - t, d.to, d.at + t);
-        const lx0 = hingeAtTo ? d.to - 0.08 : d.from, lx1 = hingeAtTo ? d.to : d.from + 0.08;
-        const z0 = d.swing > 0 ? d.at : d.at - w, z1 = d.swing > 0 ? d.at + w : d.at;
-        if (!d.pivot) nav.registerDoor(openId, lx0, z0, lx1, z1);
-      } else {
-        nav.registerDoor(closedId, d.at - t, d.from, d.at + t, d.to);
-        const lz0 = hingeAtTo ? d.to - 0.08 : d.from, lz1 = hingeAtTo ? d.to : d.from + 0.08;
-        const x0 = d.swing > 0 ? d.at : d.at - w, x1 = d.swing > 0 ? d.at + w : d.at;
-        if (!d.pivot) nav.registerDoor(openId, x0, lz0, x1, lz1);
-      }
-      nav.setDoorClosed(openId, false);
+      if (d.wall === 'x') nav.registerDoor(closedId, d.from, d.at - t, d.to, d.at + t);
+      else nav.registerDoor(closedId, d.at - t, d.from, d.at + t, d.to);
 
       const door = {
-        id: d.id, open: false, group, closedId, openId, value: 0,
+        id: d.id, open: false, group, closedId, value: 0,
         center: d.wall === 'x' ? new THREE.Vector2((d.from + d.to) / 2, d.at) : new THREE.Vector2(d.at, (d.from + d.to) / 2),
       };
       door.set = (open) => {
         if (door.open === open) return;
         door.open = open;
-        nav.setDoorClosed(closedId, !open);
-        nav.setDoorClosed(openId, open);
+        if (!open) nav.setDoorClosed(closedId, true);
         const from = door.value, to = open ? 1 : 0;
         this.animate(d.pivot ? 2.2 : 1.5, (k) => {
           door.value = from + (to - from) * k;
           group.rotation.y = baseRot + openAngle * door.value;
+          if (door.open && door.value > 0.55) nav.setDoorClosed(closedId, false);
         });
         this.ctx.audio?.door?.();
       };
@@ -194,11 +184,12 @@ export class Interactions {
     door.set = (open) => {
       if (door.open === open) return;
       door.open = open;
-      nav.setDoorClosed(id, !open);
+      if (!open) nav.setDoorClosed(id, true);
       const from = door.value, to = open ? 1 : 0;
       this.animate(2.6, (k) => {
         door.value = from + (to - from) * k;
         group.position.z = z0 - door.value * (w - 0.12);
+        if (door.open && door.value > 0.7) nav.setDoorClosed(id, false);
       });
     };
     this.doors.set(id, door);

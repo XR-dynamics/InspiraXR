@@ -158,8 +158,16 @@ function curvedSofa(ctx, c, r0, r1, a0, a1) {
   ctx.batch.add(plinth, M.shadowGap, { cast: false });
   // seat base, seat cushion, back cushion and arm-less rounded ends
   add(arcShape(r0, r1, a0, a1), 0.05, 0.27, 0.035, M.boucle);
-  add(arcShape(r0 + 0.02, r1 - 0.3, a0 + da, a1 - da), 0.27, 0.43, 0.06, M.boucle);
-  add(arcShape(r1 - 0.3, r1, a0, a1), 0.27, 0.74, 0.09, M.boucle);
+  // individual seat cushions (about 0.95 m each at the front edge) with soft seams
+  const n = Math.max(2, Math.round(((a1 - a0) * r0) / 0.95));
+  const gap = 0.012 / r0;
+  for (let i = 0; i < n; i++) {
+    const s0 = a0 + ((a1 - a0) * i) / n + (i ? gap : da);
+    const s1 = a0 + ((a1 - a0) * (i + 1)) / n - (i < n - 1 ? gap : da);
+    add(arcShape(r0 + 0.03, r1 - 0.31, s0, s1, 40), 0.27, 0.43, 0.065, M.boucle);
+  }
+  // continuous back, with a thin welt line where it meets the base
+  add(arcShape(r1 - 0.3, r1, a0, a1), 0.28, 0.74, 0.095, M.boucle);
   return parts;
 }
 

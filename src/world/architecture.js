@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import { H, ROOMS, WALLS, DOORS, CURTAIN } from './layout.js';
 import { boxGeo } from './util.js';
 
@@ -161,7 +160,6 @@ function buildCurtainWall(ctx) {
 
 function buildCeilings(ctx) {
   const { batch: B, M } = ctx;
-  const t = 0.0;
   // Roof slab over the double-height block, with timber soffit overhang to the west.
   B.box(0, H.roof, -9.3, 12.3, H.roofTop, 12.3, M.ceiling);
   B.box(-1.8, H.roof + 0.05, -9.3, 0, H.roofTop, 12.3, M.walnut);
@@ -204,7 +202,6 @@ function buildCeilings(ctx) {
     B.box(rm.x0, y, rm.z0, rm.x0 + 0.12, H.ceiling, rm.z1, M.shadowGap, { cast: false });
     B.box(rm.x1 - 0.12, y, rm.z0, rm.x1, H.ceiling, rm.z1, M.shadowGap, { cast: false });
   }
-  return t;
 }
 
 function buildGallery(ctx) {

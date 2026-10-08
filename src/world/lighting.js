@@ -13,19 +13,19 @@ const PRESETS = {
     sun: new THREE.Vector3(-0.64, 0.6, 0.48).normalize(), sunColor: new THREE.Color(0xfff0dc), sunIntensity: 3.4,
     turbidity: 2.6, rayleigh: 1.1, mie: 0.004, mieG: 0.82, skyGain: 1.0, night: 0,
     hemiSky: new THREE.Color(0xcfe0ff), hemiGround: new THREE.Color(0xd6d6d6), hemi: 0.42, tint: new THREE.Vector3(1.0, 1.0, 1.02),
-    env: 0.85, exposure: 0.6, interior: 0.0, bgFog: new THREE.Color(0xc9d3dc),
+    env: 0.85, exposure: 0.6, interior: 0.0,
   },
   sunset: {
     sun: new THREE.Vector3(-0.9, 0.3, 0.32).normalize(), sunColor: new THREE.Color(0xffbf85), sunIntensity: 3.6,
     turbidity: 4.0, rayleigh: 1.6, mie: 0.006, mieG: 0.9, skyGain: 1.0, night: 0,
     hemiSky: new THREE.Color(0xc9d3e6), hemiGround: new THREE.Color(0xd2d3d6), hemi: 0.36, tint: new THREE.Vector3(0.94, 0.985, 1.09),
-    env: 0.8, exposure: 0.62, interior: 0.75, bgFog: new THREE.Color(0xd9b49a),
+    env: 0.8, exposure: 0.62, interior: 0.75,
   },
   night: {
     sun: new THREE.Vector3(-0.35, 0.65, -0.5).normalize(), sunColor: new THREE.Color(0x8ea8de), sunIntensity: 0.06,
     turbidity: 2, rayleigh: 0.5, mie: 0.003, mieG: 0.8, skyGain: 0.0, night: 1,
     hemiSky: new THREE.Color(0x28344f), hemiGround: new THREE.Color(0x0d0d10), hemi: 0.05, tint: new THREE.Vector3(0.95, 0.99, 1.06),
-    env: 0.55, exposure: 0.62, interior: 1.0, bgFog: new THREE.Color(0x0c1220),
+    env: 0.55, exposure: 0.62, interior: 1.0,
   },
 };
 

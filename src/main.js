@@ -3,9 +3,9 @@ import { Renderer } from './core/renderer.js';
 import { buildMaterials } from './materials/library.js';
 import { Lighting } from './world/lighting.js';
 import { buildWorld, ZONES } from './world/index.js';
-import { Player, wrap } from './nav/player.js';
+import { Player } from './nav/player.js';
 import { FloorPlan } from './ui/plan.js';
-import { ROOMS, VIEWS, SELECTOR, H, roomAt } from './world/layout.js';
+import { ROOMS, VIEWS, SELECTOR, roomAt } from './world/layout.js';
 import { clamp, lerp, easeInOut } from './world/util.js';
 
 const $ = (s) => document.querySelector(s);
@@ -90,7 +90,7 @@ async function init() {
   player = new Player(camera, world.nav, world.interact);
   setProgress(0.88, 'Composing the view');
   await nextFrame();
-  try { await renderer.compileAsync(scene, camera); } catch (e) { /* older drivers */ }
+  try { await renderer.compileAsync(scene, camera); } catch { /* older drivers */ }
   setIntroPose(0);
   R.render(0);
   setProgress(1, 'Welcome');
@@ -188,7 +188,7 @@ function setupUI() {
     player.keys.add(e.code);
     if (e.code === 'KeyP' || (e.code === 'Escape' && planOpen)) togglePlan();
     if (e.code === 'KeyL' && currentRoom) {
-      const on = lighting.toggleRoom(lightGroupFor(currentRoom));
+      const on = lighting.toggleRoom(currentRoom);
       toast(on ? 'Lights on' : 'Lights off');
     }
     if (e.code === 'Digit1') setTimeOfDay('day');
@@ -201,8 +201,6 @@ function setupUI() {
 
   setupPointer();
 }
-
-function lightGroupFor(room) { return room; }
 
 function markTod(m) {
   document.querySelectorAll('#tod button').forEach((b) => b.classList.toggle('active', b.dataset.mode === m));
@@ -242,7 +240,6 @@ function toast(text) {
 const raycaster = new THREE.Raycaster();
 raycaster.layers.enableAll();
 const ndc = new THREE.Vector2();
-let hover = null;
 let floorRing;
 let pointer = { x: 0, y: 0, inside: false };
 
@@ -351,7 +348,6 @@ function updateHover(force = false) {
   }
   if (!force && ++hoverTick % 3) return;
   const hit = pick(pointer.x, pointer.y);
-  hover = hit;
   const lab = $('#cursor-label');
   if (hit) {
     lab.textContent = hit.item.label();

@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { roundedBox, rng } from './util.js';
-import { H } from './layout.js';
 import { lathe } from './living.js';
 
 /*

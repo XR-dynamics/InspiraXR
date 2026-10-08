@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { DOORS, CURTAIN, H } from './layout.js';
+import { DOORS, CURTAIN } from './layout.js';
 import { roundedBox, projectUV, easeInOut, CLONES } from './util.js';
 
 /*

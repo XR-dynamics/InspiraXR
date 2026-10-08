@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
-import { roundedBox, rng } from './util.js';
+import { roundedBox } from './util.js';
 import { H } from './layout.js';
 import { lathe, vaseWithFlowers, plant, floorLamp } from './living.js';
 

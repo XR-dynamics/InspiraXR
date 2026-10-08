@@ -12,7 +12,7 @@ import { H } from './layout.js';
 export const LIVING_CENTER = new THREE.Vector3(4.6, 0, 6.6);
 
 export function buildLiving(ctx) {
-  const { batch: B, M, nav, scene } = ctx;
+  const { batch: B, M, nav } = ctx;
   const c = LIVING_CENTER;
 
   // ---- round rug

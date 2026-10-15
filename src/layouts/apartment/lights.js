@@ -9,7 +9,7 @@ import { roomAt } from './data.js';
  */
 
 /** Lumens -> scene intensity (candela-like units; calibrated against the sun at the exposure used). */
-const PER_LUMEN = 0.012;
+const PER_LUMEN = 0.0045;
 // real lights allowed per room
 const BUDGET = { living: 3, dining: 2, kitchen: 2, entry: 2, bedroom: 2, study: 2, bath: 2, terrace: 1 };
 

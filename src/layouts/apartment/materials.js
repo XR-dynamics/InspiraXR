@@ -34,7 +34,7 @@ const RECIPES = {
   gravel:       { glsl: A.GRAVEL,         size: 1024, dataSize: 1024, normalStrength: 4.0, seed: 33, scale: 0.8 },
   rock:         { glsl: A.ROCK,           size: 1024, dataSize: 1024, normalStrength: 5.0, seed: 34, scale: 0.9 },
   plaster:      { glsl: S.PLASTER,        size: 1024, dataSize: 512,  normalStrength: 0.6, seed: 35, scale: 0.4 },
-  boucle:       { glsl: S.BOUCLE,         size: 1024, dataSize: 1024, normalStrength: 6.0, seed: 36, scale: 0.9 },
+  boucle:       { glsl: S.BOUCLE,         size: 1024, dataSize: 1024, normalStrength: 3.0, seed: 36, scale: 0.7 },
   linen:        { glsl: S.LINEN,          size: 1024, dataSize: 512,  normalStrength: 4.0, seed: 37, scale: 0.6 },
   oak:          { glsl: S.OAK,            size: 1024, dataSize: 512,  normalStrength: 2.0, seed: 38, scale: 0.5 },
   deck:         { glsl: S.DECK,           size: 1024, dataSize: 512,  normalStrength: 3.0, seed: 39, scale: 0.9 },
@@ -57,6 +57,8 @@ const SURFACE = {
   P_Teak: ['oak', null, [0.95, 0.7, 0.45]], P_Gravel: ['gravel'],
 };
 const CLOTH = new Set(['D_Boucle', 'D_Linen', 'D_Rug', 'L_BoucleGreen', 'L_BoucleTan', 'L_BoucleRust', 'L_LinenTan', 'L_RugRust', 'L_Blind', 'L_StripeThrow']);
+// The plan's emissive strengths are tuned for a path tracer; a real-time tone-mapped view needs far less.
+const EMIT_SCALE = { L_Led: 0.22, D_Downlight: 0.6, L_Halo: 0.4, L_Alabaster: 0.45 };
 const RUGS = new Set(['D_Rug', 'L_RugRust']);
 
 export function buildApartmentMaterials(renderer, specs, onProgress = () => {}) {
@@ -106,7 +108,7 @@ export function buildApartmentMaterials(renderer, specs, onProgress = () => {}) 
       if (sheer && !T.linen) { /* the linen maps are only baked when a plan material needs them */ }
     } else if (s.emissive) {
       m = new THREE.MeshStandardMaterial({ color: srgb(color), roughness: s.rough ?? 0.4, emissive: srgb(s.emissive), emissiveIntensity: 0 });
-      m.userData.emit = s.emit ?? 1;
+      m.userData.emit = (s.emit ?? 1) * (EMIT_SCALE[name] ?? 0.5);
       m.userData.emissive = true;
     } else if (name === 'D_Mirror' || name === 'L_Mirror') {
       m = new THREE.MeshStandardMaterial({ color: srgb(color), metalness: 1, roughness: 0.02 });

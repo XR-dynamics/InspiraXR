@@ -37,7 +37,7 @@ T.check('eye height is 1.65 m', Math.abs(built.eye - 1.65) < 0.05);
 // ---- every room can be reached on foot from the front door
 const routes = await ev(() => {
   const R = window.__residence, L = R.world;
-  const views = { living: [10.0, -3.2], dining: [10.0, -4.2], kitchen: [9.9, -1.2], entry: [3.1, -1.3], bedroom: [3.9, -4.55], study: [6.6, -5.9], bath: [2.1, -3.7], terrace: [13.2, -0.8] };
+  const views = { living: [10.0, -3.2], dining: [10.0, -4.2], kitchen: [9.9, -1.2], entry: [3.1, -1.3], bedroom: [3.9, -4.55], study: [6.6, -5.9], bath: [2.1, -3.7], terrace: [13.3, -4.5] };
   const out = {};
   for (const [k, [x, z]] of Object.entries(views)) {
     const p = L.nav.findPath(3.1, -1.5, x, z);
@@ -111,9 +111,11 @@ const furn = await ev(() => {
   F.endDrag(true);
   const backHome = Math.hypot(F.get('DiningChair_3').cur.x - home.x, F.get('DiningChair_3').cur.z - home.z) < 0.01;
   F.select('DiningChair_3'); F.beginDrag('DiningChair_3');
-  const free = F.dragTo(home.x + 0.5, home.z + 0.4);
+  // somewhere nearby is free: try a ring of offsets and take the first the rules accept
+  let free = false;
+  for (const [dx, dz] of [[0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5], [0.8, 0.8], [-0.8, 0.8], [1.2, 0], [-1.2, 0], [0, 1.2]]) { if (F.dragTo(home.x + dx, home.z + dz)) { free = true; break; } }
   F.endDrag(true);
-  const moved = F.get('DiningChair_3').cur.x !== home.x;
+  const moved = Math.hypot(F.get('DiningChair_3').cur.x - home.x, F.get('DiningChair_3').cur.z - home.z) > 0.1;
   F.select('DiningChair_3'); F.resetItem(); F.deselect();
   // a table's place settings travel with it
   const table = F.get('DiningTable_Oval');

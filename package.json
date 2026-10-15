@@ -12,7 +12,8 @@
     "test:desktop": "node tests/desktop.e2e.mjs",
     "test:xr": "node tests/xr.emulated.mjs",
     "test:apartment": "node tests/apartment.e2e.mjs",
-    "build:apartment": "node tools/build-apartment-pack.mjs"
+    "build:apartment": "node tools/build-apartment-pack.mjs",
+    "test:xr:apartment": "node tests/xr.apartment.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

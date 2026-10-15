@@ -1,4 +1,4 @@
-# InspiraXR — The Glass Residence
+# InspiraXR — The Glass Residence and The Apartment
 
 An immersive walkthrough of a contemporary luxury residence, built for the web with Three.js. The
 visitor walks through one continuous house: entrance, double-height living room, dining, kitchen,
@@ -10,6 +10,22 @@ On top of that it now offers:
 - **VR on Meta Quest** (WebXR `immersive-vr`), using the same scene, state and assets as the desktop.
 - **Room customisation** from a contextual panel: wall colours, five lighting environments,
   furniture placement, and an Empty Room / Restore / Reset flow. It works on the desktop and in the headset.
+
+## Two homes
+
+The intro screen lets you choose between two homes; both share the same engine, walking, customisation, VR and tests.
+
+| | The Glass Residence | The Apartment |
+| --- | --- | --- |
+| Open with | `/` or `/?home=residence` | `/?home=apartment` |
+| Source | generated entirely in code (`src/world`) | **your plan, meshes and `scene.json`** (`assets/apartment`, packed into `public/apartment`) |
+| Rooms | living, dining, kitchen, hall, two suites, two baths, terrace + pool | living, dining, kitchen, entrance, bedroom, study, bathroom, terrace |
+| Setting | garden terrace | a plateau above the **sea** (no plants or trees anywhere) |
+| Extra | | **Blueprint view** (neon-blue wireframe, desktop and VR), curtains moving in a breeze |
+
+Both get a **Home** panel (button with the bulb icon, or `H`; in VR the wrist toolbar's *Home*): lights per room
+and all on/off, open/close curtains and sheers, breeze on/off, terrace door. The apartment adds the blueprint
+toggle (`B`, the grid button, or *Blueprint* on the VR wrist toolbar). Details: [docs/APARTMENT.md](docs/APARTMENT.md).
 
 ## Run
 
@@ -94,10 +110,11 @@ full on-device checklist. In short:
 
 ## How it is built
 
-No downloaded models or textures: everything is generated at load time.
+The Residence uses no downloaded models or textures: everything is generated at load time. The Apartment loads the supplied meshes and plan, and still generates every texture on the GPU at load time.
 
 - `src/materials`: GPU-baked procedural PBR materials (stone, walnut, marble, oak, fabrics, …).
-- `src/world`: the plan (`layout.js`), architecture, rooms, lighting and interactions. The `Batcher`
+- `src/layouts`: one descriptor per home (rooms, views, zones, builders); `src/layouts/apartment` builds the apartment from the packed plan.
+- `src/world`: the Residence plan (`layout.js`), architecture, rooms, lighting and interactions. The `Batcher`
   merges geometry for speed. Two additions make customisation possible: **furniture items**
   (`ctx.item(...)` groups, individually movable) and **wall faces** (ranges in the merged wall
   meshes with a per-vertex tint).
@@ -121,6 +138,8 @@ npm run test:logic     # fast, pure Node: collision, placement rules, painting i
 npm run dev            # in another terminal, then:
 npm run test:desktop   # real headless browser: navigation, targeting, E/Esc, painting, presets, furniture, reload
 npm run test:xr        # real WebXR code path against Meta's IWER Quest 3 emulator
+npm run test:apartment       # the apartment: rooms reachable, doors, walls, furniture, Home panel, breeze, ocean, blueprint
+npm run test:xr:apartment    # the apartment in an emulated Quest 3: wrist toolbar, blueprint, Home panel, teleport rules
 ```
 
 The browser tests use headless Chromium with software WebGL, so they are slow but exact. Set

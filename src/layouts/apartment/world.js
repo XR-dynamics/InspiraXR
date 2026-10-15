@@ -283,7 +283,8 @@ function addWallFaces(ctx, asset, materialName, geo, material) {
     out.setAttribute('position', new THREE.BufferAttribute(P, 3));
     out.setAttribute('normal', new THREE.BufferAttribute(N, 3));
     out.setAttribute('uv', new THREE.BufferAttribute(U, 2));
-    if (key === 'rest' || bk.area < 0.3) { B.add(out, material, { keepUV: true }); continue; }
+    // end caps and jambs are not walls a person would repaint
+    if (key === 'rest' || bk.area < 1.2) { B.add(out, material, { keepUV: true }); continue; }
     const centroid = bk.centroid.multiplyScalar(1 / bk.area);
     const nx = key === 'xp' ? 1 : key === 'xn' ? -1 : 0, nz = key === 'zp' ? 1 : key === 'zn' ? -1 : 0;
     // the room on the face's side, sampled just in front of its largest part

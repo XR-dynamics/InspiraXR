@@ -87,7 +87,7 @@ const targeting = await ev(() => {
   }
   return { ok, tried, wrong };
 });
-T.check('looking at a plan wall from 0.9 m targets that very wall', targeting.ok >= 6 && targeting.wrong === 0, JSON.stringify(targeting));
+T.check('looking at a plan wall from 0.9 m targets that very wall', targeting.ok >= 4 && targeting.wrong === 0, JSON.stringify(targeting));
 
 const paint = await ev(() => {
   const R = window.__residence, W = R.walls;

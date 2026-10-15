@@ -146,6 +146,8 @@ T.check('an arc that lands in the bathroom is rejected (wall between)', wall.len
 await ev(() => { const x = window.__residence.xr, p = x.ui.toolbar; p.update(true); const it = p.items.find((i) => i.key === 'exit'); window.__h.aim('right', window.__h.panelPoint(p, ...window.__h.center(it))); });
 await frames(2);
 await ev(() => window.__xrDevice.controllers.right.updateButtonValue('trigger', 1));
+await frames(2);
+await ev(() => window.__xrDevice.controllers.right.updateButtonValue('trigger', 0));   // releasing activates Exit VR; no more XR frames follow
 await page.waitForFunction(() => !window.__residence.xr.presenting, null, { timeout: 120000 });
 const out = await ev(() => { const R = window.__residence; return { mode: R.mode, hud: getComputedStyle(document.querySelector('#hud')).visibility, bp: R.custom.home.blueprint.on(), eye: R.camera.position.y }; });
 T.check('leaving VR restores the desktop view', out.mode === 'walk' && out.hud !== 'hidden' && out.bp === false && Math.abs(out.eye - 1.65) < 0.05, JSON.stringify(out));

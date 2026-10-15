@@ -75,3 +75,14 @@ Record a result (pass / fail / note) for every line.
 
 Please include: headset model, Meta Quest Browser version, connection option used, and for each
 failed item what happened. A screen recording from the headset helps for visual problems.
+
+## The apartment (`/?home=apartment`)
+
+Everything above applies. In addition, on a real headset please check and note:
+
+1. **Frame rate.** The apartment has fewer meshes than the residence but 2K textures and a sea shader that covers the whole horizon. If it drops below 72 Hz, add `?vrScale=0.8`.
+2. **Blueprint view.** Wrist toolbar -> *Blueprint*. Lines should be thin, bright and steady in both eyes, with no shimmer. If they look too thin, raise `uWidth` in `src/world/blueprint.js`; if the scene feels too busy, lower the number of streaks (`N`).
+3. **Home panel.** Wrist toolbar -> *Home*. Point and pull the trigger: each room's light, *All on / All off*, curtains, sheers, breeze, terrace door. Check the text is legible at arm's length.
+4. **Breeze.** Stand by the living-room window with the terrace door open: the sheers should billow into the room, hem first, with slow gusts. They must not flicker or tear.
+5. **Sea.** Look at the horizon from the terrace: no visible seam between sea and sky, and no shimmering on the waves.
+6. **Teleport.** Aim at the bathroom from the entrance: the marker must turn invalid (a wall is in between). Through an open door it should be valid.

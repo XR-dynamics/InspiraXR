@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { CUSTOMISE, WALL_SWATCHES } from './config.js';
 import { ENVIRONMENTS, ORIGINAL_ENVIRONMENT } from './environment.js';
-import { ROOMS } from '../world/layout.js';
+import { activeLayout, roomInfo } from '../layouts/active.js';
 
 /*
  * The customisation controller. It owns all state (targeted wall, locked wall, open tab,
@@ -10,7 +10,6 @@ import { ROOMS } from '../world/layout.js';
  * description, so the two can never disagree about what a control does.
  */
 
-const STORAGE_KEY = 'inspiraxr.customisation.v1';
 
 export class Customiser {
   constructor({ camera, world, lighting, walls, furniture, getRoom, getHead, toast = () => {}, storage = defaultStorage() }) {
@@ -187,7 +186,7 @@ export class Customiser {
   }
   restoreEnvironment() { this.setEnvironment(ORIGINAL_ENVIRONMENT); this.say('Original lighting restored'); }
 
-  roomName(key) { return key && ROOMS[key] ? ROOMS[key].name : 'this area'; }
+  roomName(key) { return roomInfo(key)?.name || 'this area'; }
   currentSpace() { return this.getRoom() || 'terrace'; }
 
   askEmpty(scope) { this.state.dialog = { kind: 'empty', scope }; this.emit('schema'); }
@@ -271,7 +270,7 @@ export class Customiser {
 
     if (S.dialog) {
       const d = S.dialog;
-      const where = d.scope === 'all' ? 'the whole residence' : this.roomName(d.scope);
+      const where = d.scope === 'all' ? activeLayout().wholeName : this.roomName(d.scope);
       B.push(d.kind === 'empty'
         ? { t: 'dialog', title: 'Empty room?', text: `Hide the movable furniture and loose decor in ${where}. Walls, floors, doors, windows, built-in fixtures and lighting stay. You can restore everything afterwards.`,
           buttons: [{ label: 'Empty room', kind: 'danger', onClick: () => this.confirmDialog() }, { label: 'Cancel', onClick: () => this.cancelDialog() }] }
@@ -331,7 +330,7 @@ export class Customiser {
       B.push({ t: 'heading', text: 'Empty room' });
       B.push({ t: 'buttons', items: [
         { label: `Empty ${this.roomName(space)}`, disabled: this.furniture.countVisible(space) === 0, onClick: () => this.askEmpty(space) },
-        { label: 'Empty whole residence', onClick: () => this.askEmpty('all') },
+        { label: `Empty ${activeLayout().wholeName}`, onClick: () => this.askEmpty('all') },
       ] });
       B.push({ t: 'buttons', items: [{ label: 'Restore furniture', kind: 'primary', disabled: this.furniture.countHidden() === 0, onClick: () => this.restoreFurniture() }] });
       B.push({ t: 'heading', text: 'Reset' });
@@ -346,7 +345,7 @@ export class Customiser {
     if (!this.persist) return;
     clearTimeout(this._saveTimer);
     this._saveTimer = setTimeout(() => {
-      this.storage.set(STORAGE_KEY, JSON.stringify({
+      this.storage.set(activeLayout().storageKey, JSON.stringify({
         v: 1, environment: this.environment, walls: this.walls.serialize(), furniture: this.furniture.serialize(),
       }));
     }, 300);
@@ -354,7 +353,7 @@ export class Customiser {
 
   /** Restore a saved design (wall colours, layout, environment). Returns the saved environment id, if any. */
   restore() {
-    const raw = this.storage.get(STORAGE_KEY);
+    const raw = this.storage.get(activeLayout().storageKey);
     if (!raw) return null;
     try {
       const s = JSON.parse(raw);
@@ -366,7 +365,7 @@ export class Customiser {
     return null;
   }
 
-  clearSaved() { this.storage.remove(STORAGE_KEY); }
+  clearSaved() { this.storage.remove(activeLayout().storageKey); }
 }
 
 function defaultStorage() {

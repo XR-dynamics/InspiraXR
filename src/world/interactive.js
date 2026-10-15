@@ -202,15 +202,79 @@ export class Interactions {
     });
   }
 
+  // ------------------------------------------------- generic doors (plan-driven layouts)
+  /**
+   * A hinged door built elsewhere. `group` is positioned at the hinge with its closed yaw applied;
+   * `nav` is the doorway rectangle [x0, z0, x1, z1]. The leaf swings away from whoever opens it.
+   */
+  addHinged({ id, group, hinge, navRect, navId, label = 'door', openAngle = (Math.PI / 2) * 0.96, duration = 1.5 }) {
+    const { nav } = this.ctx;
+    const baseRot = group.rotation.y;
+    nav.registerDoor(navId, ...navRect);
+    const door = { id, open: false, group, closedId: navId, value: 0, dir: 1, center: new THREE.Vector2(hinge.x, hinge.z) };
+    door.set = (open, from = this.ctx.viewer?.()) => {
+      if (door.open === open) return;
+      door.open = open;
+      if (open) {
+        // local +z of the closed door is its "front"; the leaf swings toward -z when opened with +angle
+        let side = 1;
+        if (from) {
+          const dx = from.x - hinge.x, dz = from.z - hinge.z;
+          const c = Math.cos(baseRot), sn = Math.sin(baseRot);
+          const lz = sn * dx + c * dz; // component of (from - hinge) along the door's local z axis
+          side = lz > 0 ? 1 : -1;
+        }
+        door.dir = side;
+      } else nav.setDoorClosed(navId, true);
+      const a = door.value, b = open ? 1 : 0;
+      this.animate(duration, (k) => {
+        door.value = a + (b - a) * k;
+        group.rotation.y = baseRot + door.dir * openAngle * door.value;
+        if (door.open && door.value > 0.55) nav.setDoorClosed(navId, false);
+      });
+      this.ctx.audio?.door?.();
+    };
+    this.doors.set(navId, door);
+    this.doors.set(id, door);
+    this.add(group, { label: () => (door.open ? `Close ${label}` : `Open ${label}`), action: () => door.set(!door.open), kind: 'door' });
+    return door;
+  }
+
+  /** A sliding door made of panels that translate along `axis` ('x' | 'z') by `slide` metres each. */
+  addSliding({ id, panels, navRect, navId, label = 'door', duration = 2.6 }) {
+    const { nav } = this.ctx;
+    nav.registerDoor(navId, ...navRect);
+    const door = { id, open: false, value: 0, closedId: navId, panels, center: new THREE.Vector2((navRect[0] + navRect[2]) / 2, (navRect[1] + navRect[3]) / 2) };
+    const rest = panels.map((p) => p.group.position.clone());
+    door.set = (open) => {
+      if (door.open === open) return;
+      door.open = open;
+      if (!open) nav.setDoorClosed(navId, true);
+      const a = door.value, b = open ? 1 : 0;
+      this.animate(duration, (k) => {
+        door.value = a + (b - a) * k;
+        panels.forEach((p, i) => p.group.position.copy(rest[i]).addScaledVector(p.axis, p.slide * door.value));
+        if (door.open && door.value > 0.7) nav.setDoorClosed(navId, false);
+      });
+      this.ctx.audio?.door?.();
+    };
+    this.doors.set(navId, door);
+    this.doors.set(id, door);
+    const prev = nav.doorIsLeaf || (() => true);
+    nav.doorIsLeaf = (i) => (i === navId ? false : prev(i));
+    for (const p of panels) this.add(p.group, { label: () => (door.open ? `Close ${label}` : `Open ${label}`), action: () => door.set(!door.open), kind: 'door' });
+    return door;
+  }
+
   // ------------------------------------------------------------ curtains
-  curtain({ axis, at, from, to, y0, y1, material, gather = 'both', open = 1, label = 'curtains' }) {
+  curtain({ axis, at, from, to, y0, y1, material, gather = 'both', open = 1, label = 'curtains', stack = null, pleat = 0.2 }) {
     const c = { value: open, open: open > 0.5, panels: [] };
     if (gather === 'both') {
       const mid = (from + to) / 2;
-      c.panels.push(this._panel({ axis, at, from, to: mid, y0, y1, material, gather: 'from' }));
-      c.panels.push(this._panel({ axis, at, from: mid, to, y0, y1, material, gather: 'to' }));
+      c.panels.push(this._panel({ axis, at, from, to: mid, y0, y1, material, gather: 'from', stack, pleat }));
+      c.panels.push(this._panel({ axis, at, from: mid, to, y0, y1, material, gather: 'to', stack, pleat }));
     } else {
-      c.panels.push(this._panel({ axis, at, from, to, y0, y1, material, gather }));
+      c.panels.push(this._panel({ axis, at, from, to, y0, y1, material, gather, stack, pleat }));
     }
     const layout = () => c.panels.forEach((p) => p.layout(c.value));
     layout();
@@ -231,10 +295,9 @@ export class Interactions {
   }
 
   /** One curtain panel that gathers toward its `from` or `to` end. */
-  _panel({ axis, at, from, to, y0, y1, material, gather }) {
+  _panel({ axis, at, from, to, y0, y1, material, gather, stack = null, pleat = 0.2 }) {
     const { scene } = this.ctx;
     const len = to - from;
-    const pleat = 0.2;
     const cols = Math.max(32, Math.round((len / pleat) * 8));
     const rows = 12;
     const geo = new THREE.PlaneGeometry(1, 1, cols, rows);
@@ -250,7 +313,7 @@ export class Interactions {
     mesh.castShadow = material.opacity >= 1;
     mesh.receiveShadow = true;
     scene.add(mesh);
-    const g = 0.11; // gathered width as a fraction of the drawn width
+    const g = stack ? Math.min(0.9, stack / len) : 0.11; // gathered width as a fraction of the drawn width
     const layout = (o) => {
       for (let i = 0; i < pos.count; i++) {
         const u = rest[i * 2], v = rest[i * 2 + 1];

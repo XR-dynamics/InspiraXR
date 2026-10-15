@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { ROOMS, roomAt } from '../world/layout.js';
+import { roomAt, roomInfo } from '../layouts/active.js';
 import { CUSTOMISE } from './config.js';
 
 /*
@@ -143,8 +143,8 @@ export class FurnitureSystem {
   _valid(it, tf, from) {
     const room = roomAt(tf.x, tf.z);
     if (!room) return false;
-    const outdoor = !!ROOMS[it.room]?.outdoor;
-    if (!!ROOMS[room].outdoor !== outdoor) return false;
+    const outdoor = !!roomInfo(it.room)?.outdoor;
+    if (!!roomInfo(room)?.outdoor !== outdoor) return false;
     if (from && this.nav.wallOnSegment(from.x, from.z, tf.x, tf.z)) return false;
     return this.nav.itemFits(it.id, tf);
   }

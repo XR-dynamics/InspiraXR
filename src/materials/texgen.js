@@ -134,7 +134,10 @@ export class TextureBaker {
     const modes = { map: 0, normal: 1, orm: 2 };
     for (const m of maps) {
       const srgbMap = m === 'map';
-      const rt = new THREE.WebGLRenderTarget(size, size, {
+      // normal and roughness maps may be baked smaller than the albedo (def.dataSize) to save memory
+      const dim = srgbMap ? size : (def.dataSize || size);
+      material.uniforms.texel.value.set(1 / dim, 1 / dim);
+      const rt = new THREE.WebGLRenderTarget(dim, dim, {
         type: THREE.UnsignedByteType,
         format: THREE.RGBAFormat,
         colorSpace: srgbMap ? THREE.SRGBColorSpace : THREE.NoColorSpace,

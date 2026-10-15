@@ -12,6 +12,10 @@ import { WallSystem } from '../src/custom/walls.js';
 import { FurnitureSystem } from '../src/custom/furniture.js';
 import { Customiser } from '../src/custom/customiser.js';
 import { ENVIRONMENTS } from '../src/custom/environment.js';
+import { setActiveLayout } from '../src/layouts/active.js';
+import { residence } from '../src/layouts/residence.js';
+
+setActiveLayout(residence);
 
 const vcol = (m) => new THREE.MeshStandardMaterial({ color: m });
 

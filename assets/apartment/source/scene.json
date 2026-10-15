@@ -1,0 +1,10995 @@
+{
+ "scene_id": "LuxuryApartment",
+ "title": "Luxury Apartment (plan-faithful, walkable)",
+ "materials": {
+  "D_Marble": {
+   "surf": "marble",
+   "tile": 2.0,
+   "rough": 0.07,
+   "spec": 0.6,
+   "color": [
+    0.9,
+    0.89,
+    0.88
+   ],
+   "maps": [
+    "T_D_Marble_BC",
+    "T_D_Marble_N",
+    "T_D_Marble_ORM"
+   ]
+  },
+  "D_MarbleProp": {
+   "surf": "marble",
+   "tile": 0.8,
+   "rough": 0.09,
+   "color": [
+    0.92,
+    0.91,
+    0.9
+   ],
+   "maps": [
+    "T_D_MarbleProp_BC",
+    "T_D_MarbleProp_N",
+    "T_D_MarbleProp_ORM"
+   ]
+  },
+  "D_Travertine": {
+   "surf": "travertine",
+   "tile": 1.6,
+   "rough": 0.4,
+   "color": [
+    0.86,
+    0.82,
+    0.75
+   ],
+   "maps": [
+    "T_D_Travertine_BC",
+    "T_D_Travertine_N",
+    "T_D_Travertine_ORM"
+   ]
+  },
+  "D_Lacquer": {
+   "surf": "paint",
+   "tile": 2.0,
+   "rough": 0.18,
+   "spec": 0.7,
+   "color": [
+    0.93,
+    0.93,
+    0.92
+   ],
+   "maps": [
+    "T_D_Lacquer_BC",
+    "T_D_Lacquer_N",
+    "T_D_Lacquer_ORM"
+   ]
+  },
+  "D_Plaster": {
+   "surf": "plaster",
+   "tile": 2.5,
+   "rough": 0.55,
+   "color": [
+    0.9,
+    0.9,
+    0.89
+   ],
+   "maps": [
+    "T_D_Plaster_BC",
+    "T_D_Plaster_N",
+    "T_D_Plaster_ORM"
+   ]
+  },
+  "D_Ceiling": {
+   "surf": "plaster",
+   "tile": 2.5,
+   "rough": 0.7,
+   "color": [
+    0.95,
+    0.95,
+    0.94
+   ],
+   "maps": [
+    "T_D_Ceiling_BC",
+    "T_D_Ceiling_N",
+    "T_D_Ceiling_ORM"
+   ]
+  },
+  "D_Veneer": {
+   "surf": "walnut",
+   "tile": 1.2,
+   "rough": 0.14,
+   "spec": 0.7,
+   "color": [
+    0.34,
+    0.24,
+    0.17
+   ],
+   "maps": [
+    "T_D_Veneer_BC",
+    "T_D_Veneer_N",
+    "T_D_Veneer_ORM"
+   ]
+  },
+  "D_Oak": {
+   "surf": "wood",
+   "tile": 1.2,
+   "rough": 0.3,
+   "color": [
+    0.78,
+    0.66,
+    0.5
+   ],
+   "maps": [
+    "T_D_Oak_BC",
+    "T_D_Oak_N",
+    "T_D_Oak_ORM"
+   ]
+  },
+  "D_Chrome": {
+   "color": [
+    0.92,
+    0.93,
+    0.95
+   ],
+   "rough": 0.05,
+   "metal": 1.0
+  },
+  "D_Brass": {
+   "color": [
+    0.85,
+    0.7,
+    0.42
+   ],
+   "rough": 0.12,
+   "metal": 1.0
+  },
+  "D_Black": {
+   "color": [
+    0.05,
+    0.05,
+    0.055
+   ],
+   "rough": 0.22,
+   "metal": 0.4
+  },
+  "D_Glass": {
+   "color": [
+    0.86,
+    0.9,
+    0.92
+   ],
+   "rough": 0.01,
+   "opacity": 0.07
+  },
+  "D_Mirror": {
+   "color": [
+    0.95,
+    0.95,
+    0.95
+   ],
+   "rough": 0.01,
+   "metal": 1.0
+  },
+  "D_Boucle": {
+   "surf": "boucle",
+   "tile": 0.32,
+   "rough": 0.95,
+   "color": [
+    0.9,
+    0.88,
+    0.84
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_D_Boucle_BC",
+    "T_D_Boucle_N",
+    "T_D_Boucle_ORM"
+   ]
+  },
+  "D_Linen": {
+   "surf": "linen",
+   "tile": 0.4,
+   "rough": 0.94,
+   "color": [
+    0.86,
+    0.83,
+    0.77
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_D_Linen_BC",
+    "T_D_Linen_N",
+    "T_D_Linen_ORM"
+   ]
+  },
+  "D_Rug": {
+   "surf": "wool",
+   "tile": 1.0,
+   "rough": 1.0,
+   "color": [
+    0.84,
+    0.82,
+    0.78
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_D_Rug_BC",
+    "T_D_Rug_N",
+    "T_D_Rug_ORM"
+   ]
+  },
+  "D_Ceramic": {
+   "color": [
+    0.93,
+    0.92,
+    0.9
+   ],
+   "rough": 0.12
+  },
+  "D_Downlight": {
+   "color": [
+    1.0,
+    0.97,
+    0.93
+   ],
+   "rough": 0.3,
+   "emissive": [
+    1.0,
+    0.96,
+    0.9
+   ],
+   "emit": 14.0
+  },
+  "D_Screen": {
+   "color": [
+    0.02,
+    0.02,
+    0.025
+   ],
+   "rough": 0.03
+  },
+  "D_Steel": {
+   "color": [
+    0.78,
+    0.78,
+    0.8
+   ],
+   "rough": 0.15,
+   "metal": 1.0
+  },
+  "D_Sheer": {
+   "color": [
+    0.95,
+    0.94,
+    0.92
+   ],
+   "rough": 1.0,
+   "opacity": 0.45,
+   "twosided": true
+  },
+  "D_Deck": {
+   "surf": "wood",
+   "tile": 1.4,
+   "rough": 0.5,
+   "color": [
+    0.62,
+    0.5,
+    0.36
+   ],
+   "maps": [
+    "T_D_Deck_BC",
+    "T_D_Deck_N",
+    "T_D_Deck_ORM"
+   ]
+  },
+  "L_Plaster": {
+   "surf": "plaster",
+   "tile": 2.5,
+   "rough": 0.7,
+   "color": [
+    0.91,
+    0.871,
+    0.804
+   ],
+   "maps": [
+    "T_L_Plaster_BC",
+    "T_L_Plaster_N",
+    "T_L_Plaster_ORM"
+   ]
+  },
+  "L_Relief": {
+   "surf": "relief",
+   "tile": 1.2,
+   "rough": 0.95,
+   "color": [
+    0.353,
+    0.404,
+    0.216
+   ],
+   "maps": [
+    "T_L_Relief_BC",
+    "T_L_Relief_N",
+    "T_L_Relief_ORM"
+   ]
+  },
+  "L_Cane": {
+   "surf": "cane",
+   "tile": 0.24,
+   "rough": 0.55,
+   "color": [
+    0.769,
+    0.643,
+    0.451
+   ],
+   "maps": [
+    "T_L_Cane_BC",
+    "T_L_Cane_N",
+    "T_L_Cane_ORM"
+   ]
+  },
+  "L_Fluted": {
+   "surf": "wood",
+   "tile": 1.2,
+   "rough": 0.4,
+   "color": [
+    0.341,
+    0.231,
+    0.153
+   ],
+   "maps": [
+    "T_L_Fluted_BC",
+    "T_L_Fluted_N",
+    "T_L_Fluted_ORM"
+   ]
+  },
+  "L_BoucleGreen": {
+   "surf": "boucle",
+   "tile": 0.32,
+   "rough": 0.95,
+   "color": [
+    0.29,
+    0.34,
+    0.17
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_L_BoucleGreen_BC",
+    "T_L_BoucleGreen_N",
+    "T_L_BoucleGreen_ORM"
+   ]
+  },
+  "L_WallpaperRust": {
+   "surf": "wallpaper",
+   "tile": 1.0,
+   "rough": 0.7,
+   "color": [
+    0.573,
+    0.259,
+    0.137
+   ],
+   "maps": [
+    "T_L_WallpaperRust_BC",
+    "T_L_WallpaperRust_N",
+    "T_L_WallpaperRust_ORM"
+   ]
+  },
+  "L_MarbleTerracotta": {
+   "surf": "marble",
+   "tile": 1.6,
+   "rough": 0.14,
+   "spec": 0.7,
+   "color": [
+    0.69,
+    0.522,
+    0.427
+   ],
+   "maps": [
+    "T_L_MarbleTerracotta_BC",
+    "T_L_MarbleTerracotta_N",
+    "T_L_MarbleTerracotta_ORM"
+   ]
+  },
+  "L_MarbleScallop": {
+   "surf": "marble",
+   "tile": 0.9,
+   "rough": 0.2,
+   "spec": 0.7,
+   "color": [
+    0.345,
+    0.349,
+    0.369
+   ],
+   "maps": [
+    "T_L_MarbleScallop_BC",
+    "T_L_MarbleScallop_N",
+    "T_L_MarbleScallop_ORM"
+   ]
+  },
+  "L_StoneBeige": {
+   "surf": "stone",
+   "tile": 1.4,
+   "rough": 0.35,
+   "spec": 0.6,
+   "color": [
+    0.8,
+    0.737,
+    0.643
+   ],
+   "maps": [
+    "T_L_StoneBeige_BC",
+    "T_L_StoneBeige_N",
+    "T_L_StoneBeige_ORM"
+   ]
+  },
+  "L_PaintTaupe": {
+   "surf": "plaster",
+   "tile": 2.5,
+   "rough": 0.72,
+   "color": [
+    0.765,
+    0.639,
+    0.522
+   ],
+   "maps": [
+    "T_L_PaintTaupe_BC",
+    "T_L_PaintTaupe_N",
+    "T_L_PaintTaupe_ORM"
+   ]
+  },
+  "L_RugRust": {
+   "surf": "rug",
+   "tile": 0.7,
+   "rough": 0.95,
+   "model": "cloth",
+   "color": [
+    0.675,
+    0.298,
+    0.157
+   ],
+   "maps": [
+    "T_L_RugRust_BC",
+    "T_L_RugRust_N",
+    "T_L_RugRust_ORM"
+   ]
+  },
+  "L_Blind": {
+   "surf": "fabric",
+   "tile": 0.5,
+   "rough": 0.85,
+   "model": "cloth",
+   "color": [
+    0.757,
+    0.694,
+    0.58
+   ],
+   "maps": [
+    "T_L_Blind_BC",
+    "T_L_Blind_N",
+    "T_L_Blind_ORM"
+   ]
+  },
+  "L_BoucleTan": {
+   "surf": "boucle",
+   "tile": 0.32,
+   "rough": 0.95,
+   "color": [
+    0.633,
+    0.533,
+    0.427
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_L_BoucleTan_BC",
+    "T_L_BoucleTan_N",
+    "T_L_BoucleTan_ORM"
+   ]
+  },
+  "L_LinenTan": {
+   "surf": "boucle",
+   "tile": 0.4,
+   "rough": 0.92,
+   "color": [
+    0.653,
+    0.56,
+    0.447
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_L_LinenTan_BC",
+    "T_L_LinenTan_N",
+    "T_L_LinenTan_ORM"
+   ]
+  },
+  "L_BoucleRust": {
+   "surf": "boucle",
+   "tile": 0.32,
+   "rough": 0.95,
+   "color": [
+    0.487,
+    0.207,
+    0.127
+   ],
+   "model": "cloth",
+   "maps": [
+    "T_L_BoucleRust_BC",
+    "T_L_BoucleRust_N",
+    "T_L_BoucleRust_ORM"
+   ]
+  },
+  "L_WalnutWarm": {
+   "surf": "walnut",
+   "tile": 1.2,
+   "rough": 0.3,
+   "spec": 0.6,
+   "color": [
+    0.5,
+    0.33,
+    0.21
+   ],
+   "maps": [
+    "T_L_WalnutWarm_BC",
+    "T_L_WalnutWarm_N",
+    "T_L_WalnutWarm_ORM"
+   ]
+  },
+  "L_Book0": {
+   "color": [
+    0.36,
+    0.13,
+    0.1
+   ],
+   "rough": 0.6
+  },
+  "L_Book1": {
+   "color": [
+    0.17,
+    0.2,
+    0.16
+   ],
+   "rough": 0.6
+  },
+  "L_Book2": {
+   "color": [
+    0.55,
+    0.45,
+    0.3
+   ],
+   "rough": 0.6
+  },
+  "L_Book3": {
+   "color": [
+    0.1,
+    0.1,
+    0.12
+   ],
+   "rough": 0.6
+  },
+  "L_Book4": {
+   "color": [
+    0.5,
+    0.28,
+    0.15
+   ],
+   "rough": 0.6
+  },
+  "L_Book5": {
+   "color": [
+    0.7,
+    0.66,
+    0.58
+   ],
+   "rough": 0.6
+  },
+  "L_Ruby": {
+   "color": [
+    0.32,
+    0.03,
+    0.05
+   ],
+   "rough": 0.12,
+   "spec": 0.8
+  },
+  "L_Alabaster": {
+   "color": [
+    0.95,
+    0.9,
+    0.8
+   ],
+   "rough": 0.35,
+   "emissive": [
+    1.0,
+    0.86,
+    0.62
+   ],
+   "emit": 2.5
+  },
+  "L_BlackMatte": {
+   "color": [
+    0.03,
+    0.03,
+    0.03
+   ],
+   "rough": 0.5
+  },
+  "L_Candle": {
+   "color": [
+    0.95,
+    0.92,
+    0.85
+   ],
+   "rough": 0.5
+  },
+  "L_ShadeBlack": {
+   "color": [
+    0.02,
+    0.02,
+    0.02
+   ],
+   "rough": 0.55,
+   "twosided": true
+  },
+  "L_Halo": {
+   "color": [
+    1.0,
+    0.88,
+    0.65
+   ],
+   "rough": 0.4,
+   "emissive": [
+    1.0,
+    0.8,
+    0.5
+   ],
+   "emit": 10.0
+  },
+  "L_TravertineClad": {
+   "surf": "travertine",
+   "tile": 1.2,
+   "rough": 0.55,
+   "spec": 0.5,
+   "color": [
+    0.784,
+    0.714,
+    0.588
+   ],
+   "maps": [
+    "T_L_TravertineClad_BC",
+    "T_L_TravertineClad_N",
+    "T_L_TravertineClad_ORM"
+   ]
+  },
+  "L_BrushedSteel": {
+   "surf": "steel",
+   "tile": 0.5,
+   "rough": 0.32,
+   "metal": 1.0,
+   "color": [
+    0.698,
+    0.702,
+    0.71
+   ],
+   "maps": [
+    "T_L_BrushedSteel_BC",
+    "T_L_BrushedSteel_N",
+    "T_L_BrushedSteel_ORM"
+   ]
+  },
+  "L_StripeThrow": {
+   "surf": "fabric",
+   "tile": 0.5,
+   "rough": 0.9,
+   "model": "cloth",
+   "color": [
+    0.733,
+    0.675,
+    0.635
+   ],
+   "maps": [
+    "T_L_StripeThrow_BC",
+    "T_L_StripeThrow_N",
+    "T_L_StripeThrow_ORM"
+   ]
+  },
+  "L_Terracotta": {
+   "surf": "paint",
+   "tile": 1.5,
+   "rough": 0.55,
+   "color": [
+    0.5,
+    0.233,
+    0.167
+   ],
+   "maps": [
+    "T_L_Terracotta_BC",
+    "T_L_Terracotta_N",
+    "T_L_Terracotta_ORM"
+   ]
+  },
+  "L_Sage": {
+   "surf": "paint",
+   "tile": 1.2,
+   "rough": 0.7,
+   "color": [
+    0.607,
+    0.627,
+    0.527
+   ],
+   "maps": [
+    "T_L_Sage_BC",
+    "T_L_Sage_N",
+    "T_L_Sage_ORM"
+   ]
+  },
+  "P_Teak": {
+   "surf": "wood",
+   "tile": 1.2,
+   "rough": 0.42,
+   "color": [
+    0.573,
+    0.38,
+    0.227
+   ],
+   "maps": [
+    "T_P_Teak_BC",
+    "T_P_Teak_N",
+    "T_P_Teak_ORM"
+   ]
+  },
+  "P_Gravel": {
+   "surf": "gravel",
+   "tile": 1.0,
+   "rough": 0.85,
+   "color": [
+    0.533,
+    0.518,
+    0.486
+   ],
+   "maps": [
+    "T_P_Gravel_BC",
+    "T_P_Gravel_N",
+    "T_P_Gravel_ORM"
+   ]
+  },
+  "L_TaupeMetal": {
+   "color": [
+    0.3,
+    0.27,
+    0.23
+   ],
+   "rough": 0.42,
+   "metal": 0.75
+  },
+  "L_TVGlass": {
+   "color": [
+    0.012,
+    0.012,
+    0.014
+   ],
+   "rough": 0.04,
+   "spec": 0.9
+  },
+  "L_Garment0": {
+   "color": [
+    0.84,
+    0.8,
+    0.72
+   ],
+   "rough": 0.9,
+   "model": "cloth"
+  },
+  "L_Garment1": {
+   "color": [
+    0.58,
+    0.42,
+    0.28
+   ],
+   "rough": 0.9,
+   "model": "cloth"
+  },
+  "L_Garment2": {
+   "color": [
+    0.14,
+    0.14,
+    0.15
+   ],
+   "rough": 0.9,
+   "model": "cloth"
+  },
+  "L_Garment3": {
+   "color": [
+    0.52,
+    0.46,
+    0.38
+   ],
+   "rough": 0.9,
+   "model": "cloth"
+  },
+  "L_Garment4": {
+   "color": [
+    0.66,
+    0.5,
+    0.42
+   ],
+   "rough": 0.9,
+   "model": "cloth"
+  },
+  "L_Towel0": {
+   "color": [
+    0.9,
+    0.87,
+    0.8
+   ],
+   "rough": 0.95,
+   "model": "cloth"
+  },
+  "L_Towel1": {
+   "color": [
+    0.72,
+    0.64,
+    0.52
+   ],
+   "rough": 0.95,
+   "model": "cloth"
+  },
+  "L_Hanger": {
+   "color": [
+    0.5,
+    0.36,
+    0.22
+   ],
+   "rough": 0.5
+  },
+  "L_BlindBox": {
+   "color": [
+    0.82,
+    0.76,
+    0.64
+   ],
+   "rough": 0.7
+  },
+  "L_Bronze": {
+   "color": [
+    0.09,
+    0.08,
+    0.07
+   ],
+   "rough": 0.28,
+   "metal": 0.85
+  },
+  "L_Taupe": {
+   "color": [
+    0.42,
+    0.37,
+    0.31
+   ],
+   "rough": 0.3,
+   "spec": 0.6
+  },
+  "L_Glass": {
+   "color": [
+    0.86,
+    0.9,
+    0.92
+   ],
+   "rough": 0.01,
+   "opacity": 0.07
+  },
+  "L_Mirror": {
+   "color": [
+    0.95,
+    0.95,
+    0.95
+   ],
+   "rough": 0.01,
+   "metal": 1.0
+  },
+  "L_Led": {
+   "color": [
+    1.0,
+    0.93,
+    0.8
+   ],
+   "rough": 0.3,
+   "emissive": [
+    1.0,
+    0.88,
+    0.68
+   ],
+   "emit": 12.0
+  }
+ },
+ "assets": {
+  "SM_Wall_Entrance_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Kitchen_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Living_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Living_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Study_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bedroom_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bedroom_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bath_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Entrance_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bath_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bedroom_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bath_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bath_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Bedroom_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Study_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Study_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Wall_Study_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Floor_Bedroom_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Ceiling_Bedroom_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Floor_Study_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Ceiling_Study_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Floor_Bathroom_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Ceiling_Bathroom_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Floor_LivingDiningKitchen_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Ceiling_LivingDiningKitchen_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Roof_Slab_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Terrace_Slab_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bedroom_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bedroom_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Bedroom_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bedroom_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bedroom_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Bedroom_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bedroom_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bedroom_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Bedroom_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bedroom_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bedroom_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Bedroom_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Study_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Study_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Study_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Study_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Study_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Study_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Study_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Study_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Study_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Study_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Study_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Study_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bath_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bath_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bath_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bath_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bath_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bath_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Bath_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Bath_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_South_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_East_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_North_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_West_001": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_North_002": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_North_002": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_North_002": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_West_002": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_West_002": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_West_002": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_North_003": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_North_003": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_North_003": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_West_003": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_West_003": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_West_003": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_North_004": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_North_004": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Cove_Living_North_004": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Skirting_Living_West_004": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Crown_Living_West_004": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Relief_Living_West": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Cane_Living_West": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Marble_Kitchen_Back": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Wallpaper_Study_N1": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Wallpaper_Study_N2": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Wallpaper_Study_N3": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Wallpaper_Study_N4": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Panel_Wallpaper_Study_E": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Door_Entrance_Leaf": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Door_Entrance_Frame": {
+   "collision": "complex",
+   "kind": "prop"
+  },
+  "SM_DoorKnob_Entrance": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_DoorHinge_Entrance": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Door_Bedroom_Leaf": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Door_Bedroom_Frame": {
+   "collision": "complex",
+   "kind": "prop"
+  },
+  "SM_DoorKnob_Bedroom": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_DoorHinge_Bedroom": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Door_Bath_Leaf": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Door_Bath_Frame": {
+   "collision": "complex",
+   "kind": "prop"
+  },
+  "SM_DoorKnob_Bath": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_DoorHinge_Bath": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Door_Study_Leaf": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Door_Study_Frame": {
+   "collision": "complex",
+   "kind": "prop"
+  },
+  "SM_DoorKnob_Study": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_DoorHinge_Study": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Window_Kitchen_South_Frame": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Kitchen_South_Glass": {
+   "collision": "none",
+   "kind": "arch"
+  },
+  "SM_Window_Kitchen_South_Sill": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Living_North_Frame": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Living_North_Glass": {
+   "collision": "none",
+   "kind": "arch"
+  },
+  "SM_Window_Living_North_Sill": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Study_North_Frame": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Study_North_Glass": {
+   "collision": "none",
+   "kind": "arch"
+  },
+  "SM_Window_Study_North_Sill": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Bedroom_North_Frame": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Bedroom_North_Glass": {
+   "collision": "none",
+   "kind": "arch"
+  },
+  "SM_Window_Bedroom_North_Sill": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Bath_West_Frame": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Bath_West_Glass": {
+   "collision": "none",
+   "kind": "arch"
+  },
+  "SM_Window_Bath_West_Sill": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Window_Living_East_SlidingFrame": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Slider_Panel": {
+   "collision": "box",
+   "kind": "arch"
+  },
+  "SM_Curtain_Living_North_Sheer": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_North_DrapeL": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_North_DrapeR": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_North_Rail": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Study_North_DrapeL": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Study_North_DrapeR": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Study_North_Rail": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bedroom_North_DrapeL": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bedroom_North_DrapeR": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bedroom_North_Rail": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bath_West_Sheer": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bath_West_DrapeL": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bath_West_DrapeR": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Bath_West_Rail": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_EastSliding_Sheer": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_EastSliding_DrapeL": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_EastSliding_DrapeR": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Curtain_Living_EastSliding_Rail": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Blind_Study": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Blind_Bedroom": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Terrace_Parapet_South": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Terrace_Parapet_East": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Terrace_Parapet_North": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Terrace_Pergola_Roof": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Terrace_Post_1": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Terrace_Post_2": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Roof_Coping": {
+   "collision": "none",
+   "kind": "arch"
+  },
+  "SM_Ground_Gravel": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Entry_Steps": {
+   "collision": "complex",
+   "kind": "arch"
+  },
+  "SM_Sofa_Sectional": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Rug_Living": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_CoffeeTable_Drum": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_SideTable_Marble": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Armchair_Green": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Decor_BookStack": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Decor_Lantern": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_TV_Unit": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_TV": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_DiningTable_Oval": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_DiningChair_Cane": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_PlateSet": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_TableRunner": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Candlestick": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Pendant_Linear": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Kitchen_Run": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Kitchen_TallUnit": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_KitchenIsland": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Hob_Induction": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Faucet_Kitchen": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Microwave": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_CuttingBoard": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_BarStool_Cane": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Console_Entrance": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Mirror_OvalHalo": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Vase_Cream": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Decor_Bowl": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Rug_Entrance": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Closet_Entrance": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Bed_Master": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Nightstand": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Lamp_Ruby": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Pendant_Cone": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Rug_Bedroom": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Bench_Bed": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Wardrobe_Bedroom": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Dresser_Bedroom": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Desk_Study": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_DeskChair": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Rug_Study_Round": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Credenza_Study": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Shelving_Study": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Pendant_Ruby": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Laptop": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Decor_PenCup": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Floor_ShowerPad": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Shower_Glass": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Shower_Fitting": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Toilet_WallHung": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Vanity_Floating": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Mirror_Halo": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Mixer_Wall": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Faucet_Wall": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Towel_Rail": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Decor_BathTray": {
+   "collision": "none",
+   "kind": "prop"
+  },
+  "SM_Sofa_Terrace": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_CoffeeTable_Faceted": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_TerraceTable_Hex": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_TerraceChair_Taupe": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Chest_Teak": {
+   "collision": "box",
+   "kind": "prop"
+  },
+  "SM_Downlight": {
+   "collision": "none",
+   "kind": "prop"
+  }
+ },
+ "placements": [
+  {
+   "asset": "SM_Wall_Entrance_South_001",
+   "label": "Wall_Entrance_South",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Kitchen_South_001",
+   "label": "Wall_Kitchen_South",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Living_East_001",
+   "label": "Wall_Living_East",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Living_North_001",
+   "label": "Wall_Living_North",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Study_North_001",
+   "label": "Wall_Study_North",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bedroom_North_001",
+   "label": "Wall_Bedroom_North",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bedroom_West_001",
+   "label": "Wall_Bedroom_West",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bath_West_001",
+   "label": "Wall_Bath_West",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Entrance_West_001",
+   "label": "Wall_Entrance_West",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bath_North_001",
+   "label": "Wall_Bath_North",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bedroom_South_001",
+   "label": "Wall_Bedroom_South",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bath_East_001",
+   "label": "Wall_Bath_East",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bath_South_001",
+   "label": "Wall_Bath_South",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Bedroom_East_001",
+   "label": "Wall_Bedroom_East",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Study_West_001",
+   "label": "Wall_Study_West",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Study_South_001",
+   "label": "Wall_Study_South",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Wall_Study_East_001",
+   "label": "Wall_Study_East",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Walls",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Floor_Bedroom_001",
+   "label": "Floor_Bedroom",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Floors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Ceiling_Bedroom_001",
+   "label": "Ceiling_Bedroom",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Ceilings",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Floor_Study_001",
+   "label": "Floor_Study",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Floors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Ceiling_Study_001",
+   "label": "Ceiling_Study",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Ceilings",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Floor_Bathroom_001",
+   "label": "Floor_Bathroom",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Floors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Ceiling_Bathroom_001",
+   "label": "Ceiling_Bathroom",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Ceilings",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Floor_LivingDiningKitchen_001",
+   "label": "Floor_LivingDiningKitchen",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Floors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Ceiling_LivingDiningKitchen_001",
+   "label": "Ceiling_LivingDiningKitchen",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Ceilings",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Roof_Slab_001",
+   "label": "Roof_Slab",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Roof",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Slab_001",
+   "label": "Terrace_Slab",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bedroom_South_001",
+   "label": "Skirting_Bedroom_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bedroom_South_001",
+   "label": "Crown_Bedroom_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Bedroom_South_001",
+   "label": "Cove_Bedroom_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bedroom_East_001",
+   "label": "Skirting_Bedroom_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bedroom_East_001",
+   "label": "Crown_Bedroom_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Bedroom_East_001",
+   "label": "Cove_Bedroom_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bedroom_North_001",
+   "label": "Skirting_Bedroom_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bedroom_North_001",
+   "label": "Crown_Bedroom_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Bedroom_North_001",
+   "label": "Cove_Bedroom_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bedroom_West_001",
+   "label": "Skirting_Bedroom_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bedroom_West_001",
+   "label": "Crown_Bedroom_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Bedroom_West_001",
+   "label": "Cove_Bedroom_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Study_South_001",
+   "label": "Skirting_Study_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Study_South_001",
+   "label": "Crown_Study_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Study_South_001",
+   "label": "Cove_Study_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Study_East_001",
+   "label": "Skirting_Study_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Study_East_001",
+   "label": "Crown_Study_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Study_East_001",
+   "label": "Cove_Study_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Study_North_001",
+   "label": "Skirting_Study_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Study_North_001",
+   "label": "Crown_Study_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Study_North_001",
+   "label": "Cove_Study_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Study_West_001",
+   "label": "Skirting_Study_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Study_West_001",
+   "label": "Crown_Study_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Study_West_001",
+   "label": "Cove_Study_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bath_South_001",
+   "label": "Skirting_Bath_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bath_South_001",
+   "label": "Crown_Bath_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bath_East_001",
+   "label": "Skirting_Bath_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bath_East_001",
+   "label": "Crown_Bath_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bath_North_001",
+   "label": "Skirting_Bath_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bath_North_001",
+   "label": "Crown_Bath_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Bath_West_001",
+   "label": "Skirting_Bath_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Bath_West_001",
+   "label": "Crown_Bath_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_South_001",
+   "label": "Skirting_Living_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_South_001",
+   "label": "Crown_Living_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_South_001",
+   "label": "Cove_Living_South_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_East_001",
+   "label": "Skirting_Living_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_East_001",
+   "label": "Crown_Living_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_East_001",
+   "label": "Cove_Living_East_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_North_001",
+   "label": "Skirting_Living_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_North_001",
+   "label": "Crown_Living_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_North_001",
+   "label": "Cove_Living_North_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_West_001",
+   "label": "Skirting_Living_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_West_001",
+   "label": "Crown_Living_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_West_001",
+   "label": "Cove_Living_West_001",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_North_002",
+   "label": "Skirting_Living_North_002",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_North_002",
+   "label": "Crown_Living_North_002",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_North_002",
+   "label": "Cove_Living_North_002",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_West_002",
+   "label": "Skirting_Living_West_002",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_West_002",
+   "label": "Crown_Living_West_002",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_West_002",
+   "label": "Cove_Living_West_002",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_North_003",
+   "label": "Skirting_Living_North_003",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_North_003",
+   "label": "Crown_Living_North_003",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_North_003",
+   "label": "Cove_Living_North_003",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_West_003",
+   "label": "Skirting_Living_West_003",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_West_003",
+   "label": "Crown_Living_West_003",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_West_003",
+   "label": "Cove_Living_West_003",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_North_004",
+   "label": "Skirting_Living_North_004",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_North_004",
+   "label": "Crown_Living_North_004",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Cove_Living_North_004",
+   "label": "Cove_Living_North_004",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Cove",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Skirting_Living_West_004",
+   "label": "Skirting_Living_West_004",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Skirting",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Crown_Living_West_004",
+   "label": "Crown_Living_West_004",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Crown",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Relief_Living_West",
+   "label": "Panel_Relief_Living_West",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Cane_Living_West",
+   "label": "Panel_Cane_Living_West",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Marble_Kitchen_Back",
+   "label": "Panel_Marble_Kitchen_Back",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Wallpaper_Study_N1",
+   "label": "Panel_Wallpaper_Study_N1",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Wallpaper_Study_N2",
+   "label": "Panel_Wallpaper_Study_N2",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Wallpaper_Study_N3",
+   "label": "Panel_Wallpaper_Study_N3",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Wallpaper_Study_N4",
+   "label": "Panel_Wallpaper_Study_N4",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Panel_Wallpaper_Study_E",
+   "label": "Panel_Wallpaper_Study_E",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Panels",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Entrance_Leaf",
+   "label": "Door_Entrance_Leaf",
+   "loc": [
+    3.545,
+    0.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Entrance_Frame",
+   "label": "Door_Entrance_Frame",
+   "loc": [
+    3.545,
+    0.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorKnob_Entrance",
+   "label": "DoorKnob_Entrance",
+   "loc": [
+    3.545,
+    0.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorHinge_Entrance",
+   "label": "DoorHinge_Entrance",
+   "loc": [
+    3.545,
+    0.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Bedroom_Leaf",
+   "label": "Door_Bedroom_Leaf",
+   "loc": [
+    4.375,
+    4.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Bedroom_Frame",
+   "label": "Door_Bedroom_Frame",
+   "loc": [
+    4.375,
+    4.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorKnob_Bedroom",
+   "label": "DoorKnob_Bedroom",
+   "loc": [
+    4.375,
+    4.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorHinge_Bedroom",
+   "label": "DoorHinge_Bedroom",
+   "loc": [
+    4.375,
+    4.125,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Bath_Leaf",
+   "label": "Door_Bath_Leaf",
+   "loc": [
+    2.55,
+    1.8,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Bath_Frame",
+   "label": "Door_Bath_Frame",
+   "loc": [
+    2.55,
+    1.8,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorKnob_Bath",
+   "label": "DoorKnob_Bath",
+   "loc": [
+    2.55,
+    1.8,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorHinge_Bath",
+   "label": "DoorHinge_Bath",
+   "loc": [
+    2.55,
+    1.8,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Study_Leaf",
+   "label": "Door_Study_Leaf",
+   "loc": [
+    5.805,
+    5.4,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Door_Study_Frame",
+   "label": "Door_Study_Frame",
+   "loc": [
+    5.805,
+    5.4,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorKnob_Study",
+   "label": "DoorKnob_Study",
+   "loc": [
+    5.805,
+    5.4,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_DoorHinge_Study",
+   "label": "DoorHinge_Study",
+   "loc": [
+    5.805,
+    5.4,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Doors",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Kitchen_South_Frame",
+   "label": "Window_Kitchen_South_Frame",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Kitchen_South_Glass",
+   "label": "Window_Kitchen_South_Glass",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Kitchen_South_Sill",
+   "label": "Window_Kitchen_South_Sill",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Living_North_Frame",
+   "label": "Window_Living_North_Frame",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Living_North_Glass",
+   "label": "Window_Living_North_Glass",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Living_North_Sill",
+   "label": "Window_Living_North_Sill",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Study_North_Frame",
+   "label": "Window_Study_North_Frame",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Study_North_Glass",
+   "label": "Window_Study_North_Glass",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Study_North_Sill",
+   "label": "Window_Study_North_Sill",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Bedroom_North_Frame",
+   "label": "Window_Bedroom_North_Frame",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Bedroom_North_Glass",
+   "label": "Window_Bedroom_North_Glass",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Bedroom_North_Sill",
+   "label": "Window_Bedroom_North_Sill",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Bath_West_Frame",
+   "label": "Window_Bath_West_Frame",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Bath_West_Glass",
+   "label": "Window_Bath_West_Glass",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Bath_West_Sill",
+   "label": "Window_Bath_West_Sill",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Window_Living_East_SlidingFrame",
+   "label": "Window_Living_East_SlidingFrame",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Slider_Panel",
+   "label": "FixedPanel_1",
+   "loc": [
+    10.725,
+    1.56,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Slider_Panel",
+   "label": "Slider_2",
+   "loc": [
+    10.625,
+    2.77,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Windows",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Slider_Panel",
+   "label": "Slider_3",
+   "loc": [
+    10.625,
+    3.98,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Windows",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Slider_Panel",
+   "label": "FixedPanel_4",
+   "loc": [
+    10.725,
+    5.19,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Architecture/Windows",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_North_Sheer",
+   "label": "Curtain_Living_North_Sheer",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_North_DrapeL",
+   "label": "Curtain_Living_North_DrapeL",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_North_DrapeR",
+   "label": "Curtain_Living_North_DrapeR",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_North_Rail",
+   "label": "Curtain_Living_North_Rail",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Study_North_DrapeL",
+   "label": "Curtain_Study_North_DrapeL",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Study_North_DrapeR",
+   "label": "Curtain_Study_North_DrapeR",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Study_North_Rail",
+   "label": "Curtain_Study_North_Rail",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bedroom_North_DrapeL",
+   "label": "Curtain_Bedroom_North_DrapeL",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bedroom_North_DrapeR",
+   "label": "Curtain_Bedroom_North_DrapeR",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bedroom_North_Rail",
+   "label": "Curtain_Bedroom_North_Rail",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bath_West_Sheer",
+   "label": "Curtain_Bath_West_Sheer",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bath_West_DrapeL",
+   "label": "Curtain_Bath_West_DrapeL",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bath_West_DrapeR",
+   "label": "Curtain_Bath_West_DrapeR",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Bath_West_Rail",
+   "label": "Curtain_Bath_West_Rail",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_EastSliding_Sheer",
+   "label": "Curtain_Living_EastSliding_Sheer",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_EastSliding_DrapeL",
+   "label": "Curtain_Living_EastSliding_DrapeL",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_EastSliding_DrapeR",
+   "label": "Curtain_Living_EastSliding_DrapeR",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Curtain_Living_EastSliding_Rail",
+   "label": "Curtain_Living_EastSliding_Rail",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Interior/Curtains",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Blind_Study",
+   "label": "Blind_Study",
+   "loc": [
+    5.9,
+    8.265,
+    1.64
+   ],
+   "yaw": 270.0,
+   "folder": "Interior/Blinds",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Blind_Bedroom",
+   "label": "Blind_Bedroom",
+   "loc": [
+    2.5,
+    8.265,
+    1.92
+   ],
+   "yaw": 270.0,
+   "folder": "Interior/Blinds",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Parapet_South",
+   "label": "Terrace_Parapet_South",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Parapet_East",
+   "label": "Terrace_Parapet_East",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Parapet_North",
+   "label": "Terrace_Parapet_North",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Pergola_Roof",
+   "label": "Terrace_Pergola_Roof",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Post_1",
+   "label": "Terrace_Post_1",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Terrace_Post_2",
+   "label": "Terrace_Post_2",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Terrace",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Roof_Coping",
+   "label": "Roof_Coping",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Roof",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Ground_Gravel",
+   "label": "Ground_Gravel",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Site",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Entry_Steps",
+   "label": "Entry_Steps",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Architecture/Site",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Sofa_Sectional",
+   "label": "Sofa_Sectional",
+   "loc": [
+    7.85,
+    6.7,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Rug_Living",
+   "label": "Rug_Living",
+   "loc": [
+    8.75,
+    6.2,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_CoffeeTable_Drum",
+   "label": "CoffeeTable_Drum",
+   "loc": [
+    9.1,
+    6.2,
+    0.02
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_SideTable_Marble",
+   "label": "SideTable_Marble",
+   "loc": [
+    10.2,
+    6.05,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Armchair_Green",
+   "label": "Armchair_Green",
+   "loc": [
+    9.75,
+    5.4,
+    0.0
+   ],
+   "yaw": 125.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_BookStack",
+   "label": "Decor_Books",
+   "loc": [
+    9.05,
+    6.2,
+    0.39
+   ],
+   "yaw": 25.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_Lantern",
+   "label": "Decor_Lantern",
+   "loc": [
+    9.27,
+    6.06,
+    0.39
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TV_Unit",
+   "label": "TV_Unit",
+   "loc": [
+    10.355,
+    7.47,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TV",
+   "label": "TV_Panel",
+   "loc": [
+    10.515,
+    7.47,
+    1.0
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Living",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningTable_Oval",
+   "label": "DiningTable_Oval",
+   "loc": [
+    7.3,
+    3.5,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair",
+   "loc": [
+    6.45,
+    4.22,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet",
+   "loc": [
+    6.45,
+    3.93,
+    0.75
+   ],
+   "yaw": -90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_2",
+   "loc": [
+    6.45,
+    2.78,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_2",
+   "loc": [
+    6.45,
+    3.07,
+    0.75
+   ],
+   "yaw": 90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_3",
+   "loc": [
+    7.3,
+    4.22,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_3",
+   "loc": [
+    7.3,
+    3.93,
+    0.75
+   ],
+   "yaw": -90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_4",
+   "loc": [
+    7.3,
+    2.78,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_4",
+   "loc": [
+    7.3,
+    3.07,
+    0.75
+   ],
+   "yaw": 90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_5",
+   "loc": [
+    8.15,
+    4.22,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_5",
+   "loc": [
+    8.15,
+    3.93,
+    0.75
+   ],
+   "yaw": -90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_6",
+   "loc": [
+    8.15,
+    2.78,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_6",
+   "loc": [
+    8.15,
+    3.07,
+    0.75
+   ],
+   "yaw": 90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_7",
+   "loc": [
+    5.7,
+    3.5,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_7",
+   "loc": [
+    6.1,
+    3.5,
+    0.75
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DiningChair_Cane",
+   "label": "DiningChair_8",
+   "loc": [
+    8.9,
+    3.5,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Dining",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_PlateSet",
+   "label": "PlateSet_8",
+   "loc": [
+    8.5,
+    3.5,
+    0.75
+   ],
+   "yaw": 180.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TableRunner",
+   "label": "TableRunner",
+   "loc": [
+    7.3,
+    3.5,
+    0.75
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Candlestick",
+   "label": "Candlestick",
+   "loc": [
+    6.8,
+    3.5,
+    0.754
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Candlestick",
+   "label": "Candlestick_2",
+   "loc": [
+    7.8,
+    3.5,
+    0.754
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Pendant_Linear",
+   "label": "Pendant_Linear_Dining",
+   "loc": [
+    7.3,
+    3.5,
+    2.3
+   ],
+   "yaw": 90.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Kitchen_Run",
+   "label": "Kitchen_Run",
+   "loc": [
+    7.125,
+    0.25,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Kitchen_TallUnit",
+   "label": "Kitchen_TallUnit",
+   "loc": [
+    9.975,
+    0.25,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_KitchenIsland",
+   "label": "Kitchen_Island",
+   "loc": [
+    7.3,
+    1.95,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Hob_Induction",
+   "label": "Hob_Induction",
+   "loc": [
+    7.3,
+    0.55,
+    0.91
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Faucet_Kitchen",
+   "label": "Faucet_Island",
+   "loc": [
+    7.3,
+    1.78,
+    0.93
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Microwave",
+   "label": "Microwave",
+   "loc": [
+    9.12,
+    0.5,
+    0.91
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_CuttingBoard",
+   "label": "CuttingBoard",
+   "loc": [
+    8.2,
+    0.29,
+    0.91
+   ],
+   "yaw": 90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_BarStool_Cane",
+   "label": "BarStool",
+   "loc": [
+    6.45,
+    2.42,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_BarStool_Cane",
+   "label": "BarStool_2",
+   "loc": [
+    7.3,
+    2.42,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_BarStool_Cane",
+   "label": "BarStool_3",
+   "loc": [
+    8.15,
+    2.42,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Kitchen",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Console_Entrance",
+   "label": "Console_Entrance",
+   "loc": [
+    2.8,
+    3.25,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Entrance",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Mirror_OvalHalo",
+   "label": "Mirror_Entrance_Halo",
+   "loc": [
+    2.64,
+    3.25,
+    1.6
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Entrance",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Vase_Cream",
+   "label": "Vase_Console",
+   "loc": [
+    2.78,
+    2.85,
+    0.78
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_Bowl",
+   "label": "Decor_Bowl_Console",
+   "loc": [
+    2.8,
+    3.35,
+    0.78
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_BookStack",
+   "label": "Books_Console",
+   "loc": [
+    2.8,
+    3.65,
+    0.78
+   ],
+   "yaw": 15.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Rug_Entrance",
+   "label": "Rug_Entrance",
+   "loc": [
+    3.8,
+    1.45,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Entrance",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Closet_Entrance",
+   "label": "Closet_Entrance",
+   "loc": [
+    1.4,
+    0.25,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Entrance",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Bed_Master",
+   "label": "Bed_Master",
+   "loc": [
+    2.5,
+    6.95,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Nightstand",
+   "label": "Nightstand",
+   "loc": [
+    1.2,
+    7.85,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Lamp_Ruby",
+   "label": "Lamp_Bedside",
+   "loc": [
+    1.2,
+    7.85,
+    0.52
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Nightstand",
+   "label": "Nightstand_2",
+   "loc": [
+    3.8,
+    7.85,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Lamp_Ruby",
+   "label": "Lamp_Bedside_2",
+   "loc": [
+    3.8,
+    7.85,
+    0.52
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Pendant_Cone",
+   "label": "Pendant_Cone",
+   "loc": [
+    1.2,
+    7.98,
+    1.55
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Pendant_Cone",
+   "label": "Pendant_Cone_2",
+   "loc": [
+    3.8,
+    7.98,
+    1.55
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Rug_Bedroom",
+   "label": "Rug_Bedroom",
+   "loc": [
+    2.5,
+    6.3,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Bench_Bed",
+   "label": "Bench_Bed",
+   "loc": [
+    2.5,
+    5.5,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Wardrobe_Bedroom",
+   "label": "Wardrobe",
+   "loc": [
+    0.55,
+    6.25,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Dresser_Bedroom",
+   "label": "Dresser_Bedroom",
+   "loc": [
+    2.2,
+    4.385,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Bedroom",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Desk_Study",
+   "label": "Desk_Study",
+   "loc": [
+    5.8,
+    7.6,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Study",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_DeskChair",
+   "label": "DeskChair",
+   "loc": [
+    5.8,
+    6.85,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Study",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Rug_Study_Round",
+   "label": "Rug_Study",
+   "loc": [
+    5.75,
+    6.8,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Study",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Credenza_Study",
+   "label": "Credenza_Study",
+   "loc": [
+    6.895,
+    7.1,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Study",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Shelving_Study",
+   "label": "Shelving_Study",
+   "loc": [
+    6.95,
+    7.1,
+    0.0
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Study",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Pendant_Ruby",
+   "label": "Pendant_Ruby",
+   "loc": [
+    5.8,
+    7.6,
+    2.08
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Laptop",
+   "label": "Laptop",
+   "loc": [
+    5.8,
+    7.55,
+    0.75
+   ],
+   "yaw": -90.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_PenCup",
+   "label": "PenCup",
+   "loc": [
+    5.25,
+    7.75,
+    0.75
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_BookStack",
+   "label": "Books_Desk",
+   "loc": [
+    6.25,
+    7.45,
+    0.75
+   ],
+   "yaw": 20.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Floor_ShowerPad",
+   "label": "Shower_Pad",
+   "loc": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Shower_Glass",
+   "label": "Shower_Glass",
+   "loc": [
+    1.3,
+    2.95,
+    0.012
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Shower_Fitting",
+   "label": "Shower_Fitting",
+   "loc": [
+    0.265,
+    3.0,
+    0.0
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Toilet_WallHung",
+   "label": "Toilet",
+   "loc": [
+    1.95,
+    3.93,
+    0.0
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Vanity_Floating",
+   "label": "Vanity_Floating",
+   "loc": [
+    1.9,
+    1.405,
+    0.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Mirror_Halo",
+   "label": "Mirror_Halo",
+   "loc": [
+    1.9,
+    1.185,
+    1.1
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Mixer_Wall",
+   "label": "Mixer_Wall",
+   "loc": [
+    1.9,
+    1.2,
+    1.0
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Faucet_Wall",
+   "label": "Faucet_Wall",
+   "loc": [
+    1.9,
+    1.22,
+    1.05
+   ],
+   "yaw": 90.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Towel_Rail",
+   "label": "Towel_Rail",
+   "loc": [
+    2.41,
+    3.45,
+    1.35
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Bath",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Decor_BathTray",
+   "label": "Decor_Tray",
+   "loc": [
+    2.2,
+    1.4,
+    0.77
+   ],
+   "yaw": 0.0,
+   "folder": "Decor",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Sofa_Terrace",
+   "label": "Sofa_Terrace",
+   "loc": [
+    12.2,
+    5.85,
+    -0.02
+   ],
+   "yaw": -90.0,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_CoffeeTable_Faceted",
+   "label": "CoffeeTable_Faceted",
+   "loc": [
+    12.05,
+    4.45,
+    -0.02
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TerraceTable_Hex",
+   "label": "DiningTable_Hex",
+   "loc": [
+    12.2,
+    1.7,
+    -0.02
+   ],
+   "yaw": 0.0,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TerraceChair_Taupe",
+   "label": "Chair_Terrace",
+   "loc": [
+    11.38,
+    1.12,
+    -0.02
+   ],
+   "yaw": 35.2724,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TerraceChair_Taupe",
+   "label": "Chair_Terrace_2",
+   "loc": [
+    11.38,
+    2.28,
+    -0.02
+   ],
+   "yaw": -35.2724,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TerraceChair_Taupe",
+   "label": "Chair_Terrace_3",
+   "loc": [
+    13.02,
+    1.12,
+    -0.02
+   ],
+   "yaw": 144.7276,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_TerraceChair_Taupe",
+   "label": "Chair_Terrace_4",
+   "loc": [
+    13.02,
+    2.28,
+    -0.02
+   ],
+   "yaw": -144.7276,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Chest_Teak",
+   "label": "Chest_Teak",
+   "loc": [
+    13.59,
+    3.1,
+    -0.02
+   ],
+   "yaw": 180.0,
+   "folder": "Furniture/Terrace",
+   "mobility": "movable"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight",
+   "loc": [
+    8.0,
+    4.6,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_2",
+   "loc": [
+    8.0,
+    6.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_3",
+   "loc": [
+    9.6,
+    4.6,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_4",
+   "loc": [
+    9.6,
+    6.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_5",
+   "loc": [
+    9.8,
+    2.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_6",
+   "loc": [
+    8.8,
+    7.9,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_7",
+   "loc": [
+    5.9,
+    3.5,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_8",
+   "loc": [
+    8.5,
+    3.5,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_9",
+   "loc": [
+    6.0,
+    1.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_10",
+   "loc": [
+    8.2,
+    1.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_11",
+   "loc": [
+    7.2,
+    2.45,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_12",
+   "loc": [
+    3.3,
+    0.9,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_13",
+   "loc": [
+    3.3,
+    2.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_14",
+   "loc": [
+    3.3,
+    3.5,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_15",
+   "loc": [
+    5.2,
+    2.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_16",
+   "loc": [
+    9.3,
+    3.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_17",
+   "loc": [
+    1.4,
+    0.7,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_18",
+   "loc": [
+    1.4,
+    5.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_19",
+   "loc": [
+    3.6,
+    5.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_20",
+   "loc": [
+    2.5,
+    6.2,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_21",
+   "loc": [
+    1.4,
+    7.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_22",
+   "loc": [
+    3.6,
+    7.0,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_23",
+   "loc": [
+    5.3,
+    6.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_24",
+   "loc": [
+    6.5,
+    6.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_25",
+   "loc": [
+    5.3,
+    7.5,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_26",
+   "loc": [
+    6.5,
+    7.5,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_27",
+   "loc": [
+    0.8,
+    2.8,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_28",
+   "loc": [
+    1.8,
+    2.4,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_29",
+   "loc": [
+    1.9,
+    1.6,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_30",
+   "loc": [
+    0.8,
+    1.7,
+    3.2
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_31",
+   "loc": [
+    11.6,
+    1.0,
+    3.0
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_32",
+   "loc": [
+    13.1,
+    1.0,
+    3.0
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_33",
+   "loc": [
+    11.6,
+    3.2,
+    3.0
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_34",
+   "loc": [
+    13.1,
+    3.2,
+    3.0
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_35",
+   "loc": [
+    11.8,
+    5.2,
+    3.0
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  },
+  {
+   "asset": "SM_Downlight",
+   "label": "Downlight_36",
+   "loc": [
+    13.0,
+    5.2,
+    3.0
+   ],
+   "yaw": 0.0,
+   "folder": "Lighting/Fixtures",
+   "mobility": "static"
+  }
+ ],
+ "doors": [
+  {
+   "type": "hinged",
+   "label": "Door_Entrance",
+   "hinge": [
+    3.545,
+    0.125
+   ],
+   "yaw": 180.0,
+   "w": 0.95,
+   "leaf": "SM_Door_Entrance_Leaf",
+   "frame": "SM_Door_Entrance_Frame",
+   "knob": "SM_DoorKnob_Entrance",
+   "hinges": "SM_DoorHinge_Entrance"
+  },
+  {
+   "type": "hinged",
+   "label": "Door_Bedroom",
+   "hinge": [
+    4.375,
+    4.125
+   ],
+   "yaw": 180.0,
+   "w": 0.85,
+   "leaf": "SM_Door_Bedroom_Leaf",
+   "frame": "SM_Door_Bedroom_Frame",
+   "knob": "SM_DoorKnob_Bedroom",
+   "hinges": "SM_DoorHinge_Bedroom"
+  },
+  {
+   "type": "hinged",
+   "label": "Door_Bath",
+   "hinge": [
+    2.55,
+    1.8
+   ],
+   "yaw": 90.0,
+   "w": 0.8,
+   "leaf": "SM_Door_Bath_Leaf",
+   "frame": "SM_Door_Bath_Frame",
+   "knob": "SM_DoorKnob_Bath",
+   "hinges": "SM_DoorHinge_Bath"
+  },
+  {
+   "type": "hinged",
+   "label": "Door_Study",
+   "hinge": [
+    5.805,
+    5.4
+   ],
+   "yaw": 0.0,
+   "w": 0.85,
+   "leaf": "SM_Door_Study_Leaf",
+   "frame": "SM_Door_Study_Frame",
+   "knob": "SM_DoorKnob_Study",
+   "hinges": "SM_DoorHinge_Study"
+  },
+  {
+   "type": "sliding",
+   "label": "Door_Sliding_Living",
+   "centre": [
+    10.675,
+    3.98
+   ],
+   "panels": [
+    {
+     "label": "Slider_2",
+     "loc": [
+      10.625,
+      2.77,
+      0.0
+     ],
+     "yaw": 90.0,
+     "slide": -1.16
+    },
+    {
+     "label": "Slider_3",
+     "loc": [
+      10.625,
+      3.98,
+      0.0
+     ],
+     "yaw": 90.0,
+     "slide": 1.16
+    }
+   ],
+   "asset": "SM_Slider_Panel"
+  }
+ ],
+ "lights": [
+  {
+   "kind": "spot",
+   "loc": [
+    8.0,
+    4.6,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Living",
+   "shadows": true,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    8.0,
+    6.4,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Living_2",
+   "shadows": true,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    9.6,
+    4.6,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Living_3",
+   "shadows": true,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    9.6,
+    6.4,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Living_4",
+   "shadows": true,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    9.8,
+    2.4,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Living_5",
+   "shadows": true,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    8.8,
+    7.9,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Living_6",
+   "shadows": true,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    5.9,
+    3.5,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_DiningKitchen",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    8.5,
+    3.5,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_DiningKitchen_2",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    6.0,
+    1.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_DiningKitchen_3",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    8.2,
+    1.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_DiningKitchen_4",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    7.2,
+    2.45,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_DiningKitchen_5",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    3.3,
+    0.9,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Entrance",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    3.3,
+    2.4,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Entrance_2",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    3.3,
+    3.5,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Entrance_3",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    5.2,
+    2.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Entrance_4",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    9.3,
+    3.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Entrance_5",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    1.4,
+    0.7,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Entrance_6",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    1.4,
+    5.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bedroom",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    3.6,
+    5.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bedroom_2",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    2.5,
+    6.2,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bedroom_3",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    1.4,
+    7.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bedroom_4",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    3.6,
+    7.0,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bedroom_5",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    5.3,
+    6.4,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Study",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    6.5,
+    6.4,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Study_2",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    5.3,
+    7.5,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Study_3",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    6.5,
+    7.5,
+    3.16
+   ],
+   "lumens": 620,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Study_4",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    0.8,
+    2.8,
+    3.16
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bath",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    1.8,
+    2.4,
+    3.16
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bath_2",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    1.9,
+    1.6,
+    3.16
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bath_3",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    0.8,
+    1.7,
+    3.16
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Bath_4",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    11.6,
+    1.0,
+    2.96
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Terrace",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    13.1,
+    1.0,
+    2.96
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Terrace_2",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    11.6,
+    3.2,
+    2.96
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Terrace_3",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    13.1,
+    3.2,
+    2.96
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Terrace_4",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    11.8,
+    5.2,
+    2.96
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Terrace_5",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "spot",
+   "loc": [
+    13.0,
+    5.2,
+    2.96
+   ],
+   "lumens": 520,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": [
+    -90,
+    0
+   ],
+   "label": "DL_Terrace_6",
+   "shadows": false,
+   "cone": [
+    24.0,
+    58.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 0.0,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.28,
+    0.5,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.34,
+    0.5,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_2",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    5.4,
+    0.5,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_3",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.46,
+    0.5,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_4",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    9.52,
+    0.5,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_5",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    10.3,
+    1.2625,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_6",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    10.3,
+    3.2875,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_7",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    10.3,
+    5.3125,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_8",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    10.3,
+    7.3375,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_9",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    8.9125,
+    8.1,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_10",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.525,
+    6.8375,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_11",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    5.95,
+    5.075,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_12",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    4.875,
+    4.6875,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_13",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.625,
+    3.8,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_14",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    2.875,
+    2.5375,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_15",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.4375,
+    0.775,
+    3.0
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Living_16",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.3062,
+    4.45,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.4187,
+    4.45,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_2",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    4.225,
+    5.2375,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_3",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    4.225,
+    7.3125,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_4",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.4187,
+    8.1,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_5",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.3062,
+    8.1,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_6",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    0.5,
+    7.3125,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_7",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    0.5,
+    5.2375,
+    3.0
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Bedroom_8",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    5.875,
+    5.725,
+    3.0
+   ],
+   "lumens": 180,
+   "kelvin": 2800,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Study",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    6.875,
+    6.9125,
+    3.0
+   ],
+   "lumens": 180,
+   "kelvin": 2800,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Study_2",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    5.875,
+    8.1,
+    3.0
+   ],
+   "lumens": 180,
+   "kelvin": 2800,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Study_3",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    4.875,
+    6.9125,
+    3.0
+   ],
+   "lumens": 180,
+   "kelvin": 2800,
+   "radius": 420,
+   "rot": null,
+   "label": "Cove_Study_4",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.3,
+    3.5,
+    2.35
+   ],
+   "lumens": 1100,
+   "kelvin": 3000,
+   "radius": 650,
+   "rot": null,
+   "label": "Pendant_Dining",
+   "shadows": true,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 18,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.3,
+    1.6,
+    0.8
+   ],
+   "lumens": 220,
+   "kelvin": 2700,
+   "radius": 300,
+   "rot": null,
+   "label": "UnderIsland_LED",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 20,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.3,
+    0.5,
+    0.95
+   ],
+   "lumens": 260,
+   "kelvin": 3000,
+   "radius": 300,
+   "rot": null,
+   "label": "UnderCounter_LED",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 20,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.3,
+    6.2,
+    2.9
+   ],
+   "lumens": 500,
+   "kelvin": 2800,
+   "radius": 450,
+   "rot": null,
+   "label": "Graze_Relief",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 6,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    7.3,
+    7.6,
+    2.9
+   ],
+   "lumens": 500,
+   "kelvin": 2800,
+   "radius": 450,
+   "rot": null,
+   "label": "Graze_Cane",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 6,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    2.9,
+    3.25,
+    2.4
+   ],
+   "lumens": 300,
+   "kelvin": 2800,
+   "radius": 300,
+   "rot": null,
+   "label": "Entrance_Wall_Wash",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 6,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    2.85,
+    3.25,
+    1.6
+   ],
+   "lumens": 200,
+   "kelvin": 2700,
+   "radius": 250,
+   "rot": null,
+   "label": "Mirror_Entrance_Halo_2",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.4,
+    0.55,
+    1.5
+   ],
+   "lumens": 300,
+   "kelvin": 2700,
+   "radius": 260,
+   "rot": null,
+   "label": "Closet_LED",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 20,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.9,
+    1.6,
+    1.55
+   ],
+   "lumens": 520,
+   "kelvin": 2900,
+   "radius": 320,
+   "rot": null,
+   "label": "Mirror_Halo_2",
+   "shadows": true,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 12,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    0.5,
+    3.0,
+    2.0
+   ],
+   "lumens": 300,
+   "kelvin": 2800,
+   "radius": 300,
+   "rot": null,
+   "label": "Terracotta_Wall_Wash",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 6,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.2,
+    7.85,
+    0.85
+   ],
+   "lumens": 200,
+   "kelvin": 2600,
+   "radius": 300,
+   "rot": null,
+   "label": "Lamp_Bedside_3",
+   "shadows": true,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 5,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    1.2,
+    7.98,
+    1.58
+   ],
+   "lumens": 240,
+   "kelvin": 2700,
+   "radius": 320,
+   "rot": null,
+   "label": "Pendant_Cone_3",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 4,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.8,
+    7.85,
+    0.85
+   ],
+   "lumens": 200,
+   "kelvin": 2600,
+   "radius": 300,
+   "rot": null,
+   "label": "Lamp_Bedside_4",
+   "shadows": true,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 5,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.8,
+    7.98,
+    1.58
+   ],
+   "lumens": 240,
+   "kelvin": 2700,
+   "radius": 320,
+   "rot": null,
+   "label": "Pendant_Cone_4",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 4,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    5.8,
+    7.6,
+    1.95
+   ],
+   "lumens": 520,
+   "kelvin": 2700,
+   "radius": 400,
+   "rot": null,
+   "label": "Pendant_Ruby_2",
+   "shadows": true,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 10,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    6.8,
+    7.1,
+    0.96
+   ],
+   "lumens": 120,
+   "kelvin": 2700,
+   "radius": 220,
+   "rot": null,
+   "label": "Shelf_LED",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 25,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    6.8,
+    7.1,
+    1.41
+   ],
+   "lumens": 120,
+   "kelvin": 2700,
+   "radius": 220,
+   "rot": null,
+   "label": "Shelf_LED_2",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 25,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    6.8,
+    7.1,
+    1.86
+   ],
+   "lumens": 120,
+   "kelvin": 2700,
+   "radius": 220,
+   "rot": null,
+   "label": "Shelf_LED_3",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 25,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    6.8,
+    7.1,
+    2.31
+   ],
+   "lumens": 120,
+   "kelvin": 2700,
+   "radius": 220,
+   "rot": null,
+   "label": "Shelf_LED_4",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 25,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    12.2,
+    3.4,
+    2.7
+   ],
+   "lumens": 350,
+   "kelvin": 2800,
+   "radius": 700,
+   "rot": null,
+   "label": "Terrace_Ambient",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 8,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    3.1,
+    1.2,
+    1.0
+   ],
+   "lumens": 220,
+   "kelvin": 2800,
+   "radius": 300,
+   "rot": null,
+   "label": "Entrance_Fill",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 8,
+   "folder": "Lighting"
+  },
+  {
+   "kind": "point",
+   "loc": [
+    8.7,
+    4.3,
+    1.6
+   ],
+   "lumens": 300,
+   "kelvin": 3000,
+   "radius": 500,
+   "rot": null,
+   "label": "Living_Fill",
+   "shadows": false,
+   "cone": [
+    22.0,
+    48.0
+   ],
+   "size": [
+    100.0,
+    4.0
+   ],
+   "src_radius": 8,
+   "folder": "Lighting"
+  }
+ ],
+ "cameras": [
+  {
+   "label": "Living",
+   "loc": [
+    10.3,
+    3.0,
+    1.45
+   ],
+   "target": [
+    7.8,
+    6.4,
+    1.0
+   ],
+   "focal": 20
+  },
+  {
+   "label": "DiningKitchen",
+   "loc": [
+    10.3,
+    4.0,
+    1.5
+   ],
+   "target": [
+    6.4,
+    2.0,
+    1.0
+   ],
+   "focal": 20
+  },
+  {
+   "label": "Kitchen",
+   "loc": [
+    7.2,
+    4.4,
+    1.35
+   ],
+   "target": [
+    7.2,
+    0.3,
+    1.2
+   ],
+   "focal": 22
+  },
+  {
+   "label": "Entry",
+   "loc": [
+    3.3,
+    0.6,
+    1.5
+   ],
+   "target": [
+    4.0,
+    3.6,
+    1.2
+   ],
+   "focal": 20
+  },
+  {
+   "label": "Bedroom",
+   "loc": [
+    3.9,
+    4.5,
+    1.5
+   ],
+   "target": [
+    2.0,
+    7.9,
+    1.1
+   ],
+   "focal": 18
+  },
+  {
+   "label": "Bath",
+   "loc": [
+    2.35,
+    3.95,
+    1.6
+   ],
+   "target": [
+    0.9,
+    1.5,
+    1.0
+   ],
+   "focal": 15
+  },
+  {
+   "label": "Study",
+   "loc": [
+    6.7,
+    5.7,
+    1.5
+   ],
+   "target": [
+    5.6,
+    7.8,
+    1.1
+   ],
+   "focal": 18
+  },
+  {
+   "label": "Terrace",
+   "loc": [
+    13.6,
+    0.5,
+    1.6
+   ],
+   "target": [
+    11.8,
+    4.8,
+    1.0
+   ],
+   "focal": 18
+  },
+  {
+   "label": "Facade",
+   "loc": [
+    7.0,
+    -9.5,
+    1.7
+   ],
+   "target": [
+    8.0,
+    0.0,
+    1.8
+   ],
+   "focal": 24
+  },
+  {
+   "label": "Top",
+   "loc": [
+    5.4,
+    4.3,
+    17.0
+   ],
+   "target": [
+    5.4,
+    4.3,
+    0.0
+   ],
+   "focal": 22
+  },
+  {
+   "label": "Aerial",
+   "loc": [
+    -6.0,
+    -8.0,
+    9.0
+   ],
+   "target": [
+    6.0,
+    4.0,
+    1.0
+   ],
+   "focal": 20
+  }
+ ],
+ "env": {
+  "sun_dir": [
+   -0.8,
+   -0.25,
+   -0.5
+  ],
+  "sun_lux": 6.0,
+  "sun_k": 4200,
+  "sun_angle": 1.0,
+  "sky": 1.0,
+  "fog": 0.006,
+  "ground_z": -12.0,
+  "exposure": 1.0,
+  "white_temp": 6500.0,
+  "clouds": false,
+  "player_start": [
+   3.1,
+   1.5,
+   90.0
+  ],
+  "eye_height": 1.65
+ },
+ "polys": {
+  "SM_Wall_Entrance_South_001": 21,
+  "SM_Wall_Kitchen_South_001": 21,
+  "SM_Wall_Living_East_001": 21,
+  "SM_Wall_Living_North_001": 21,
+  "SM_Wall_Study_North_001": 21,
+  "SM_Wall_Bedroom_North_001": 21,
+  "SM_Wall_Bedroom_West_001": 5,
+  "SM_Wall_Bath_West_001": 21,
+  "SM_Wall_Entrance_West_001": 5,
+  "SM_Wall_Bath_North_001": 5,
+  "SM_Wall_Bedroom_South_001": 16,
+  "SM_Wall_Bath_East_001": 16,
+  "SM_Wall_Bath_South_001": 5,
+  "SM_Wall_Bedroom_East_001": 5,
+  "SM_Wall_Study_West_001": 5,
+  "SM_Wall_Study_South_001": 16,
+  "SM_Wall_Study_East_001": 5,
+  "SM_Floor_Bedroom_001": 6,
+  "SM_Ceiling_Bedroom_001": 6,
+  "SM_Floor_Study_001": 6,
+  "SM_Ceiling_Study_001": 6,
+  "SM_Floor_Bathroom_001": 6,
+  "SM_Ceiling_Bathroom_001": 6,
+  "SM_Floor_LivingDiningKitchen_001": 26,
+  "SM_Ceiling_LivingDiningKitchen_001": 26,
+  "SM_Roof_Slab_001": 6,
+  "SM_Terrace_Slab_001": 6,
+  "SM_Skirting_Bedroom_South_001": 10,
+  "SM_Crown_Bedroom_South_001": 5,
+  "SM_Cove_Bedroom_South_001": 10,
+  "SM_Skirting_Bedroom_East_001": 5,
+  "SM_Crown_Bedroom_East_001": 5,
+  "SM_Cove_Bedroom_East_001": 10,
+  "SM_Skirting_Bedroom_North_001": 5,
+  "SM_Crown_Bedroom_North_001": 5,
+  "SM_Cove_Bedroom_North_001": 10,
+  "SM_Skirting_Bedroom_West_001": 5,
+  "SM_Crown_Bedroom_West_001": 5,
+  "SM_Cove_Bedroom_West_001": 10,
+  "SM_Skirting_Study_South_001": 10,
+  "SM_Crown_Study_South_001": 5,
+  "SM_Cove_Study_South_001": 10,
+  "SM_Skirting_Study_East_001": 5,
+  "SM_Crown_Study_East_001": 5,
+  "SM_Cove_Study_East_001": 10,
+  "SM_Skirting_Study_North_001": 5,
+  "SM_Crown_Study_North_001": 5,
+  "SM_Cove_Study_North_001": 10,
+  "SM_Skirting_Study_West_001": 5,
+  "SM_Crown_Study_West_001": 5,
+  "SM_Cove_Study_West_001": 10,
+  "SM_Skirting_Bath_South_001": 5,
+  "SM_Crown_Bath_South_001": 5,
+  "SM_Skirting_Bath_East_001": 10,
+  "SM_Crown_Bath_East_001": 5,
+  "SM_Skirting_Bath_North_001": 5,
+  "SM_Crown_Bath_North_001": 5,
+  "SM_Skirting_Bath_West_001": 5,
+  "SM_Crown_Bath_West_001": 5,
+  "SM_Skirting_Living_South_001": 10,
+  "SM_Crown_Living_South_001": 5,
+  "SM_Cove_Living_South_001": 10,
+  "SM_Skirting_Living_East_001": 10,
+  "SM_Crown_Living_East_001": 5,
+  "SM_Cove_Living_East_001": 10,
+  "SM_Skirting_Living_North_001": 5,
+  "SM_Crown_Living_North_001": 5,
+  "SM_Cove_Living_North_001": 10,
+  "SM_Skirting_Living_West_001": 5,
+  "SM_Crown_Living_West_001": 5,
+  "SM_Cove_Living_West_001": 10,
+  "SM_Skirting_Living_North_002": 10,
+  "SM_Crown_Living_North_002": 5,
+  "SM_Cove_Living_North_002": 10,
+  "SM_Skirting_Living_West_002": 5,
+  "SM_Crown_Living_West_002": 5,
+  "SM_Cove_Living_West_002": 10,
+  "SM_Skirting_Living_North_003": 10,
+  "SM_Crown_Living_North_003": 5,
+  "SM_Cove_Living_North_003": 10,
+  "SM_Skirting_Living_West_003": 10,
+  "SM_Crown_Living_West_003": 5,
+  "SM_Cove_Living_West_003": 10,
+  "SM_Skirting_Living_North_004": 5,
+  "SM_Crown_Living_North_004": 5,
+  "SM_Cove_Living_North_004": 10,
+  "SM_Skirting_Living_West_004": 5,
+  "SM_Crown_Living_West_004": 5,
+  "SM_Panel_Relief_Living_West": 5,
+  "SM_Panel_Cane_Living_West": 5,
+  "SM_Panel_Marble_Kitchen_Back": 5,
+  "SM_Panel_Wallpaper_Study_N1": 5,
+  "SM_Panel_Wallpaper_Study_N2": 5,
+  "SM_Panel_Wallpaper_Study_N3": 5,
+  "SM_Panel_Wallpaper_Study_N4": 5,
+  "SM_Panel_Wallpaper_Study_E": 5,
+  "SM_Door_Entrance_Leaf": 6,
+  "SM_Door_Entrance_Frame": 18,
+  "SM_DoorKnob_Entrance": 36,
+  "SM_DoorHinge_Entrance": 54,
+  "SM_Door_Bedroom_Leaf": 6,
+  "SM_Door_Bedroom_Frame": 18,
+  "SM_DoorKnob_Bedroom": 36,
+  "SM_DoorHinge_Bedroom": 54,
+  "SM_Door_Bath_Leaf": 30,
+  "SM_Door_Bath_Frame": 18,
+  "SM_DoorKnob_Bath": 36,
+  "SM_DoorHinge_Bath": 54,
+  "SM_Door_Study_Leaf": 6,
+  "SM_Door_Study_Frame": 18,
+  "SM_DoorKnob_Study": 36,
+  "SM_DoorHinge_Study": 54,
+  "SM_Window_Kitchen_South_Frame": 36,
+  "SM_Window_Kitchen_South_Glass": 18,
+  "SM_Window_Kitchen_South_Sill": 6,
+  "SM_Window_Living_North_Frame": 30,
+  "SM_Window_Living_North_Glass": 12,
+  "SM_Window_Living_North_Sill": 6,
+  "SM_Window_Study_North_Frame": 30,
+  "SM_Window_Study_North_Glass": 12,
+  "SM_Window_Study_North_Sill": 6,
+  "SM_Window_Bedroom_North_Frame": 36,
+  "SM_Window_Bedroom_North_Glass": 18,
+  "SM_Window_Bedroom_North_Sill": 6,
+  "SM_Window_Bath_West_Frame": 30,
+  "SM_Window_Bath_West_Glass": 12,
+  "SM_Window_Bath_West_Sill": 6,
+  "SM_Window_Living_East_SlidingFrame": 24,
+  "SM_Slider_Panel": 42,
+  "SM_Curtain_Living_North_Sheer": 86,
+  "SM_Curtain_Living_North_DrapeL": 18,
+  "SM_Curtain_Living_North_DrapeR": 18,
+  "SM_Curtain_Living_North_Rail": 6,
+  "SM_Curtain_Study_North_DrapeL": 8,
+  "SM_Curtain_Study_North_DrapeR": 8,
+  "SM_Curtain_Study_North_Rail": 6,
+  "SM_Curtain_Bedroom_North_DrapeL": 16,
+  "SM_Curtain_Bedroom_North_DrapeR": 16,
+  "SM_Curtain_Bedroom_North_Rail": 6,
+  "SM_Curtain_Bath_West_Sheer": 58,
+  "SM_Curtain_Bath_West_DrapeL": 12,
+  "SM_Curtain_Bath_West_DrapeR": 12,
+  "SM_Curtain_Bath_West_Rail": 6,
+  "SM_Curtain_Living_EastSliding_Sheer": 156,
+  "SM_Curtain_Living_EastSliding_DrapeL": 32,
+  "SM_Curtain_Living_EastSliding_DrapeR": 32,
+  "SM_Curtain_Living_EastSliding_Rail": 6,
+  "SM_Blind_Study": 21,
+  "SM_Blind_Bedroom": 21,
+  "SM_Terrace_Parapet_South": 6,
+  "SM_Terrace_Parapet_East": 6,
+  "SM_Terrace_Parapet_North": 6,
+  "SM_Terrace_Pergola_Roof": 6,
+  "SM_Terrace_Post_1": 6,
+  "SM_Terrace_Post_2": 6,
+  "SM_Roof_Coping": 24,
+  "SM_Ground_Gravel": 6,
+  "SM_Entry_Steps": 18,
+  "SM_Sofa_Sectional": 3125,
+  "SM_Rug_Living": 288,
+  "SM_CoffeeTable_Drum": 236,
+  "SM_SideTable_Marble": 142,
+  "SM_Armchair_Green": 1453,
+  "SM_Decor_BookStack": 18,
+  "SM_Decor_Lantern": 94,
+  "SM_TV_Unit": 30,
+  "SM_TV": 12,
+  "SM_DiningTable_Oval": 222,
+  "SM_DiningChair_Cane": 351,
+  "SM_PlateSet": 194,
+  "SM_TableRunner": 10,
+  "SM_Candlestick": 160,
+  "SM_Pendant_Linear": 114,
+  "SM_Kitchen_Run": 150,
+  "SM_Kitchen_TallUnit": 96,
+  "SM_KitchenIsland": 138,
+  "SM_Hob_Induction": 374,
+  "SM_Faucet_Kitchen": 24,
+  "SM_Microwave": 18,
+  "SM_CuttingBoard": 110,
+  "SM_BarStool_Cane": 354,
+  "SM_Console_Entrance": 60,
+  "SM_Mirror_OvalHalo": 328,
+  "SM_Vase_Cream": 122,
+  "SM_Decor_Bowl": 58,
+  "SM_Rug_Entrance": 369,
+  "SM_Closet_Entrance": 3340,
+  "SM_Bed_Master": 2688,
+  "SM_Nightstand": 60,
+  "SM_Lamp_Ruby": 286,
+  "SM_Pendant_Cone": 102,
+  "SM_Rug_Bedroom": 369,
+  "SM_Bench_Bed": 271,
+  "SM_Wardrobe_Bedroom": 108,
+  "SM_Dresser_Bedroom": 48,
+  "SM_Desk_Study": 1622,
+  "SM_DeskChair": 582,
+  "SM_Rug_Study_Round": 94,
+  "SM_Credenza_Study": 48,
+  "SM_Shelving_Study": 660,
+  "SM_Pendant_Ruby": 306,
+  "SM_Laptop": 12,
+  "SM_Decor_PenCup": 48,
+  "SM_Floor_ShowerPad": 6,
+  "SM_Shower_Glass": 24,
+  "SM_Shower_Fitting": 110,
+  "SM_Toilet_WallHung": 1364,
+  "SM_Vanity_Floating": 479,
+  "SM_Mirror_Halo": 172,
+  "SM_Mixer_Wall": 24,
+  "SM_Faucet_Wall": 34,
+  "SM_Towel_Rail": 24,
+  "SM_Decor_BathTray": 50,
+  "SM_Sofa_Terrace": 2455,
+  "SM_CoffeeTable_Faceted": 252,
+  "SM_TerraceTable_Hex": 244,
+  "SM_TerraceChair_Taupe": 534,
+  "SM_Chest_Teak": 338,
+  "SM_Downlight": 34
+ },
+ "bbox": {
+  "SM_Wall_Entrance_South_001": [
+   [
+    0.0,
+    0.0,
+    -0.25
+   ],
+   [
+    4.55,
+    0.25,
+    3.2
+   ]
+  ],
+  "SM_Wall_Kitchen_South_001": [
+   [
+    4.55,
+    0.0,
+    -0.25
+   ],
+   [
+    10.8,
+    0.25,
+    3.2
+   ]
+  ],
+  "SM_Wall_Living_East_001": [
+   [
+    10.55,
+    0.25,
+    -0.25
+   ],
+   [
+    10.8,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Wall_Living_North_001": [
+   [
+    7.2,
+    8.35,
+    -0.25
+   ],
+   [
+    10.8,
+    8.6,
+    3.2
+   ]
+  ],
+  "SM_Wall_Study_North_001": [
+   [
+    4.55,
+    8.35,
+    -0.25
+   ],
+   [
+    7.2,
+    8.6,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bedroom_North_001": [
+   [
+    0.0,
+    8.35,
+    -0.25
+   ],
+   [
+    4.55,
+    8.6,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bedroom_West_001": [
+   [
+    0.0,
+    4.125,
+    -0.25
+   ],
+   [
+    0.25,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bath_West_001": [
+   [
+    0.0,
+    1.1,
+    -0.25
+   ],
+   [
+    0.25,
+    4.125,
+    3.2
+   ]
+  ],
+  "SM_Wall_Entrance_West_001": [
+   [
+    0.0,
+    0.25,
+    -0.25
+   ],
+   [
+    0.25,
+    1.1,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bath_North_001": [
+   [
+    0.25,
+    4.05,
+    0.0
+   ],
+   [
+    2.55,
+    4.2,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bedroom_South_001": [
+   [
+    2.55,
+    4.05,
+    0.0
+   ],
+   [
+    4.475,
+    4.2,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bath_East_001": [
+   [
+    2.4749999999999996,
+    1.025,
+    0.0
+   ],
+   [
+    2.625,
+    4.05,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bath_South_001": [
+   [
+    0.25,
+    1.0250000000000001,
+    0.0
+   ],
+   [
+    2.475,
+    1.175,
+    3.2
+   ]
+  ],
+  "SM_Wall_Bedroom_East_001": [
+   [
+    4.475,
+    4.05,
+    0.0
+   ],
+   [
+    4.625,
+    5.4,
+    3.2
+   ]
+  ],
+  "SM_Wall_Study_West_001": [
+   [
+    4.475,
+    5.4,
+    0.0
+   ],
+   [
+    4.625,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Wall_Study_South_001": [
+   [
+    4.625,
+    5.325,
+    0.0
+   ],
+   [
+    7.125,
+    5.4750000000000005,
+    3.2
+   ]
+  ],
+  "SM_Wall_Study_East_001": [
+   [
+    7.125,
+    5.325,
+    0.0
+   ],
+   [
+    7.275,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Floor_Bedroom_001": [
+   [
+    0.0,
+    4.125,
+    -0.12
+   ],
+   [
+    4.55,
+    8.6,
+    0.0
+   ]
+  ],
+  "SM_Ceiling_Bedroom_001": [
+   [
+    0.0,
+    4.125,
+    3.2
+   ],
+   [
+    4.55,
+    8.6,
+    3.3000000000000003
+   ]
+  ],
+  "SM_Floor_Study_001": [
+   [
+    4.55,
+    5.4,
+    -0.12
+   ],
+   [
+    7.2,
+    8.6,
+    0.0
+   ]
+  ],
+  "SM_Ceiling_Study_001": [
+   [
+    4.55,
+    5.4,
+    3.2
+   ],
+   [
+    7.2,
+    8.6,
+    3.3000000000000003
+   ]
+  ],
+  "SM_Floor_Bathroom_001": [
+   [
+    0.0,
+    1.1,
+    -0.12
+   ],
+   [
+    2.55,
+    4.125,
+    0.0
+   ]
+  ],
+  "SM_Ceiling_Bathroom_001": [
+   [
+    0.0,
+    1.1,
+    3.2
+   ],
+   [
+    2.55,
+    4.125,
+    3.3000000000000003
+   ]
+  ],
+  "SM_Floor_LivingDiningKitchen_001": [
+   [
+    0.0,
+    0.0,
+    -0.12
+   ],
+   [
+    10.8,
+    8.6,
+    0.0
+   ]
+  ],
+  "SM_Ceiling_LivingDiningKitchen_001": [
+   [
+    0.0,
+    0.0,
+    3.2
+   ],
+   [
+    10.8,
+    8.6,
+    3.3000000000000003
+   ]
+  ],
+  "SM_Roof_Slab_001": [
+   [
+    0.0,
+    0.0,
+    3.3000000000000003
+   ],
+   [
+    10.8,
+    8.6,
+    3.5000000000000004
+   ]
+  ],
+  "SM_Terrace_Slab_001": [
+   [
+    10.8,
+    0.0,
+    -0.25
+   ],
+   [
+    14.05,
+    6.64,
+    -0.02
+   ]
+  ],
+  "SM_Skirting_Bedroom_South_001": [
+   [
+    0.25,
+    4.2,
+    0.0
+   ],
+   [
+    4.475,
+    4.2139999999999995,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bedroom_South_001": [
+   [
+    0.25,
+    4.2,
+    3.125
+   ],
+   [
+    4.475,
+    4.235,
+    3.2
+   ]
+  ],
+  "SM_Cove_Bedroom_South_001": [
+   [
+    0.25,
+    4.235,
+    3.073
+   ],
+   [
+    4.475,
+    4.3950000000000005,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Bedroom_East_001": [
+   [
+    4.461,
+    4.2,
+    0.0
+   ],
+   [
+    4.475,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bedroom_East_001": [
+   [
+    4.4399999999999995,
+    4.2,
+    3.125
+   ],
+   [
+    4.475,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Bedroom_East_001": [
+   [
+    4.279999999999999,
+    4.2,
+    3.073
+   ],
+   [
+    4.4399999999999995,
+    8.35,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Bedroom_North_001": [
+   [
+    0.25,
+    8.336,
+    0.0
+   ],
+   [
+    4.475,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bedroom_North_001": [
+   [
+    0.25,
+    8.315,
+    3.125
+   ],
+   [
+    4.475,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Bedroom_North_001": [
+   [
+    0.25,
+    8.155,
+    3.073
+   ],
+   [
+    4.475,
+    8.315,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Bedroom_West_001": [
+   [
+    0.25,
+    4.2,
+    0.0
+   ],
+   [
+    0.264,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bedroom_West_001": [
+   [
+    0.25,
+    4.2,
+    3.125
+   ],
+   [
+    0.28500000000000003,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Bedroom_West_001": [
+   [
+    0.285,
+    4.2,
+    3.073
+   ],
+   [
+    0.445,
+    8.35,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Study_South_001": [
+   [
+    4.625,
+    5.475,
+    0.0
+   ],
+   [
+    7.125,
+    5.488999999999999,
+    0.11
+   ]
+  ],
+  "SM_Crown_Study_South_001": [
+   [
+    4.625,
+    5.475,
+    3.125
+   ],
+   [
+    7.125,
+    5.51,
+    3.2
+   ]
+  ],
+  "SM_Cove_Study_South_001": [
+   [
+    4.625,
+    5.51,
+    3.073
+   ],
+   [
+    7.125,
+    5.67,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Study_East_001": [
+   [
+    7.111000000000001,
+    5.475,
+    0.0
+   ],
+   [
+    7.125,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Study_East_001": [
+   [
+    7.09,
+    5.475,
+    3.125
+   ],
+   [
+    7.125,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Study_East_001": [
+   [
+    6.93,
+    5.475,
+    3.073
+   ],
+   [
+    7.09,
+    8.35,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Study_North_001": [
+   [
+    4.625,
+    8.336,
+    0.0
+   ],
+   [
+    7.125,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Study_North_001": [
+   [
+    4.625,
+    8.315,
+    3.125
+   ],
+   [
+    7.125,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Study_North_001": [
+   [
+    4.625,
+    8.155,
+    3.073
+   ],
+   [
+    7.125,
+    8.315,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Study_West_001": [
+   [
+    4.625,
+    5.475,
+    0.0
+   ],
+   [
+    4.638999999999999,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Study_West_001": [
+   [
+    4.625,
+    5.475,
+    3.125
+   ],
+   [
+    4.66,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Study_West_001": [
+   [
+    4.66,
+    5.475,
+    3.073
+   ],
+   [
+    4.82,
+    8.35,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Bath_South_001": [
+   [
+    0.25,
+    1.175,
+    0.0
+   ],
+   [
+    2.475,
+    1.1889999999999998,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bath_South_001": [
+   [
+    0.25,
+    1.175,
+    3.125
+   ],
+   [
+    2.475,
+    1.2100000000000002,
+    3.2
+   ]
+  ],
+  "SM_Skirting_Bath_East_001": [
+   [
+    2.461,
+    1.175,
+    0.0
+   ],
+   [
+    2.475,
+    4.05,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bath_East_001": [
+   [
+    2.44,
+    1.175,
+    3.125
+   ],
+   [
+    2.475,
+    4.05,
+    3.2
+   ]
+  ],
+  "SM_Skirting_Bath_North_001": [
+   [
+    0.25,
+    4.0360000000000005,
+    0.0
+   ],
+   [
+    2.475,
+    4.05,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bath_North_001": [
+   [
+    0.25,
+    4.015,
+    3.125
+   ],
+   [
+    2.475,
+    4.05,
+    3.2
+   ]
+  ],
+  "SM_Skirting_Bath_West_001": [
+   [
+    0.25,
+    1.1749999999999998,
+    0.0
+   ],
+   [
+    0.264,
+    4.05,
+    0.11
+   ]
+  ],
+  "SM_Crown_Bath_West_001": [
+   [
+    0.25,
+    1.1749999999999998,
+    3.125
+   ],
+   [
+    0.28500000000000003,
+    4.05,
+    3.2
+   ]
+  ],
+  "SM_Skirting_Living_South_001": [
+   [
+    0.25,
+    0.25,
+    0.0
+   ],
+   [
+    10.55,
+    0.264,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_South_001": [
+   [
+    0.25,
+    0.25,
+    3.125
+   ],
+   [
+    10.55,
+    0.28500000000000003,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_South_001": [
+   [
+    0.25,
+    0.285,
+    3.073
+   ],
+   [
+    10.55,
+    0.445,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_East_001": [
+   [
+    10.536000000000001,
+    0.25,
+    0.0
+   ],
+   [
+    10.55,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_East_001": [
+   [
+    10.515,
+    0.25,
+    3.125
+   ],
+   [
+    10.55,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_East_001": [
+   [
+    10.355,
+    0.25,
+    3.073
+   ],
+   [
+    10.515,
+    8.35,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_North_001": [
+   [
+    7.275,
+    8.336,
+    0.0
+   ],
+   [
+    10.55,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_North_001": [
+   [
+    7.275,
+    8.315,
+    3.125
+   ],
+   [
+    10.55,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_North_001": [
+   [
+    7.275,
+    8.155,
+    3.073
+   ],
+   [
+    10.55,
+    8.315,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_West_001": [
+   [
+    7.275,
+    5.325,
+    0.0
+   ],
+   [
+    7.289,
+    8.35,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_West_001": [
+   [
+    7.275,
+    5.325,
+    3.125
+   ],
+   [
+    7.3100000000000005,
+    8.35,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_West_001": [
+   [
+    7.3100000000000005,
+    5.325,
+    3.073
+   ],
+   [
+    7.470000000000001,
+    8.35,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_North_002": [
+   [
+    4.625,
+    5.311000000000001,
+    0.0
+   ],
+   [
+    7.275,
+    5.325,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_North_002": [
+   [
+    4.625,
+    5.29,
+    3.125
+   ],
+   [
+    7.275,
+    5.325,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_North_002": [
+   [
+    4.625,
+    5.13,
+    3.073
+   ],
+   [
+    7.275,
+    5.29,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_West_002": [
+   [
+    4.625,
+    4.05,
+    0.0
+   ],
+   [
+    4.638999999999999,
+    5.325,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_West_002": [
+   [
+    4.625,
+    4.05,
+    3.125
+   ],
+   [
+    4.66,
+    5.325,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_West_002": [
+   [
+    4.66,
+    4.05,
+    3.073
+   ],
+   [
+    4.82,
+    5.325,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_North_003": [
+   [
+    2.625,
+    4.0360000000000005,
+    0.0
+   ],
+   [
+    4.625,
+    4.05,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_North_003": [
+   [
+    2.625,
+    4.015,
+    3.125
+   ],
+   [
+    4.625,
+    4.05,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_North_003": [
+   [
+    2.625,
+    3.8549999999999995,
+    3.073
+   ],
+   [
+    4.625,
+    4.015,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_West_003": [
+   [
+    2.625,
+    1.025,
+    0.0
+   ],
+   [
+    2.6390000000000002,
+    4.05,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_West_003": [
+   [
+    2.625,
+    1.025,
+    3.125
+   ],
+   [
+    2.66,
+    4.05,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_West_003": [
+   [
+    2.66,
+    1.025,
+    3.073
+   ],
+   [
+    2.8200000000000003,
+    4.05,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_North_004": [
+   [
+    0.25,
+    1.0110000000000001,
+    0.0
+   ],
+   [
+    2.625,
+    1.025,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_North_004": [
+   [
+    0.25,
+    0.9899999999999999,
+    3.125
+   ],
+   [
+    2.625,
+    1.025,
+    3.2
+   ]
+  ],
+  "SM_Cove_Living_North_004": [
+   [
+    0.25,
+    0.83,
+    3.073
+   ],
+   [
+    2.625,
+    0.9899999999999999,
+    3.125
+   ]
+  ],
+  "SM_Skirting_Living_West_004": [
+   [
+    0.25,
+    0.25,
+    0.0
+   ],
+   [
+    0.264,
+    1.025,
+    0.11
+   ]
+  ],
+  "SM_Crown_Living_West_004": [
+   [
+    0.25,
+    0.25,
+    3.125
+   ],
+   [
+    0.28500000000000003,
+    1.025,
+    3.2
+   ]
+  ],
+  "SM_Panel_Relief_Living_West": [
+   [
+    7.275,
+    5.45,
+    0.05
+   ],
+   [
+    7.305,
+    6.9,
+    3.1
+   ]
+  ],
+  "SM_Panel_Cane_Living_West": [
+   [
+    7.275,
+    6.9,
+    0.05
+   ],
+   [
+    7.305,
+    8.3,
+    3.1
+   ]
+  ],
+  "SM_Panel_Marble_Kitchen_Back": [
+   [
+    4.85,
+    0.25,
+    0.05
+   ],
+   [
+    9.4,
+    0.28,
+    1.1
+   ]
+  ],
+  "SM_Panel_Wallpaper_Study_N1": [
+   [
+    4.64,
+    8.32,
+    0.05
+   ],
+   [
+    4.9,
+    8.350000000000001,
+    3.1
+   ]
+  ],
+  "SM_Panel_Wallpaper_Study_N2": [
+   [
+    6.9,
+    8.32,
+    0.05
+   ],
+   [
+    7.11,
+    8.350000000000001,
+    3.1
+   ]
+  ],
+  "SM_Panel_Wallpaper_Study_N3": [
+   [
+    4.9,
+    8.32,
+    0.05
+   ],
+   [
+    6.9,
+    8.350000000000001,
+    0.95
+   ]
+  ],
+  "SM_Panel_Wallpaper_Study_N4": [
+   [
+    4.9,
+    8.32,
+    2.35
+   ],
+   [
+    6.9,
+    8.350000000000001,
+    3.1
+   ]
+  ],
+  "SM_Panel_Wallpaper_Study_E": [
+   [
+    7.095000000000001,
+    5.5,
+    0.05
+   ],
+   [
+    7.125,
+    8.33,
+    3.1
+   ]
+  ],
+  "SM_Door_Entrance_Leaf": [
+   [
+    0.004,
+    -0.02,
+    0.0
+   ],
+   [
+    0.946,
+    0.02,
+    2.095
+   ]
+  ],
+  "SM_Door_Entrance_Frame": [
+   [
+    -0.04,
+    -0.135,
+    0.0
+   ],
+   [
+    0.99,
+    0.135,
+    2.14
+   ]
+  ],
+  "SM_DoorKnob_Entrance": [
+   [
+    0.845,
+    -0.105,
+    0.5
+   ],
+   [
+    0.875,
+    0.105,
+    1.55
+   ]
+  ],
+  "SM_DoorHinge_Entrance": [
+   [
+    -0.009,
+    -0.008559508646656382,
+    0.25
+   ],
+   [
+    0.009,
+    0.008559508646656382,
+    1.85
+   ]
+  ],
+  "SM_Door_Bedroom_Leaf": [
+   [
+    0.004,
+    -0.02,
+    0.0
+   ],
+   [
+    0.846,
+    0.02,
+    2.095
+   ]
+  ],
+  "SM_Door_Bedroom_Frame": [
+   [
+    -0.04,
+    -0.08499999999999999,
+    0.0
+   ],
+   [
+    0.89,
+    0.08499999999999999,
+    2.14
+   ]
+  ],
+  "SM_DoorKnob_Bedroom": [
+   [
+    0.64,
+    -0.066,
+    0.978
+   ],
+   [
+    0.792,
+    0.066,
+    1.022
+   ]
+  ],
+  "SM_DoorHinge_Bedroom": [
+   [
+    -0.009,
+    -0.008559508646656382,
+    0.25
+   ],
+   [
+    0.009,
+    0.008559508646656382,
+    1.85
+   ]
+  ],
+  "SM_Door_Bath_Leaf": [
+   [
+    0.004,
+    -0.02,
+    0.0
+   ],
+   [
+    0.796,
+    0.02,
+    2.095
+   ]
+  ],
+  "SM_Door_Bath_Frame": [
+   [
+    -0.04,
+    -0.08499999999999999,
+    0.0
+   ],
+   [
+    0.8400000000000001,
+    0.08499999999999999,
+    2.14
+   ]
+  ],
+  "SM_DoorKnob_Bath": [
+   [
+    0.5900000000000001,
+    -0.066,
+    0.978
+   ],
+   [
+    0.7420000000000001,
+    0.066,
+    1.022
+   ]
+  ],
+  "SM_DoorHinge_Bath": [
+   [
+    -0.009,
+    -0.008559508646656382,
+    0.25
+   ],
+   [
+    0.009,
+    0.008559508646656382,
+    1.85
+   ]
+  ],
+  "SM_Door_Study_Leaf": [
+   [
+    0.004,
+    -0.02,
+    0.0
+   ],
+   [
+    0.846,
+    0.02,
+    2.095
+   ]
+  ],
+  "SM_Door_Study_Frame": [
+   [
+    -0.04,
+    -0.08499999999999999,
+    0.0
+   ],
+   [
+    0.89,
+    0.08499999999999999,
+    2.14
+   ]
+  ],
+  "SM_DoorKnob_Study": [
+   [
+    0.64,
+    -0.066,
+    0.978
+   ],
+   [
+    0.792,
+    0.066,
+    1.022
+   ]
+  ],
+  "SM_DoorHinge_Study": [
+   [
+    -0.009,
+    -0.008559508646656382,
+    0.25
+   ],
+   [
+    0.009,
+    0.008559508646656382,
+    1.85
+   ]
+  ],
+  "SM_Window_Kitchen_South_Frame": [
+   [
+    5.0,
+    0.08,
+    1.1300000000000001
+   ],
+   [
+    8.4,
+    0.16999999999999998,
+    2.2
+   ]
+  ],
+  "SM_Window_Kitchen_South_Glass": [
+   [
+    5.05,
+    0.118,
+    1.2000000000000002
+   ],
+   [
+    8.350000000000001,
+    0.132,
+    2.1500000000000004
+   ]
+  ],
+  "SM_Window_Kitchen_South_Sill": [
+   [
+    4.96,
+    0.0,
+    1.1
+   ],
+   [
+    8.440000000000001,
+    0.32,
+    1.1300000000000001
+   ]
+  ],
+  "SM_Window_Living_North_Frame": [
+   [
+    7.8,
+    8.43,
+    0.53
+   ],
+   [
+    10.2,
+    8.52,
+    2.7
+   ]
+  ],
+  "SM_Window_Living_North_Glass": [
+   [
+    7.85,
+    8.468,
+    0.6
+   ],
+   [
+    10.149999999999999,
+    8.482,
+    2.6500000000000004
+   ]
+  ],
+  "SM_Window_Living_North_Sill": [
+   [
+    7.76,
+    8.28,
+    0.5
+   ],
+   [
+    10.239999999999998,
+    8.6,
+    0.53
+   ]
+  ],
+  "SM_Window_Study_North_Frame": [
+   [
+    4.9,
+    8.43,
+    0.98
+   ],
+   [
+    6.9,
+    8.52,
+    2.35
+   ]
+  ],
+  "SM_Window_Study_North_Glass": [
+   [
+    4.95,
+    8.468,
+    1.05
+   ],
+   [
+    6.8500000000000005,
+    8.482,
+    2.3000000000000003
+   ]
+  ],
+  "SM_Window_Study_North_Sill": [
+   [
+    4.86,
+    8.28,
+    0.95
+   ],
+   [
+    6.94,
+    8.6,
+    0.98
+   ]
+  ],
+  "SM_Window_Bedroom_North_Frame": [
+   [
+    0.7999999999999998,
+    8.43,
+    1.48
+   ],
+   [
+    4.2,
+    8.52,
+    2.45
+   ]
+  ],
+  "SM_Window_Bedroom_North_Glass": [
+   [
+    0.8499999999999996,
+    8.468,
+    1.55
+   ],
+   [
+    4.15,
+    8.482,
+    2.4000000000000004
+   ]
+  ],
+  "SM_Window_Bedroom_North_Sill": [
+   [
+    0.7599999999999998,
+    8.28,
+    1.45
+   ],
+   [
+    4.24,
+    8.6,
+    1.48
+   ]
+  ],
+  "SM_Window_Bath_West_Frame": [
+   [
+    0.08,
+    2.3,
+    0.8300000000000001
+   ],
+   [
+    0.16999999999999998,
+    3.7,
+    2.3
+   ]
+  ],
+  "SM_Window_Bath_West_Glass": [
+   [
+    0.118,
+    2.3499999999999996,
+    0.9
+   ],
+   [
+    0.132,
+    3.6500000000000004,
+    2.25
+   ]
+  ],
+  "SM_Window_Bath_West_Sill": [
+   [
+    0.0,
+    2.26,
+    0.8
+   ],
+   [
+    0.32,
+    3.74,
+    0.8300000000000001
+   ]
+  ],
+  "SM_Window_Living_East_SlidingFrame": [
+   [
+    10.610000000000001,
+    1.56,
+    0.0
+   ],
+   [
+    10.74,
+    6.4,
+    2.9
+   ]
+  ],
+  "SM_Slider_Panel": [
+   [
+    0.0,
+    -0.03,
+    0.04
+   ],
+   [
+    1.21,
+    0.05,
+    2.86
+   ]
+  ],
+  "SM_Curtain_Living_North_Sheer": [
+   [
+    7.5,
+    8.187999999999999,
+    0.02
+   ],
+   [
+    10.5,
+    8.212,
+    2.95
+   ]
+  ],
+  "SM_Curtain_Living_North_DrapeL": [
+   [
+    9.9,
+    8.120000000000001,
+    0.01
+   ],
+   [
+    10.5,
+    8.18,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Living_North_DrapeR": [
+   [
+    7.5,
+    8.120000000000001,
+    0.01
+   ],
+   [
+    8.1,
+    8.18,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Living_North_Rail": [
+   [
+    7.470000000000001,
+    8.11,
+    2.97
+   ],
+   [
+    10.53,
+    8.2,
+    3.03
+   ]
+  ],
+  "SM_Curtain_Study_North_DrapeL": [
+   [
+    6.692,
+    8.120000000000001,
+    0.01
+   ],
+   [
+    7.0,
+    8.18,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Study_North_DrapeR": [
+   [
+    4.800000000000001,
+    8.120000000000001,
+    0.01
+   ],
+   [
+    5.1080000000000005,
+    8.18,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Study_North_Rail": [
+   [
+    4.7700000000000005,
+    8.11,
+    2.97
+   ],
+   [
+    7.03,
+    8.2,
+    3.03
+   ]
+  ],
+  "SM_Curtain_Bedroom_North_DrapeL": [
+   [
+    3.868,
+    8.120000000000001,
+    1.38
+   ],
+   [
+    4.4,
+    8.18,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Bedroom_North_DrapeR": [
+   [
+    0.5999999999999996,
+    8.120000000000001,
+    1.38
+   ],
+   [
+    1.1319999999999997,
+    8.18,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Bedroom_North_Rail": [
+   [
+    0.5699999999999998,
+    8.11,
+    2.97
+   ],
+   [
+    4.43,
+    8.2,
+    3.03
+   ]
+  ],
+  "SM_Curtain_Bath_West_Sheer": [
+   [
+    0.388,
+    2.0,
+    0.02
+   ],
+   [
+    0.41200000000000003,
+    4.0,
+    2.95
+   ]
+  ],
+  "SM_Curtain_Bath_West_DrapeL": [
+   [
+    0.42000000000000004,
+    3.5999999999999996,
+    0.01
+   ],
+   [
+    0.48,
+    4.0,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Bath_West_DrapeR": [
+   [
+    0.42000000000000004,
+    2.0,
+    0.01
+   ],
+   [
+    0.48,
+    2.4,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Bath_West_Rail": [
+   [
+    0.4,
+    1.9700000000000002,
+    2.97
+   ],
+   [
+    0.49,
+    4.03,
+    3.03
+   ]
+  ],
+  "SM_Curtain_Living_EastSliding_Sheer": [
+   [
+    10.388,
+    1.26,
+    0.02
+   ],
+   [
+    10.412,
+    6.7,
+    2.95
+   ]
+  ],
+  "SM_Curtain_Living_EastSliding_DrapeL": [
+   [
+    10.320000000000002,
+    1.26,
+    0.01
+   ],
+   [
+    10.38,
+    2.348,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Living_EastSliding_DrapeR": [
+   [
+    10.320000000000002,
+    5.612,
+    0.01
+   ],
+   [
+    10.38,
+    6.7,
+    3.0
+   ]
+  ],
+  "SM_Curtain_Living_EastSliding_Rail": [
+   [
+    10.31,
+    1.23,
+    2.97
+   ],
+   [
+    10.4,
+    6.73,
+    3.03
+   ]
+  ],
+  "SM_Blind_Study": [
+   [
+    -0.035,
+    -0.96,
+    -0.012
+   ],
+   [
+    0.035,
+    0.96,
+    0.7000000000000002
+   ]
+  ],
+  "SM_Blind_Bedroom": [
+   [
+    -0.035,
+    -1.66,
+    -0.012
+   ],
+   [
+    0.035,
+    1.66,
+    0.5200000000000001
+   ]
+  ],
+  "SM_Terrace_Parapet_South": [
+   [
+    10.8,
+    0.0,
+    -0.02
+   ],
+   [
+    14.05,
+    0.2,
+    0.95
+   ]
+  ],
+  "SM_Terrace_Parapet_East": [
+   [
+    13.85,
+    0.2,
+    -0.02
+   ],
+   [
+    14.05,
+    6.44,
+    0.95
+   ]
+  ],
+  "SM_Terrace_Parapet_North": [
+   [
+    10.8,
+    6.44,
+    -0.02
+   ],
+   [
+    14.05,
+    6.64,
+    0.95
+   ]
+  ],
+  "SM_Terrace_Pergola_Roof": [
+   [
+    10.8,
+    0.0,
+    3.0
+   ],
+   [
+    14.05,
+    6.64,
+    3.12
+   ]
+  ],
+  "SM_Terrace_Post_1": [
+   [
+    13.7,
+    0.35000000000000003,
+    -0.02
+   ],
+   [
+    13.8,
+    0.45,
+    3.0
+   ]
+  ],
+  "SM_Terrace_Post_2": [
+   [
+    13.7,
+    6.19,
+    -0.02
+   ],
+   [
+    13.8,
+    6.29,
+    3.0
+   ]
+  ],
+  "SM_Roof_Coping": [
+   [
+    -0.02,
+    -0.02,
+    3.5000000000000004
+   ],
+   [
+    10.82,
+    8.62,
+    3.5600000000000005
+   ]
+  ],
+  "SM_Ground_Gravel": [
+   [
+    -9.0,
+    -11.0,
+    -0.65
+   ],
+   [
+    24.0,
+    16.0,
+    -0.25
+   ]
+  ],
+  "SM_Entry_Steps": [
+   [
+    2.35,
+    -4.6,
+    -0.25
+   ],
+   [
+    3.8,
+    0.0,
+    -0.02
+   ]
+  ],
+  "SM_Sofa_Sectional": [
+   [
+    -0.49,
+    -1.5,
+    0.020000000000000004
+   ],
+   [
+    1.76,
+    1.5,
+    0.8899999999999999
+   ]
+  ],
+  "SM_Rug_Living": [
+   [
+    -1.3,
+    -1.55,
+    0.0
+   ],
+   [
+    1.3,
+    1.55,
+    0.02
+   ]
+  ],
+  "SM_CoffeeTable_Drum": [
+   [
+    -0.56,
+    -0.56,
+    0.0
+   ],
+   [
+    0.56,
+    0.56,
+    0.37
+   ]
+  ],
+  "SM_SideTable_Marble": [
+   [
+    -0.25,
+    -0.25,
+    0.0
+   ],
+   [
+    0.25,
+    0.25,
+    0.5
+   ]
+  ],
+  "SM_Armchair_Green": [
+   [
+    -0.42,
+    -0.44000000000000006,
+    -0.00307317073170732
+   ],
+   [
+    0.4,
+    0.44000000000000006,
+    0.86
+   ]
+  ],
+  "SM_Decor_BookStack": [
+   [
+    -0.17,
+    -0.13,
+    0.0
+   ],
+   [
+    0.17,
+    0.13,
+    0.10500000000000001
+   ]
+  ],
+  "SM_Decor_Lantern": [
+   [
+    -0.09,
+    -0.09,
+    0.0
+   ],
+   [
+    0.09,
+    0.09,
+    0.28
+   ]
+  ],
+  "SM_TV_Unit": [
+   [
+    -0.19,
+    -0.85,
+    0.0
+   ],
+   [
+    0.2,
+    0.85,
+    0.46
+   ]
+  ],
+  "SM_TV": [
+   [
+    -0.035,
+    -0.625,
+    0.0
+   ],
+   [
+    0.004,
+    0.625,
+    0.72
+   ]
+  ],
+  "SM_DiningTable_Oval": [
+   [
+    -1.45,
+    -0.55,
+    0.0
+   ],
+   [
+    1.45,
+    0.55,
+    0.75
+   ]
+  ],
+  "SM_DiningChair_Cane": [
+   [
+    -0.3479996210473038,
+    -0.28,
+    -0.0048985775180181435
+   ],
+   [
+    0.32830472363798646,
+    0.28,
+    0.8646081768756904
+   ]
+  ],
+  "SM_PlateSet": [
+   [
+    -0.15,
+    -0.15,
+    0.0
+   ],
+   [
+    0.23600000000000002,
+    0.15,
+    0.1701
+   ]
+  ],
+  "SM_TableRunner": [
+   [
+    -1.6099999999999999,
+    -0.18,
+    -0.3
+   ],
+   [
+    1.6099999999999999,
+    0.18,
+    0.004
+   ]
+  ],
+  "SM_Candlestick": [
+   [
+    -0.05,
+    -0.04874639560909119,
+    0.0
+   ],
+   [
+    0.05,
+    0.048746395609091185,
+    0.52
+   ]
+  ],
+  "SM_Pendant_Linear": [
+   [
+    -0.085,
+    -1.3,
+    -0.17
+   ],
+   [
+    0.085,
+    1.3,
+    0.9
+   ]
+  ],
+  "SM_Kitchen_Run": [
+   [
+    -0.0,
+    -2.15,
+    0.0
+   ],
+   [
+    0.625,
+    2.15,
+    0.91
+   ]
+  ],
+  "SM_Kitchen_TallUnit": [
+   [
+    0.0,
+    -0.575,
+    0.0
+   ],
+   [
+    0.6960000000000001,
+    0.575,
+    3.05
+   ]
+  ],
+  "SM_KitchenIsland": [
+   [
+    -0.535,
+    -1.51,
+    0.0
+   ],
+   [
+    0.30500000000000005,
+    1.51,
+    0.935
+   ]
+  ],
+  "SM_Hob_Induction": [
+   [
+    -0.3,
+    -0.26,
+    0.0
+   ],
+   [
+    0.3,
+    0.26,
+    0.009
+   ]
+  ],
+  "SM_Faucet_Kitchen": [
+   [
+    -0.11,
+    -0.071,
+    0.0
+   ],
+   [
+    0.014,
+    0.014,
+    0.43021324359973784
+   ]
+  ],
+  "SM_Microwave": [
+   [
+    -0.17,
+    -0.23,
+    0.0
+   ],
+   [
+    0.173,
+    0.23,
+    0.27
+   ]
+  ],
+  "SM_CuttingBoard": [
+   [
+    -0.0,
+    -0.17,
+    0.0
+   ],
+   [
+    0.022,
+    0.17,
+    0.43
+   ]
+  ],
+  "SM_BarStool_Cane": [
+   [
+    -0.25482557546475926,
+    -0.22604532696405033,
+    -0.002410438017631633
+   ],
+   [
+    0.22595454277989435,
+    0.22604532696405033,
+    0.9822808577638091
+   ]
+  ],
+  "SM_Console_Entrance": [
+   [
+    -0.17,
+    -0.635,
+    -0.0011218492236245159
+   ],
+   [
+    0.175,
+    0.635,
+    0.81
+   ]
+  ],
+  "SM_Mirror_OvalHalo": [
+   [
+    -0.012,
+    -0.355,
+    -0.615
+   ],
+   [
+    0.016,
+    0.355,
+    0.615
+   ]
+  ],
+  "SM_Vase_Cream": [
+   [
+    -0.09,
+    -0.09,
+    0.0
+   ],
+   [
+    0.09,
+    0.09,
+    0.3801
+   ]
+  ],
+  "SM_Decor_Bowl": [
+   [
+    -0.2,
+    -0.2,
+    0.0
+   ],
+   [
+    0.2,
+    0.2,
+    0.09
+   ]
+  ],
+  "SM_Rug_Entrance": [
+   [
+    -0.425,
+    -0.8,
+    0.0
+   ],
+   [
+    0.425,
+    0.8,
+    0.02
+   ]
+  ],
+  "SM_Closet_Entrance": [
+   [
+    0.0,
+    -1.15,
+    0.0
+   ],
+   [
+    0.55,
+    1.15,
+    2.75
+   ]
+  ],
+  "SM_Bed_Master": [
+   [
+    -1.335,
+    -1.6400000000000001,
+    0.08
+   ],
+   [
+    1.17,
+    1.6400000000000001,
+    1.31
+   ]
+  ],
+  "SM_Nightstand": [
+   [
+    -0.22,
+    -0.26,
+    -0.0022941573387056102
+   ],
+   [
+    0.236,
+    0.26,
+    0.525
+   ]
+  ],
+  "SM_Lamp_Ruby": [
+   [
+    -0.15,
+    -0.15,
+    0.0
+   ],
+   [
+    0.15,
+    0.15,
+    0.56
+   ]
+  ],
+  "SM_Pendant_Cone": [
+   [
+    -0.14,
+    -0.14,
+    -0.03
+   ],
+   [
+    0.14,
+    0.14,
+    1.5699999999999998
+   ]
+  ],
+  "SM_Rug_Bedroom": [
+   [
+    -1.5,
+    -1.15,
+    0.0
+   ],
+   [
+    1.5,
+    1.15,
+    0.02
+   ]
+  ],
+  "SM_Bench_Bed": [
+   [
+    -0.23,
+    -0.8,
+    0.0
+   ],
+   [
+    0.23,
+    0.8,
+    0.46
+   ]
+  ],
+  "SM_Wardrobe_Bedroom": [
+   [
+    -0.3,
+    -2.0,
+    0.0
+   ],
+   [
+    0.318,
+    2.0,
+    2.7
+   ]
+  ],
+  "SM_Dresser_Bedroom": [
+   [
+    -0.19,
+    -1.21,
+    0.0
+   ],
+   [
+    0.19,
+    1.21,
+    0.81
+   ]
+  ],
+  "SM_Desk_Study": [
+   [
+    -0.36,
+    -0.8111057910730234,
+    -0.006844961206034894
+   ],
+   [
+    0.36,
+    0.8111057910730234,
+    0.75
+   ]
+  ],
+  "SM_DeskChair": [
+   [
+    -0.270387292558789,
+    -0.26049329234678964,
+    -0.0031446603773522264
+   ],
+   [
+    0.270387292558789,
+    0.26049329234678964,
+    0.9163815572471546
+   ]
+  ],
+  "SM_Rug_Study_Round": [
+   [
+    -0.65,
+    -0.65,
+    0.0
+   ],
+   [
+    0.65,
+    0.65,
+    0.02
+   ]
+  ],
+  "SM_Credenza_Study": [
+   [
+    -0.24000000000000002,
+    -1.16,
+    0.0
+   ],
+   [
+    0.24000000000000002,
+    1.16,
+    0.81
+   ]
+  ],
+  "SM_Shelving_Study": [
+   [
+    -0.15,
+    -1.17,
+    0.0
+   ],
+   [
+    0.15,
+    1.17,
+    2.55
+   ]
+  ],
+  "SM_Pendant_Ruby": [
+   [
+    -0.275,
+    -0.275,
+    -0.012
+   ],
+   [
+    0.275,
+    0.275,
+    1.1099999999999999
+   ]
+  ],
+  "SM_Laptop": [
+   [
+    -0.15,
+    -0.11,
+    0.0
+   ],
+   [
+    0.15,
+    0.11,
+    0.23
+   ]
+  ],
+  "SM_Decor_PenCup": [
+   [
+    -0.04,
+    -0.04,
+    0.0
+   ],
+   [
+    0.04,
+    0.04,
+    0.17061186276233603
+   ]
+  ],
+  "SM_Floor_ShowerPad": [
+   [
+    0.25,
+    1.175,
+    0.0
+   ],
+   [
+    1.3,
+    4.05,
+    0.012
+   ]
+  ],
+  "SM_Shower_Glass": [
+   [
+    -0.012,
+    -1.06,
+    0.0
+   ],
+   [
+    0.012,
+    1.05,
+    2.17
+   ]
+  ],
+  "SM_Shower_Fitting": [
+   [
+    -0.01,
+    -0.13,
+    0.9
+   ],
+   [
+    0.45,
+    0.13,
+    2.16
+   ]
+  ],
+  "SM_Toilet_WallHung": [
+   [
+    -0.125,
+    -0.2,
+    0.0
+   ],
+   [
+    0.5,
+    0.2,
+    1.15
+   ]
+  ],
+  "SM_Vanity_Floating": [
+   [
+    -0.24000000000000002,
+    -0.535,
+    0.11
+   ],
+   [
+    0.24000000000000002,
+    0.535,
+    0.87
+   ]
+  ],
+  "SM_Mirror_Halo": [
+   [
+    0.0,
+    -0.495,
+    -0.034999999999999976
+   ],
+   [
+    0.02,
+    0.495,
+    0.9550000000000001
+   ]
+  ],
+  "SM_Mixer_Wall": [
+   [
+    0.0,
+    -0.2325,
+    -0.0125
+   ],
+   [
+    0.060000000000000005,
+    0.2325,
+    0.06
+   ]
+  ],
+  "SM_Faucet_Wall": [
+   [
+    -0.035,
+    -0.035,
+    -0.07
+   ],
+   [
+    0.19,
+    0.035,
+    0.011
+   ]
+  ],
+  "SM_Towel_Rail": [
+   [
+    -0.06,
+    -0.36,
+    -0.5
+   ],
+   [
+    0.02,
+    0.36,
+    0.01
+   ]
+  ],
+  "SM_Decor_BathTray": [
+   [
+    -0.15,
+    -0.1,
+    0.0
+   ],
+   [
+    0.15,
+    0.1,
+    0.1
+   ]
+  ],
+  "SM_Sofa_Terrace": [
+   [
+    -0.49999999999999994,
+    -1.05,
+    0.0
+   ],
+   [
+    0.4799999999999999,
+    1.05,
+    0.8400000000000001
+   ]
+  ],
+  "SM_CoffeeTable_Faceted": [
+   [
+    -0.5946742181050215,
+    -0.4552138938356834,
+    0.0
+   ],
+   [
+    0.5628000000000001,
+    0.4395800205593111,
+    0.34
+   ]
+  ],
+  "SM_TerraceTable_Hex": [
+   [
+    -0.6756884389802832,
+    -0.6279912503354298,
+    0.0
+   ],
+   [
+    0.6756884389802832,
+    0.6279912503354299,
+    0.74
+   ]
+  ],
+  "SM_TerraceChair_Taupe": [
+   [
+    -0.28396757169754155,
+    -0.28400000000000003,
+    0.0
+   ],
+   [
+    0.26,
+    0.28400000000000003,
+    0.8809523344339233
+   ]
+  ],
+  "SM_Chest_Teak": [
+   [
+    -0.28,
+    -0.97,
+    0.0
+   ],
+   [
+    0.31,
+    0.97,
+    0.612
+   ]
+  ],
+  "SM_Downlight": [
+   [
+    -0.055,
+    -0.05416442641567145,
+    -0.012
+   ],
+   [
+    0.055,
+    0.05416442641567144,
+    0.0
+   ]
+  ]
+ },
+ "plan": {
+  "walls": [
+   {
+    "name": "SM_Wall_Entrance_South_001",
+    "a": [
+     0.0,
+     0.125
+    ],
+    "b": [
+     4.55,
+     0.125
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 3.07,
+      "w": 1.03,
+      "head": 2.14,
+      "sill": 0.0
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Kitchen_South_001",
+    "a": [
+     4.55,
+     0.125
+    ],
+    "b": [
+     10.8,
+     0.125
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 2.1500000000000004,
+      "w": 3.4,
+      "head": 2.2,
+      "sill": 1.1
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Living_East_001",
+    "a": [
+     10.675,
+     0.25
+    ],
+    "b": [
+     10.675,
+     8.35
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 3.73,
+      "w": 4.84,
+      "head": 2.9,
+      "sill": 0.0
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Living_North_001",
+    "a": [
+     10.8,
+     8.475
+    ],
+    "b": [
+     7.2,
+     8.475
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 1.8000000000000007,
+      "w": 2.4,
+      "head": 2.7,
+      "sill": 0.5
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Study_North_001",
+    "a": [
+     7.2,
+     8.475
+    ],
+    "b": [
+     4.55,
+     8.475
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 1.2999999999999998,
+      "w": 2.0,
+      "head": 2.35,
+      "sill": 0.95
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Bedroom_North_001",
+    "a": [
+     4.55,
+     8.475
+    ],
+    "b": [
+     0.0,
+     8.475
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 2.05,
+      "w": 3.4,
+      "head": 2.45,
+      "sill": 1.45
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Bedroom_West_001",
+    "a": [
+     0.125,
+     8.35
+    ],
+    "b": [
+     0.125,
+     4.125
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": []
+   },
+   {
+    "name": "SM_Wall_Bath_West_001",
+    "a": [
+     0.125,
+     4.125
+    ],
+    "b": [
+     0.125,
+     1.1
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 1.125,
+      "w": 1.4,
+      "head": 2.3,
+      "sill": 0.8
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Entrance_West_001",
+    "a": [
+     0.125,
+     1.1
+    ],
+    "b": [
+     0.125,
+     0.25
+    ],
+    "t": 0.25,
+    "h": 3.2,
+    "ops": []
+   },
+   {
+    "name": "SM_Wall_Bath_North_001",
+    "a": [
+     0.25,
+     4.125
+    ],
+    "b": [
+     2.55,
+     4.125
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": []
+   },
+   {
+    "name": "SM_Wall_Bedroom_South_001",
+    "a": [
+     2.55,
+     4.125
+    ],
+    "b": [
+     4.475,
+     4.125
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 1.4000000000000004,
+      "w": 0.9299999999999999,
+      "head": 2.14,
+      "sill": 0.0
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Bath_East_001",
+    "a": [
+     2.55,
+     1.025
+    ],
+    "b": [
+     2.55,
+     4.05
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 1.1750000000000003,
+      "w": 0.88,
+      "head": 2.14,
+      "sill": 0.0
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Bath_South_001",
+    "a": [
+     0.25,
+     1.1
+    ],
+    "b": [
+     2.475,
+     1.1
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": []
+   },
+   {
+    "name": "SM_Wall_Bedroom_East_001",
+    "a": [
+     4.55,
+     4.05
+    ],
+    "b": [
+     4.55,
+     5.4
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": []
+   },
+   {
+    "name": "SM_Wall_Study_West_001",
+    "a": [
+     4.55,
+     5.4
+    ],
+    "b": [
+     4.55,
+     8.35
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": []
+   },
+   {
+    "name": "SM_Wall_Study_South_001",
+    "a": [
+     4.625,
+     5.4
+    ],
+    "b": [
+     7.125,
+     5.4
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": [
+     {
+      "c": 1.6050000000000004,
+      "w": 0.9299999999999999,
+      "head": 2.14,
+      "sill": 0.0
+     }
+    ]
+   },
+   {
+    "name": "SM_Wall_Study_East_001",
+    "a": [
+     7.2,
+     5.325
+    ],
+    "b": [
+     7.2,
+     8.35
+    ],
+    "t": 0.15,
+    "h": 3.2,
+    "ops": []
+   }
+  ],
+  "rooms": {
+   "Bedroom": [
+    [
+     0.25,
+     4.2
+    ],
+    [
+     4.475,
+     4.2
+    ],
+    [
+     4.475,
+     8.35
+    ],
+    [
+     0.25,
+     8.35
+    ]
+   ],
+   "Study": [
+    [
+     4.625,
+     5.475
+    ],
+    [
+     7.125,
+     5.475
+    ],
+    [
+     7.125,
+     8.35
+    ],
+    [
+     4.625,
+     8.35
+    ]
+   ],
+   "Bath": [
+    [
+     0.25,
+     1.175
+    ],
+    [
+     2.475,
+     1.175
+    ],
+    [
+     2.475,
+     4.05
+    ],
+    [
+     0.25,
+     4.05
+    ]
+   ],
+   "Living": [
+    [
+     0.25,
+     0.25
+    ],
+    [
+     10.55,
+     0.25
+    ],
+    [
+     10.55,
+     8.35
+    ],
+    [
+     7.275,
+     8.35
+    ],
+    [
+     7.275,
+     5.325
+    ],
+    [
+     4.625,
+     5.325
+    ],
+    [
+     4.625,
+     4.05
+    ],
+    [
+     2.625,
+     4.05
+    ],
+    [
+     2.625,
+     1.025
+    ],
+    [
+     0.25,
+     1.025
+    ]
+   ]
+  },
+  "doors": [
+   {
+    "room": "Entrance",
+    "hinge": [
+     3.545,
+     0.125
+    ],
+    "yaw": 180.0,
+    "w": 0.95,
+    "h": 2.14
+   },
+   {
+    "room": "Bedroom",
+    "hinge": [
+     4.375,
+     4.125
+    ],
+    "yaw": 180.0,
+    "w": 0.85,
+    "h": 2.14
+   },
+   {
+    "room": "Bath",
+    "hinge": [
+     2.55,
+     1.8000000000000003
+    ],
+    "yaw": 90.0,
+    "w": 0.8,
+    "h": 2.14
+   },
+   {
+    "room": "Study",
+    "hinge": [
+     5.805000000000001,
+     5.4
+    ],
+    "yaw": 0.0,
+    "w": 0.85,
+    "h": 2.14
+   }
+  ],
+  "windows": [
+   {
+    "room": "Kitchen",
+    "dir": "South",
+    "a": [
+     5.0,
+     0.125
+    ],
+    "b": [
+     8.4,
+     0.125
+    ],
+    "sill": 1.1,
+    "head": 2.2
+   },
+   {
+    "room": "Living",
+    "dir": "North",
+    "a": [
+     10.2,
+     8.475
+    ],
+    "b": [
+     7.8,
+     8.475
+    ],
+    "sill": 0.5,
+    "head": 2.7
+   },
+   {
+    "room": "Study",
+    "dir": "North",
+    "a": [
+     6.9,
+     8.475
+    ],
+    "b": [
+     4.9,
+     8.475
+    ],
+    "sill": 0.95,
+    "head": 2.35
+   },
+   {
+    "room": "Bedroom",
+    "dir": "North",
+    "a": [
+     4.2,
+     8.475
+    ],
+    "b": [
+     0.7999999999999998,
+     8.475
+    ],
+    "sill": 1.45,
+    "head": 2.45
+   },
+   {
+    "room": "Bath",
+    "dir": "West",
+    "a": [
+     0.125,
+     3.7
+    ],
+    "b": [
+     0.125,
+     2.3
+    ],
+    "sill": 0.8,
+    "head": 2.3
+   },
+   {
+    "room": "Living",
+    "dir": "East",
+    "a": [
+     10.675,
+     1.56
+    ],
+    "b": [
+     10.675,
+     6.4
+    ],
+    "sill": 0.0,
+    "head": 2.9
+   }
+  ]
+ }
+}

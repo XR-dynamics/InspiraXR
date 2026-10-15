@@ -8,36 +8,43 @@ import { lerp, smooth } from './util.js';
  * grouped per room.
  */
 
+const UP = new THREE.Vector3(0, 1, 0);
+
 const PRESETS = {
   day: {
     sun: new THREE.Vector3(-0.64, 0.6, 0.48).normalize(), sunColor: new THREE.Color(0xfff0dc), sunIntensity: 3.4,
     turbidity: 2.6, rayleigh: 1.1, mie: 0.004, mieG: 0.82, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0xcfe0ff), hemiGround: new THREE.Color(0xd6d6d6), hemi: 0.42, tint: new THREE.Vector3(1.0, 1.0, 1.02),
     env: 0.85, exposure: 0.6, interior: 0.0,
+    seaHorizon: new THREE.Color(0xcfe3f5), seaZenith: new THREE.Color(0x5b8fd0), seaDeep: new THREE.Color(0x0a4766), seaShallow: new THREE.Color(0x2b8aa0), seaGlint: 1.0,
   },
   sunset: {
     sun: new THREE.Vector3(-0.9, 0.3, 0.32).normalize(), sunColor: new THREE.Color(0xffbf85), sunIntensity: 3.6,
     turbidity: 4.0, rayleigh: 1.6, mie: 0.006, mieG: 0.9, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0xc9d3e6), hemiGround: new THREE.Color(0xd2d3d6), hemi: 0.36, tint: new THREE.Vector3(0.94, 0.985, 1.09),
     env: 0.8, exposure: 0.62, interior: 0.75,
+    seaHorizon: new THREE.Color(0xf2b78a), seaZenith: new THREE.Color(0x4f6faa), seaDeep: new THREE.Color(0x123f5c), seaShallow: new THREE.Color(0x4a7c8c), seaGlint: 1.3,
   },
   overcast: {
     sun: new THREE.Vector3(-0.25, 0.85, 0.3).normalize(), sunColor: new THREE.Color(0xe4ebf5), sunIntensity: 0.55,
     turbidity: 10, rayleigh: 0.6, mie: 0.02, mieG: 0.7, skyGain: 1.0, night: 0, overcast: 1,
     hemiSky: new THREE.Color(0xdfe6ef), hemiGround: new THREE.Color(0xcfcfcf), hemi: 0.95, tint: new THREE.Vector3(0.97, 1.0, 1.04),
     env: 1.0, exposure: 0.72, interior: 0.0,
+    seaHorizon: new THREE.Color(0xbcc4cb), seaZenith: new THREE.Color(0x949ea9), seaDeep: new THREE.Color(0x284857), seaShallow: new THREE.Color(0x4c6c77), seaGlint: 0.1,
   },
   evening: {
     sun: new THREE.Vector3(-0.92, -0.05, 0.38).normalize(), sunColor: new THREE.Color(0xff9a62), sunIntensity: 0.12,
     turbidity: 3.5, rayleigh: 2.2, mie: 0.005, mieG: 0.85, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0x6f82b0), hemiGround: new THREE.Color(0x4a4a56), hemi: 0.3, tint: new THREE.Vector3(0.94, 0.985, 1.1),
     env: 0.7, exposure: 0.72, interior: 0.9,
+    seaHorizon: new THREE.Color(0xa07f93), seaZenith: new THREE.Color(0x303c6b), seaDeep: new THREE.Color(0x0d2337), seaShallow: new THREE.Color(0x2a4860), seaGlint: 0.45,
   },
   night: {
     sun: new THREE.Vector3(-0.35, 0.65, -0.5).normalize(), sunColor: new THREE.Color(0x8ea8de), sunIntensity: 0.06,
     turbidity: 2, rayleigh: 0.5, mie: 0.003, mieG: 0.8, skyGain: 0.0, night: 1, overcast: 0,
     hemiSky: new THREE.Color(0x28344f), hemiGround: new THREE.Color(0x0d0d10), hemi: 0.05, tint: new THREE.Vector3(0.95, 0.99, 1.06),
     env: 0.55, exposure: 0.62, interior: 1.0,
+    seaHorizon: new THREE.Color(0x1c2a47), seaZenith: new THREE.Color(0x050a18), seaDeep: new THREE.Color(0x02080f), seaShallow: new THREE.Color(0x061622), seaGlint: 0.12,
   },
 };
 
@@ -52,6 +59,7 @@ export class Lighting {
     this.from = null; this.to = null; this.t = 1; this.dur = 3.0;
     this.envDirty = true;
     this.onEnvBaked = null;
+    this.sunYaw = 0;   // rotates every preset's sun about the vertical axis (see configure)
 
     // --- sky
     const sky = new Sky();
@@ -99,6 +107,22 @@ export class Lighting {
 
     this._apply();
   }
+
+  /** Per-layout lighting setup: sun heading, shadow frustum and where the shadow camera looks. */
+  configure({ sunYaw = 0, sunTarget = null, shadowExtent = null, shadowFar = null } = {}) {
+    this.sunYaw = sunYaw;
+    if (sunTarget) this.sun.target.position.set(...sunTarget);
+    if (shadowExtent) {
+      const sc = this.sun.shadow.camera;
+      sc.left = -shadowExtent; sc.right = shadowExtent; sc.top = shadowExtent; sc.bottom = -shadowExtent;
+      if (shadowFar) sc.far = shadowFar;
+      sc.updateProjectionMatrix();
+    }
+    this._apply();
+  }
+
+  /** The preset sun direction after the layout's heading rotation. */
+  _sunDir(v = this.state.sun) { return v.clone().applyAxisAngle(UP, this.sunYaw); }
 
   _copy(p) {
     const o = {};
@@ -152,9 +176,10 @@ export class Lighting {
     u.skyGain.value = s.skyGain;
     u.nightMix.value = s.night;
     u.overcastMix.value = s.overcast;
-    const sunSky = s.night > 0.5 ? new THREE.Vector3(0, -1, 0) : s.sun;
+    const dir = this._sunDir(s.sun);
+    const sunSky = s.night > 0.5 ? new THREE.Vector3(0, -1, 0) : dir;
     u.sunPosition.value.copy(sunSky).multiplyScalar(400);
-    this.sun.position.copy(this.sun.target.position).addScaledVector(s.sun, 80);
+    this.sun.position.copy(this.sun.target.position).addScaledVector(dir, 80);
     this.sun.color.copy(s.sunColor);
     this.sun.intensity = s.sunIntensity;
     this.hemi.color.copy(s.hemiSky);

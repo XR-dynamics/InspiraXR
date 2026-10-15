@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { H } from '../world/layout.js';
+import { eyeHeight } from '../layouts/active.js';
 import { clamp, lerp, easeInOut } from '../world/util.js';
 
 /*
@@ -29,7 +29,7 @@ export class Player {
     this.route = null;
     this.blockedTime = 0;
     this.onArrive = null;
-    this.eye = H.eye;
+    this.eye = eyeHeight();
     this.shift = 0;
     this.tShift = 0;
   }

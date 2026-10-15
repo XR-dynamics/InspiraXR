@@ -1,11 +1,8 @@
 import * as THREE from 'three';
 import { Renderer } from './core/renderer.js';
-import { buildMaterials } from './materials/library.js';
 import { Lighting } from './world/lighting.js';
-import { buildWorld, ZONES } from './world/index.js';
 import { Player } from './nav/player.js';
-import { FloorPlan } from './ui/plan.js';
-import { ROOMS, VIEWS, SELECTOR, roomAt } from './world/layout.js';
+import { LAYOUTS, chosenLayoutId, rememberLayout, loadLayout } from './layouts/index.js';
 import { clamp, lerp, easeInOut } from './world/util.js';
 import { WallSystem } from './custom/walls.js';
 import { FurnitureSystem } from './custom/furniture.js';
@@ -55,36 +52,28 @@ const clock = new THREE.Clock();
 let mode = 'loading';
 
 // Eye adaptation: like a photographer exposing each room, exposure eases
-// toward a per-zone value as the visitor walks from space to space.
-const ADAPT = {
-  day: { main: 1, kitchen: 1.45, hall: 1.5, master: 1.3, masterBath: 1.25, bedroom: 1.4, bath: 1.45, outdoor: 0.78 },
-  sunset: { main: 1, kitchen: 1.5, hall: 1.55, master: 1.35, masterBath: 1.3, bedroom: 1.45, bath: 1.5, outdoor: 0.85 },
-  night: { main: 1, kitchen: 1.1, hall: 1.2, master: 1.15, masterBath: 1.1, bedroom: 1.15, bath: 1.15, outdoor: 1.25 },
-  overcast: { main: 1, kitchen: 1.35, hall: 1.4, master: 1.25, masterBath: 1.2, bedroom: 1.3, bath: 1.35, outdoor: 0.9 },
-  evening: { main: 1, kitchen: 1.3, hall: 1.4, master: 1.25, masterBath: 1.2, bedroom: 1.3, bath: 1.35, outdoor: 1.1 },
-};
-const ROOM_ZONE = { living: 'main', foyer: 'main', dining: 'main', kitchen: 'kitchen', hall: 'hall', master: 'master', masterBath: 'masterBath', bedroom: 'bedroom', bath: 'bath', terrace: 'outdoor' };
+// toward a per-zone value (layout.ADAPT) as the visitor walks from space to space.
+let layout;
+const roomAt = (x, z) => layout.roomAt(x, z);
 let adapt = 1;
 let snapAdapt = false;
 let time = 0;
 
-// ---- intro choreography: a slow cinematic drift through the living room
-const INTRO = [
-  { pos: new THREE.Vector3(5.9, 1.42, 12.6), look: new THREE.Vector3(4.2, 1.85, 0.0), shift: 0.3 },
-  { pos: new THREE.Vector3(6.6, 1.42, 11.0), look: new THREE.Vector3(3.2, 1.9, 0.0), shift: 0.3 },
-];
-const START = { pos: [6.0, 14.4], look: [4.6, 1.6, 4.0] };
-
 async function init() {
+  const layoutId = chosenLayoutId(params);
+  layout = await loadLayout(layoutId);
+  document.title = layout.title;
+  document.body.dataset.layout = layout.id;
   setProgress(0.04, 'Preparing materials');
   await nextFrame();
   const M = await bakeMaterials();
-  setProgress(0.62, 'Building the residence');
+  setProgress(0.62, `Building ${layout.id === 'apartment' ? 'the apartment' : 'the residence'}`);
   await nextFrame();
   lighting = new Lighting(renderer, scene);
-  world = buildWorld({ scene, M, lighting });
+  lighting.configure(layout.lightingConfig);
+  world = await layout.buildWorld({ scene, M, lighting, renderer, onProgress: (p, label) => setProgress(0.62 + p * 0.12, label) });
   world.toast = toast;
-  lighting.setupProbes(ZONES, world.zoneMaterials);
+  lighting.setupProbes(layout.ZONES, world.zoneMaterials);
   setupCustomisation();
   setProgress(0.75, 'Lighting the interiors');
   await nextFrame();
@@ -101,6 +90,7 @@ async function init() {
   lighting.update(0.001, 0);
   bakeEnv();
   player = new Player(camera, world.nav, world.interact);
+  world.viewer = () => ({ x: player.pos.x, z: player.pos.y });
   setProgress(0.88, 'Composing the view');
   await nextFrame();
   try { await renderer.compileAsync(scene, camera); } catch { /* older drivers */ }
@@ -121,7 +111,7 @@ async function init() {
 async function bakeMaterials() {
   // Bake on the GPU with periodic yields so the progress bar stays alive.
   let last = performance.now();
-  const M = buildMaterials(renderer, (p) => {
+  const M = layout.buildMaterials(renderer, (p) => {
     setProgress(0.04 + p * 0.56);
     if (performance.now() - last > 60) last = performance.now();
   });
@@ -140,7 +130,7 @@ function bakeEnv(zones = null) {
 
 function setIntroPose(t) {
   const k = easeInOut(clamp(t, 0, 1));
-  const a = INTRO[0], b = INTRO[1];
+  const a = layout.INTRO[0], b = layout.INTRO[1];
   camera.position.lerpVectors(a.pos, b.pos, k);
   const look = new THREE.Vector3().lerpVectors(a.look, b.look, k);
   camera.lookAt(look.x, camera.position.y, look.z);
@@ -224,8 +214,8 @@ function enter(instant = false) {
   if (mode !== 'intro' && mode !== 'loading') return;
   $('#intro').classList.add('hidden');
   const from = { pos: camera.position.clone(), quat: camera.quaternion.clone(), shift: lensShift };
-  player.setPose(START.pos[0], START.pos[1], 0);
-  player.lookAt(...START.look, true);
+  player.setPose(layout.START.pos[0], layout.START.pos[1], 0);
+  player.lookAt(...layout.START.look, true);
   player.enabled = true;
   player.update(0.016);
   const to = { pos: camera.position.clone(), quat: camera.quaternion.clone() };
@@ -245,10 +235,28 @@ function enter(instant = false) {
 let currentRoom = null;
 function setupUI() {
   $('#enter').addEventListener('click', () => enter());
+  $('#intro h1').textContent = layout.title;
+  $('#intro .sub').innerHTML = layout.subtitle;
+  // choose between the homes: switching reloads with ?home=..., so each starts from a clean GPU state
+  const pick = $('#layout-pick');
+  for (const l of LAYOUTS) {
+    const b = document.createElement('button');
+    b.textContent = l.name;
+    b.title = l.blurb;
+    b.classList.toggle('active', l.id === layout.id);
+    b.addEventListener('click', () => {
+      if (l.id === layout.id) return;
+      rememberLayout(l.id);
+      const q = new URLSearchParams(location.search);
+      q.set('home', l.id);
+      location.search = q.toString();
+    });
+    pick.appendChild(b);
+  }
 
   // room selector
   const nav = $('#rooms');
-  SELECTOR.forEach(([key, label], i) => {
+  layout.SELECTOR.forEach(([key, label], i) => {
     if (i) { const s = document.createElement('span'); s.className = 'sep'; nav.appendChild(s); }
     const b = document.createElement('button');
     b.textContent = label;
@@ -264,7 +272,7 @@ function setupUI() {
   markTod(lighting.mode);
 
   // floor plan
-  plan = new FloorPlan($('#plan-svg'), (key) => { togglePlan(false); goToRoom(key); });
+  plan = layout.createPlan($('#plan-svg'), (key) => { togglePlan(false); goToRoom(key); });
   $('#plan-btn').addEventListener('click', () => togglePlan());
   $('#plan-close').addEventListener('click', () => togglePlan(false));
   $('#plan').addEventListener('click', (e) => { if (e.target.id === 'plan') togglePlan(false); });
@@ -317,13 +325,13 @@ function setTimeOfDay(m) {
 }
 
 function goToRoom(key) {
-  const target = key === 'hall' ? { pos: [17, 1.2], look: [29, 1.6, 1.2] } : key === 'bath' ? { pos: [27.6, -1.4], look: [28, 1.2, -6] } : VIEWS[key];
+  const target = layout.viewFor(key);
   if (!target) return;
   player.walkTo(target.pos[0], target.pos[1], target.look);
   document.querySelectorAll('#rooms button').forEach((b) => b.classList.toggle('active', b.dataset.room === key));
   // the terrace door opens for you when heading outside
-  const inside = roomAt(player.pos.x, player.pos.y) !== 'terrace';
-  if ((key === 'terrace') === inside) world.interact.doors.get('slider').set(true);
+  const inside = roomAt(player.pos.x, player.pos.y) !== layout.outdoorRoom;
+  if ((key === layout.outdoorRoom) === inside) world.interact.doors.get(layout.sliderId)?.set(true);
 }
 
 let planOpen = false;
@@ -567,15 +575,15 @@ function frame(dt, render = true) {
       currentRoom = room;
       const label = $('#room-name .label');
       label.style.opacity = 0;
-      setTimeout(() => { label.textContent = room ? ROOMS[room].name : ''; label.style.opacity = 1; }, 400);
+      setTimeout(() => { label.textContent = room ? layout.ROOMS[room].name : ''; label.style.opacity = 1; }, 400);
     }
     if (planOpen) plan.update(player.pos.x, player.pos.y, player.yaw);
   }
 
   world.interact.update(dt);
   lighting.update(dt, time);
-  const zone = mode === 'walk' ? ROOM_ZONE[roomAt(player.pos.x, player.pos.y)] || 'main' : 'main';
-  const targetAdapt = ADAPT[lighting.mode]?.[zone] ?? 1;
+  const zone = mode === 'walk' ? layout.ROOM_ZONE[roomAt(player.pos.x, player.pos.y)] || 'main' : 'main';
+  const targetAdapt = layout.ADAPT[lighting.mode]?.[zone] ?? 1;
   adapt = snapAdapt ? targetAdapt : lerp(adapt, targetAdapt, 1 - Math.exp(-dt * 1.4));
   snapAdapt = false;
   renderer.toneMappingExposure = lighting.baseExposure * adapt;

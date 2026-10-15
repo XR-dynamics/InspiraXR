@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { arcShape, extrudeShape, roundedBox, rng, projectUV } from './util.js';
+import { arcShape, extrudeShape, roundedBox, rng } from './util.js';
 import { H } from './layout.js';
 
 /*
@@ -16,74 +16,79 @@ export function buildLiving(ctx) {
   const c = LIVING_CENTER;
 
   // ---- round rug
-  const rugR = 2.35;
-  const rug = new THREE.CylinderGeometry(rugR, rugR, 0.016, 128, 1);
-  rug.translate(c.x, 0.008, c.z);
-  B.add(rug, M.rug, { keepUV: true, cast: false });
+  ctx.item('living-rug', { name: 'Round rug', room: 'living', category: 'decor', movable: true, flat: true }, () => {
+    const rugR = 2.35;
+    const rug = new THREE.CylinderGeometry(rugR, rugR, 0.016, 128, 1);
+    rug.translate(c.x, 0.008, c.z);
+    B.add(rug, M.rug, { keepUV: true, cast: false });
+  });
 
-  // ---- curved sofas (two opposed arcs)
-  const sofaGroup = [];
-  sofaGroup.push(curvedSofa(ctx, c, 1.62, 2.55, THREE.MathUtils.degToRad(208), THREE.MathUtils.degToRad(332)));
-  sofaGroup.push(curvedSofa(ctx, c, 1.62, 2.55, THREE.MathUtils.degToRad(38), THREE.MathUtils.degToRad(142)));
-  ctx.interact.material(sofaGroup.flat(), 'sofa');
-
-  // pillows on the sofas, facing the centre
+  // ---- curved sofas (two opposed arcs), each with its own cushions and throw
+  const deg = THREE.MathUtils.degToRad;
   const pillowMats = [M.linenDark, M.velvetTaupe, M.linenSlate, M.linenGrey, M.linenDark];
   const pr = rng(4);
   const placePillows = (angles, r) => {
-    angles.forEach((deg, i) => {
-      const a = THREE.MathUtils.degToRad(deg);
+    angles.forEach((d, i) => {
+      const a = deg(d);
       const x = c.x + Math.cos(a) * r, z = c.z - Math.sin(a) * r;
       const geo = pillow(0.52 + pr() * 0.08, 0.48, 0.17);
       const ry = Math.atan2(c.x - x, c.z - z);
       B.addTransformed(geo, pillowMats[i % pillowMats.length], { x, y: 0.62, z, ry: ry + (pr() - 0.5) * 0.25, rx: -0.28, rz: (pr() - 0.5) * 0.12 });
     });
   };
-  placePillows([216, 230, 244, 296, 310, 323], 2.22);
-  placePillows([48, 64, 116, 132], 2.22);
-
-  // folded throw on the far sofa
-  const throwGeo = roundedBox(0.55, 0.06, 0.9, 0.025, 3);
-  B.addTransformed(throwGeo, M.linenSlate, { x: c.x + Math.cos(1.57) * 2.0, y: 0.47, z: c.z - Math.sin(1.57) * 2.0, ry: 0.0 });
-
-  nav.blockCircle(c.x, c.z, 0.85);
-  // sofa footprints (arc sampled)
-  for (const [a0, a1] of [[208, 332], [38, 142]]) {
-    for (let d = a0; d <= a1; d += 6) {
-      const a = THREE.MathUtils.degToRad(d);
-      nav.blockCircle(c.x + Math.cos(a) * 2.08, c.z - Math.sin(a) * 2.08, 0.5);
-    }
+  const sofas = [
+    { id: 'living-sofa-south', name: 'Curved sofa (south)', a0: 208, a1: 332, pillows: [216, 230, 244, 296, 310, 323] },
+    { id: 'living-sofa-north', name: 'Curved sofa (north)', a0: 38, a1: 142, pillows: [48, 64, 116, 132], throwBlanket: true },
+  ];
+  for (const sf of sofas) {
+    ctx.item(sf.id, { name: sf.name, room: 'living', category: 'furniture', movable: true, finish: 'sofa' }, () => {
+      curvedSofa(ctx, c, 1.62, 2.55, deg(sf.a0), deg(sf.a1));
+      placePillows(sf.pillows, 2.22);
+      if (sf.throwBlanket) {
+        const throwGeo = roundedBox(0.55, 0.06, 0.9, 0.025, 3);
+        B.addTransformed(throwGeo, M.linenSlate, { x: c.x + Math.cos(1.57) * 2.0, y: 0.47, z: c.z - Math.sin(1.57) * 2.0, ry: 0.0 });
+      }
+      for (let d = sf.a0; d <= sf.a1; d += 6) {
+        const a = deg(d);
+        nav.blockCircle(c.x + Math.cos(a) * 2.08, c.z - Math.sin(a) * 2.08, 0.5);
+      }
+    });
   }
 
-  // ---- two-tier coffee table: black lacquer disc + brushed brass disc
-  const t1 = new THREE.CylinderGeometry(0.7, 0.7, 0.05, 96);
-  t1.translate(c.x - 0.12, 0.35, c.z + 0.05);
-  B.add(t1, M.lacquerBlack);
-  const t1b = new THREE.CylinderGeometry(0.66, 0.66, 0.3, 96, 1, true);
-  t1b.translate(c.x - 0.12, 0.165, c.z + 0.05);
-  B.add(t1b, M.bronze);
-  const t2 = new THREE.CylinderGeometry(0.46, 0.46, 0.06, 96);
-  t2.translate(c.x + 0.42, 0.42, c.z - 0.18);
-  B.add(t2, M.brass);
-  const t2b = new THREE.CylinderGeometry(0.43, 0.43, 0.39, 96, 1, true);
-  t2b.translate(c.x + 0.42, 0.195, c.z - 0.18);
-  B.add(t2b, M.lacquerBlack);
+  // ---- two-tier coffee table: black lacquer disc + brushed brass disc (with its styling)
+  ctx.item('living-coffee-table', { name: 'Two-tier coffee table', room: 'living', category: 'furniture', movable: true }, () => {
+    nav.blockCircle(c.x, c.z, 0.85);
+    const t1 = new THREE.CylinderGeometry(0.7, 0.7, 0.05, 96);
+    t1.translate(c.x - 0.12, 0.35, c.z + 0.05);
+    B.add(t1, M.lacquerBlack);
+    const t1b = new THREE.CylinderGeometry(0.66, 0.66, 0.3, 96, 1, true);
+    t1b.translate(c.x - 0.12, 0.165, c.z + 0.05);
+    B.add(t1b, M.bronze);
+    const t2 = new THREE.CylinderGeometry(0.46, 0.46, 0.06, 96);
+    t2.translate(c.x + 0.42, 0.42, c.z - 0.18);
+    B.add(t2, M.brass);
+    const t2b = new THREE.CylinderGeometry(0.43, 0.43, 0.39, 96, 1, true);
+    t2b.translate(c.x + 0.42, 0.195, c.z - 0.18);
+    B.add(t2b, M.lacquerBlack);
 
-  // table styling: tray, books, vase with white flowers
-  B.add(roundedBox(0.42, 0.03, 0.3, 0.01).translate(c.x + 0.4, 0.465, c.z - 0.12), M.leather);
-  B.add(roundedBox(0.32, 0.05, 0.24, 0.005).translate(c.x - 0.35, 0.4, c.z + 0.25), M.paper);
-  B.add(roundedBox(0.28, 0.04, 0.22, 0.005).translate(c.x - 0.35, 0.445, c.z + 0.25), M.linenSlate);
-  vaseWithFlowers(ctx, c.x + 0.28, 0.45, c.z - 0.28, 0.9);
+    // table styling: tray, books, vase with white flowers
+    B.add(roundedBox(0.42, 0.03, 0.3, 0.01).translate(c.x + 0.4, 0.465, c.z - 0.12), M.leather);
+    B.add(roundedBox(0.32, 0.05, 0.24, 0.005).translate(c.x - 0.35, 0.4, c.z + 0.25), M.paper);
+    B.add(roundedBox(0.28, 0.04, 0.22, 0.005).translate(c.x - 0.35, 0.445, c.z + 0.25), M.linenSlate);
+    vaseWithFlowers(ctx, c.x + 0.28, 0.45, c.z - 0.28, 0.9);
+  });
 
   // ---- ottoman / pouf near the glazing
-  const pouf = new THREE.CylinderGeometry(0.34, 0.36, 0.4, 64);
-  pouf.translate(1.25, 0.2, 9.4);
-  B.add(pouf, M.boucle);
-  nav.blockCircle(1.25, 9.4, 0.38);
+  ctx.item('living-pouf', { name: 'Bouclé pouf', room: 'living', category: 'furniture', movable: true }, () => {
+    const pouf = new THREE.CylinderGeometry(0.34, 0.36, 0.4, 64);
+    pouf.translate(1.25, 0.2, 9.4);
+    B.add(pouf, M.boucle);
+    nav.blockCircle(1.25, 9.4, 0.38);
+  });
 
   // ---- side tables with lamps at the sofa ends
-  sideTable(ctx, c.x - 2.75, c.z + 0.2);
-  sideTable(ctx, c.x + 2.75, c.z - 0.2);
+  ctx.item('living-side-table-west', { name: 'Marble side table', room: 'living', category: 'furniture', movable: true }, () => sideTable(ctx, c.x - 2.75, c.z + 0.2));
+  ctx.item('living-side-table-east', { name: 'Marble side table', room: 'living', category: 'furniture', movable: true }, () => sideTable(ctx, c.x + 2.75, c.z - 0.2));
   floorLamp(ctx, 'living', 1.0, 3.8);
 
   // ---- chandelier
@@ -95,27 +100,35 @@ export function buildLiving(ctx) {
   nav.blockRect(11.2, 4.5, 12, 9.5);
   fireplace(ctx, 11.84, 0.62, 7.0, 2.8, 0.42);
   // sculptural objects on the hearth
-  const urn = new THREE.LatheGeometry(lathe([[0, 0], [0.12, 0.01], [0.17, 0.15], [0.12, 0.38], [0.07, 0.42], [0.075, 0.46], [0, 0.46]]), 48);
-  urn.translate(11.58, 0.4, 5.2);
-  B.add(urn, M.ceramicDark);
-  const bowl = new THREE.LatheGeometry(lathe([[0, 0], [0.14, 0.01], [0.2, 0.09], [0.19, 0.1], [0, 0.03]]), 48);
-  bowl.translate(11.58, 0.4, 8.9);
-  B.add(bowl, M.ceramic);
+  ctx.item('hearth-urn', { name: 'Hearth urn', room: 'living', category: 'decor', movable: false }, () => {
+    const urn = new THREE.LatheGeometry(lathe([[0, 0], [0.12, 0.01], [0.17, 0.15], [0.12, 0.38], [0.07, 0.42], [0.075, 0.46], [0, 0.46]]), 48);
+    urn.translate(11.58, 0.4, 5.2);
+    B.add(urn, M.ceramicDark);
+  });
+  ctx.item('hearth-bowl', { name: 'Hearth bowl', room: 'living', category: 'decor', movable: false }, () => {
+    const bowl = new THREE.LatheGeometry(lathe([[0, 0], [0.14, 0.01], [0.2, 0.09], [0.19, 0.1], [0, 0.03]]), 48);
+    bowl.translate(11.58, 0.4, 8.9);
+    B.add(bowl, M.ceramic);
+  });
 
   // ---- large plant by the glazing
-  plant(ctx, 1.0, 11.0, 1.0);
-  plant(ctx, 8.4, 0.9, 0.85);
+  ctx.item('living-plant-west', { name: 'Potted plant', room: 'living', category: 'decor', movable: true }, () => plant(ctx, 1.0, 11.0, 1.0));
+  ctx.item('living-plant-east', { name: 'Potted plant', room: 'living', category: 'decor', movable: true }, () => plant(ctx, 8.4, 0.9, 0.85));
 
   // ---- entrance hall: console, art, bench, mirror pendant
+  ctx.item('foyer-console', { name: 'Entrance console', room: 'foyer', category: 'furniture', movable: true }, () => {
   B.box(3.7, 0.0, 13.2, 4.15, 0.82, 15.4, M.walnut);
   B.box(3.68, 0.82, 13.15, 4.2, 0.86, 15.45, M.darkMarble);
   nav.blockRect(3.5, 13.0, 4.3, 15.6);
-  // art above console (on west foyer wall)
-  // (west foyer wall has a slot window; art goes on the east wall)
-  B.box(8.44, 1.2, 13.0, 8.5, 3.6, 15.6, M.blackMatte);
-  B.add(new THREE.PlaneGeometry(2.5, 2.3).rotateY(-Math.PI / 2).translate(8.43, 2.4, 14.3), M.art, { keepUV: true });
   vaseWithFlowers(ctx, 3.92, 0.86, 13.7, 1.2);
   B.add(new THREE.LatheGeometry(lathe([[0, 0], [0.1, 0.0], [0.13, 0.12], [0.07, 0.3], [0, 0.3]]), 32).translate(3.92, 0.86, 14.9), M.ceramicDark);
+  });
+  // art above console (on west foyer wall)
+  // (west foyer wall has a slot window; art goes on the east wall)
+  ctx.item('foyer-art', { name: 'Entrance artwork', room: 'foyer', category: 'decor', movable: false }, () => {
+    B.box(8.44, 1.2, 13.0, 8.5, 3.6, 15.6, M.blackMatte);
+    B.add(new THREE.PlaneGeometry(2.5, 2.3).rotateY(-Math.PI / 2).translate(8.43, 2.4, 14.3), M.art, { keepUV: true });
+  });
   // foyer floor: inset stone mat in darker marble
   B.box(4.6, 0.0, 15.0, 7.4, 0.004, 16.3, M.slate, { cast: false });
   // grand pendant over the entrance: ring of opal globes
@@ -139,17 +152,11 @@ export function buildLiving(ctx) {
 }
 
 function curvedSofa(ctx, c, r0, r1, a0, a1) {
-  const { M, scene } = ctx;
-  const parts = [];
+  const { M } = ctx;
   const add = (shape, y0, y1, bevel, mat) => {
     const g = extrudeShape(shape, y0, y1, bevel, 96);
     g.translate(c.x, 0, c.z);
-    projectUV(g);
-    const m = new THREE.Mesh(g, mat);
-    m.castShadow = true; m.receiveShadow = true;
-    scene.add(m);
-    parts.push(m);
-    return m;
+    ctx.batch.add(g, mat);
   };
   const da = 0.012;
   // recessed plinth
@@ -168,7 +175,6 @@ function curvedSofa(ctx, c, r0, r1, a0, a1) {
   }
   // continuous back, with a thin welt line where it meets the base
   add(arcShape(r1 - 0.3, r1, a0, a1), 0.28, 0.74, 0.095, M.boucle);
-  return parts;
 }
 
 function pillow(w, h, d) {

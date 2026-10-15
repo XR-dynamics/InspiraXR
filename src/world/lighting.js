@@ -11,19 +11,31 @@ import { lerp, smooth } from './util.js';
 const PRESETS = {
   day: {
     sun: new THREE.Vector3(-0.64, 0.6, 0.48).normalize(), sunColor: new THREE.Color(0xfff0dc), sunIntensity: 3.4,
-    turbidity: 2.6, rayleigh: 1.1, mie: 0.004, mieG: 0.82, skyGain: 1.0, night: 0,
+    turbidity: 2.6, rayleigh: 1.1, mie: 0.004, mieG: 0.82, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0xcfe0ff), hemiGround: new THREE.Color(0xd6d6d6), hemi: 0.42, tint: new THREE.Vector3(1.0, 1.0, 1.02),
     env: 0.85, exposure: 0.6, interior: 0.0,
   },
   sunset: {
     sun: new THREE.Vector3(-0.9, 0.3, 0.32).normalize(), sunColor: new THREE.Color(0xffbf85), sunIntensity: 3.6,
-    turbidity: 4.0, rayleigh: 1.6, mie: 0.006, mieG: 0.9, skyGain: 1.0, night: 0,
+    turbidity: 4.0, rayleigh: 1.6, mie: 0.006, mieG: 0.9, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0xc9d3e6), hemiGround: new THREE.Color(0xd2d3d6), hemi: 0.36, tint: new THREE.Vector3(0.94, 0.985, 1.09),
     env: 0.8, exposure: 0.62, interior: 0.75,
   },
+  overcast: {
+    sun: new THREE.Vector3(-0.25, 0.85, 0.3).normalize(), sunColor: new THREE.Color(0xe4ebf5), sunIntensity: 0.55,
+    turbidity: 10, rayleigh: 0.6, mie: 0.02, mieG: 0.7, skyGain: 1.0, night: 0, overcast: 1,
+    hemiSky: new THREE.Color(0xdfe6ef), hemiGround: new THREE.Color(0xcfcfcf), hemi: 0.95, tint: new THREE.Vector3(0.97, 1.0, 1.04),
+    env: 1.0, exposure: 0.72, interior: 0.0,
+  },
+  evening: {
+    sun: new THREE.Vector3(-0.92, -0.05, 0.38).normalize(), sunColor: new THREE.Color(0xff9a62), sunIntensity: 0.12,
+    turbidity: 3.5, rayleigh: 2.2, mie: 0.005, mieG: 0.85, skyGain: 1.0, night: 0, overcast: 0,
+    hemiSky: new THREE.Color(0x6f82b0), hemiGround: new THREE.Color(0x4a4a56), hemi: 0.3, tint: new THREE.Vector3(0.94, 0.985, 1.1),
+    env: 0.7, exposure: 0.72, interior: 0.9,
+  },
   night: {
     sun: new THREE.Vector3(-0.35, 0.65, -0.5).normalize(), sunColor: new THREE.Color(0x8ea8de), sunIntensity: 0.06,
-    turbidity: 2, rayleigh: 0.5, mie: 0.003, mieG: 0.8, skyGain: 0.0, night: 1,
+    turbidity: 2, rayleigh: 0.5, mie: 0.003, mieG: 0.8, skyGain: 0.0, night: 1, overcast: 0,
     hemiSky: new THREE.Color(0x28344f), hemiGround: new THREE.Color(0x0d0d10), hemi: 0.05, tint: new THREE.Vector3(0.95, 0.99, 1.06),
     env: 0.55, exposure: 0.62, interior: 1.0,
   },
@@ -46,14 +58,18 @@ export class Lighting {
     sky.scale.setScalar(900);
     sky.material.uniforms.skyGain = { value: 1 };
     sky.material.uniforms.nightMix = { value: 0 };
+    sky.material.uniforms.overcastMix = { value: 0 };
     sky.material.fragmentShader = sky.material.fragmentShader
-      .replace('uniform vec3 up;', 'uniform vec3 up;\nuniform float skyGain;\nuniform float nightMix;')
+      .replace('uniform vec3 up;', 'uniform vec3 up;\nuniform float skyGain;\nuniform float nightMix;\nuniform float overcastMix;')
       .replace('gl_FragColor = vec4( retColor, 1.0 );', `
         retColor = min(retColor * skyGain, vec3(6.0));
         float hz = clamp(direction.y, 0.0, 1.0);
         vec3 night = mix(vec3(0.020, 0.030, 0.055), vec3(0.004, 0.007, 0.018), pow(hz, 0.45));
         float st = fract(sin(dot(floor(direction.xz / max(direction.y, 0.05) * 220.0), vec2(12.9898, 78.233))) * 43758.5453);
         night += vec3(step(0.9985, st) * 0.6 * smoothstep(0.05, 0.3, hz));
+        // flat, bright cloud deck: soft grey-white at the horizon, a little deeper overhead
+        vec3 cloud = mix(vec3(0.62, 0.65, 0.69), vec3(0.34, 0.37, 0.42), pow(hz, 0.55));
+        retColor = mix(retColor, cloud, overcastMix);
         retColor = mix(retColor, night, nightMix);
         gl_FragColor = vec4( retColor, 1.0 );`);
     sky.material.needsUpdate = true;
@@ -135,6 +151,7 @@ export class Lighting {
     u.mieDirectionalG.value = s.mieG;
     u.skyGain.value = s.skyGain;
     u.nightMix.value = s.night;
+    u.overcastMix.value = s.overcast;
     const sunSky = s.night > 0.5 ? new THREE.Vector3(0, -1, 0) : s.sun;
     u.sunPosition.value.copy(sunSky).multiplyScalar(400);
     this.sun.position.copy(this.sun.target.position).addScaledVector(s.sun, 80);

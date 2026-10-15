@@ -67,12 +67,18 @@ export function buildExterior(ctx) {
 
   // ---- outdoor dining by the slider
   const tx = -2.3, tz = 5.0;
-  B.add(roundedBox(1.0, 0.05, 2.6, 0.01).translate(tx, 0.74, tz), M.slate);
-  B.box(tx - 0.3, 0, tz - 1.0, tx + 0.3, 0.71, tz - 0.94, M.blackAlu);
-  B.box(tx - 0.3, 0, tz + 0.94, tx + 0.3, 0.71, tz + 1.0, M.blackAlu);
-  nav.blockRect(tx - 0.55, tz - 1.35, tx + 0.55, tz + 1.35);
+  ctx.item('terrace-table', { name: 'Outdoor dining table', room: 'terrace', category: 'furniture', movable: true }, () => {
+    B.add(roundedBox(1.0, 0.05, 2.6, 0.01).translate(tx, 0.74, tz), M.slate);
+    B.box(tx - 0.3, 0, tz - 1.0, tx + 0.3, 0.71, tz - 0.94, M.blackAlu);
+    B.box(tx - 0.3, 0, tz + 0.94, tx + 0.3, 0.71, tz + 1.0, M.blackAlu);
+    nav.blockRect(tx - 0.55, tz - 1.35, tx + 0.55, tz + 1.35);
+  });
+  let chairNo = 0;
   for (let i = 0; i < 3; i++) {
-    for (const s of [-1, 1]) outdoorChair(ctx, tx + s * 0.85, tz - 0.85 + i * 0.85, s > 0 ? -Math.PI / 2 : Math.PI / 2);
+    for (const s of [-1, 1]) {
+      ctx.item(`terrace-chair-${++chairNo}`, { name: 'Outdoor chair', room: 'terrace', category: 'furniture', movable: true },
+        () => outdoorChair(ctx, tx + s * 0.85, tz - 0.85 + i * 0.85, s > 0 ? -Math.PI / 2 : Math.PI / 2));
+    }
   }
   // umbrella-free pergola: slender black frame with timber slats
   for (const [x, z] of [[-4.0, 2.6], [-4.0, 7.4], [-0.6, 2.6], [-0.6, 7.4]]) {
@@ -84,7 +90,9 @@ export function buildExterior(ctx) {
   for (let x = -3.95; x <= -0.6; x += 0.18) B.box(x, 3.0, 2.55, x + 0.06, 3.12, 7.45, M.walnut);
 
   // ---- loungers by the pool
-  for (let i = 0; i < 3; i++) lounger(ctx, -3.6, -6.8 + i * 1.3);
+  for (let i = 0; i < 3; i++) {
+    ctx.item(`terrace-lounger-${i + 1}`, { name: 'Sun lounger', room: 'terrace', category: 'furniture', movable: true }, () => lounger(ctx, -3.6, -6.8 + i * 1.3));
+  }
   // ---- topiary planters (as in the reference photo)
   topiary(ctx, -0.8, -8.5);
   topiary(ctx, -0.8, 13.3);

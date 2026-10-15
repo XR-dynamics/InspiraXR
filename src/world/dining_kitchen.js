@@ -12,13 +12,22 @@ export function buildDining(ctx) {
   const { batch: B, M, nav } = ctx;
   const cx = 6.0, cz = -4.5;
   const L = 4.2, W = 1.25;
-  // table: dark marble top on two walnut slab legs
-  B.add(roundedBox(L, 0.05, W, 0.012, 2).translate(cx, 0.745, cz), M.darkMarble);
-  for (const s of [-1, 1]) {
-    B.box(cx + s * (L / 2 - 0.55) - 0.06, 0, cz - W / 2 + 0.22, cx + s * (L / 2 - 0.55) + 0.06, 0.72, cz + W / 2 - 0.22, M.walnut);
-  }
-  B.box(cx - L / 2 + 0.5, 0.66, cz - 0.04, cx + L / 2 - 0.5, 0.72, cz + 0.04, M.blackAlu);
-  nav.blockRect(cx - L / 2 - 0.05, cz - W / 2 - 0.05, cx + L / 2 + 0.05, cz + W / 2 + 0.05);
+  const r = rng(5);
+  // table: dark marble top on two walnut slab legs, with its table styling
+  ctx.item('dining-table', { name: 'Dining table', room: 'dining', category: 'furniture', movable: true }, () => {
+    B.add(roundedBox(L, 0.05, W, 0.012, 2).translate(cx, 0.745, cz), M.darkMarble);
+    for (const s of [-1, 1]) {
+      B.box(cx + s * (L / 2 - 0.55) - 0.06, 0, cz - W / 2 + 0.22, cx + s * (L / 2 - 0.55) + 0.06, 0.72, cz + W / 2 - 0.22, M.walnut);
+    }
+    B.box(cx - L / 2 + 0.5, 0.66, cz - 0.04, cx + L / 2 - 0.5, 0.72, cz + 0.04, M.blackAlu);
+    nav.blockRect(cx - L / 2 - 0.05, cz - W / 2 - 0.05, cx + L / 2 + 0.05, cz + W / 2 + 0.05);
+    for (let i = 0; i < 3; i++) {
+      const x = cx - 0.9 + i * 0.9;
+      const h = 0.14 + r() * 0.2;
+      B.add(new THREE.LatheGeometry(lathe([[0, 0], [0.05, 0], [0.07, h * 0.5], [0.03, h], [0, h]]), 32).translate(x, 0.77, cz), [M.ceramic, M.ceramicDark, M.smokedGlass][i]);
+    }
+    vaseWithFlowers(ctx, cx + 1.45, 0.77, cz + 0.1, 0.9);
+  });
 
   // chairs: 5 each side + heads
   const seats = [];
@@ -29,16 +38,9 @@ export function buildDining(ctx) {
   }
   seats.push([cx - L / 2 - 0.42, cz, Math.PI / 2]);
   seats.push([cx + L / 2 + 0.42, cz, -Math.PI / 2]);
-  for (const [x, z, ry] of seats) diningChair(ctx, x, z, ry);
-
-  // table styling
-  const r = rng(5);
-  for (let i = 0; i < 3; i++) {
-    const x = cx - 0.9 + i * 0.9;
-    const h = 0.14 + r() * 0.2;
-    B.add(new THREE.LatheGeometry(lathe([[0, 0], [0.05, 0], [0.07, h * 0.5], [0.03, h], [0, h]]), 32).translate(x, 0.77, cz), [M.ceramic, M.ceramicDark, M.smokedGlass][i]);
-  }
-  vaseWithFlowers(ctx, cx + 1.45, 0.77, cz + 0.1, 0.9);
+  seats.forEach(([x, z, ry], i) => {
+    ctx.item(`dining-chair-${i + 1}`, { name: 'Dining chair', room: 'dining', category: 'furniture', movable: true }, () => diningChair(ctx, x, z, ry));
+  });
 
   // chandelier over the table: linear cluster of globes in the coffer
   const sphere = new THREE.SphereGeometry(1, 28, 16);
@@ -55,23 +57,27 @@ export function buildDining(ctx) {
   dl.position.set(cx, 2.1, cz);
   ctx.lighting.addLight('dining', dl, 10);
 
-  // sideboard + art on the north wall
-  B.box(3.0, 0.12, -8.98, 9.0, 0.82, -8.45, M.walnut);
-  B.box(3.04, 0.0, -8.94, 8.96, 0.12, -8.5, M.shadowGap, { cast: false });
-  B.box(2.98, 0.82, -9.0, 9.02, 0.85, -8.43, M.darkMarble);
-  for (let i = 1; i < 4; i++) B.box(3.0 + i * 1.5 - 0.004, 0.14, -8.452, 3.0 + i * 1.5 + 0.004, 0.8, -8.447, M.shadowGap, { cast: false });
-  nav.blockRect(2.9, -9, 9.1, -8.35);
-  B.box(3.6, 1.15, -8.99, 8.4, 3.05, -8.96, M.blackMatte);
-  B.add(new THREE.PlaneGeometry(4.7, 1.8).translate(6.0, 2.1, -8.955), M.art2, { keepUV: true });
-  // brass disc sculpture cluster (as in the reference back wall)
-  for (let i = 0; i < 4; i++) {
-    const rr = 0.12 + r() * 0.12;
-    B.add(new THREE.CylinderGeometry(rr, rr, 0.015, 48).rotateX(Math.PI / 2).translate(3.5 + r() * 0.6, 0.96 + 0.02, -8.75), M.brass);
-  }
-  B.add(new THREE.LatheGeometry(lathe([[0, 0], [0.11, 0], [0.15, 0.2], [0.08, 0.5], [0.05, 0.55], [0, 0.55]]), 40).translate(8.3, 0.85, -8.7), M.ceramicDark);
-  vaseWithFlowers(ctx, 7.6, 0.85, -8.7, 1.1);
-  plant(ctx, 1.0, -8.2, 0.95);
-  plant(ctx, 11.2, -8.2, 0.8);
+  // sideboard (with its sculptures) + art on the north wall
+  ctx.item('dining-sideboard', { name: 'Walnut sideboard', room: 'dining', category: 'furniture', movable: true }, () => {
+    B.box(3.0, 0.12, -8.98, 9.0, 0.82, -8.45, M.walnut);
+    B.box(3.04, 0.0, -8.94, 8.96, 0.12, -8.5, M.shadowGap, { cast: false });
+    B.box(2.98, 0.82, -9.0, 9.02, 0.85, -8.43, M.darkMarble);
+    for (let i = 1; i < 4; i++) B.box(3.0 + i * 1.5 - 0.004, 0.14, -8.452, 3.0 + i * 1.5 + 0.004, 0.8, -8.447, M.shadowGap, { cast: false });
+    nav.blockRect(2.9, -9, 9.1, -8.35);
+    // brass disc sculpture cluster (as in the reference back wall)
+    for (let i = 0; i < 4; i++) {
+      const rr = 0.12 + r() * 0.12;
+      B.add(new THREE.CylinderGeometry(rr, rr, 0.015, 48).rotateX(Math.PI / 2).translate(3.5 + r() * 0.6, 0.96 + 0.02, -8.75), M.brass);
+    }
+    B.add(new THREE.LatheGeometry(lathe([[0, 0], [0.11, 0], [0.15, 0.2], [0.08, 0.5], [0.05, 0.55], [0, 0.55]]), 40).translate(8.3, 0.85, -8.7), M.ceramicDark);
+    vaseWithFlowers(ctx, 7.6, 0.85, -8.7, 1.1);
+  });
+  ctx.item('dining-art', { name: 'Dining artwork', room: 'dining', category: 'decor', movable: false }, () => {
+    B.box(3.6, 1.15, -8.99, 8.4, 3.05, -8.96, M.blackMatte);
+    B.add(new THREE.PlaneGeometry(4.7, 1.8).translate(6.0, 2.1, -8.955), M.art2, { keepUV: true });
+  });
+  ctx.item('dining-plant-west', { name: 'Potted plant', room: 'dining', category: 'decor', movable: true }, () => plant(ctx, 1.0, -8.2, 0.95));
+  ctx.item('dining-plant-east', { name: 'Potted plant', room: 'dining', category: 'decor', movable: true }, () => plant(ctx, 11.2, -8.2, 0.8));
 
   ctx.downlights('dining', [[2.5, -8.2], [9.5, -8.2], [2.5, -0.8], [9.5, -0.8]], H.ceiling - 0.14);
   ctx.spot('dining', 4.2, H.ceiling - 0.02, cz, 30);
@@ -139,15 +145,19 @@ export function buildKitchen(ctx) {
   ctx.island = { x: (ix0 + ix1) / 2, z: (iz0 + iz1) / 2 };
 
   // bar stools on the dining side
-  for (let i = 0; i < 4; i++) barStool(ctx, 14.75 + i * 1.05, iz1 + 0.42);
+  for (let i = 0; i < 4; i++) {
+    ctx.item(`kitchen-stool-${i + 1}`, { name: 'Bar stool', room: 'kitchen', category: 'furniture', movable: true }, () => barStool(ctx, 14.75 + i * 1.05, iz1 + 0.42));
+  }
 
-  // island styling
-  B.add(new THREE.CylinderGeometry(0.2, 0.17, 0.08, 48, 1, true).translate(17.6, top + 0.04, -4.5), M.ceramic);
-  B.add(new THREE.CylinderGeometry(0.17, 0.17, 0.005, 48).translate(17.6, top + 0.003, -4.5), M.ceramic);
-  const fruit = new THREE.IcosahedronGeometry(0.04, 2);
-  const r = rng(12);
-  for (let i = 0; i < 6; i++) B.add(fruit.clone().translate(17.6 + (r() - 0.5) * 0.18, top + 0.05, -4.5 + (r() - 0.5) * 0.18), i % 2 ? M.foliage : M.brass);
-  B.add(roundedBox(0.45, 0.025, 0.3, 0.01).translate(14.6, top + 0.013, -4.6), M.walnutDark);
+  // island styling (loose decor on the counter)
+  ctx.item('island-decor', { name: 'Island bowl and board', room: 'kitchen', category: 'decor', movable: false }, () => {
+    B.add(new THREE.CylinderGeometry(0.2, 0.17, 0.08, 48, 1, true).translate(17.6, top + 0.04, -4.5), M.ceramic);
+    B.add(new THREE.CylinderGeometry(0.17, 0.17, 0.005, 48).translate(17.6, top + 0.003, -4.5), M.ceramic);
+    const fruit = new THREE.IcosahedronGeometry(0.04, 2);
+    const r = rng(12);
+    for (let i = 0; i < 6; i++) B.add(fruit.clone().translate(17.6 + (r() - 0.5) * 0.18, top + 0.05, -4.5 + (r() - 0.5) * 0.18), i % 2 ? M.foliage : M.brass);
+    B.add(roundedBox(0.45, 0.025, 0.3, 0.01).translate(14.6, top + 0.013, -4.6), M.walnutDark);
+  });
 
   // pendants over the island: smoked glass cylinders on brass rods
   for (let i = 0; i < 3; i++) {

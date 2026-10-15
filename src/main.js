@@ -7,6 +7,13 @@ import { Player } from './nav/player.js';
 import { FloorPlan } from './ui/plan.js';
 import { ROOMS, VIEWS, SELECTOR, roomAt } from './world/layout.js';
 import { clamp, lerp, easeInOut } from './world/util.js';
+import { WallSystem } from './custom/walls.js';
+import { FurnitureSystem } from './custom/furniture.js';
+import { Customiser } from './custom/customiser.js';
+import { DomPanel } from './custom/panel-dom.js';
+import { ENVIRONMENTS, ORIGINAL_ENVIRONMENT } from './custom/environment.js';
+import { CUSTOMISE } from './custom/config.js';
+import { XRManager } from './xr/xr.js';
 
 const $ = (s) => document.querySelector(s);
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
@@ -43,7 +50,7 @@ const setProgress = (p, label) => {
   if (label) $('#loader .status').textContent = label;
 };
 
-let world, lighting, player, plan;
+let world, lighting, player, plan, walls, furniture, custom, xr;
 const clock = new THREE.Clock();
 let mode = 'loading';
 
@@ -53,6 +60,8 @@ const ADAPT = {
   day: { main: 1, kitchen: 1.45, hall: 1.5, master: 1.3, masterBath: 1.25, bedroom: 1.4, bath: 1.45, outdoor: 0.78 },
   sunset: { main: 1, kitchen: 1.5, hall: 1.55, master: 1.35, masterBath: 1.3, bedroom: 1.45, bath: 1.5, outdoor: 0.85 },
   night: { main: 1, kitchen: 1.1, hall: 1.2, master: 1.15, masterBath: 1.1, bedroom: 1.15, bath: 1.15, outdoor: 1.25 },
+  overcast: { main: 1, kitchen: 1.35, hall: 1.4, master: 1.25, masterBath: 1.2, bedroom: 1.3, bath: 1.35, outdoor: 0.9 },
+  evening: { main: 1, kitchen: 1.3, hall: 1.4, master: 1.25, masterBath: 1.2, bedroom: 1.3, bath: 1.35, outdoor: 1.1 },
 };
 const ROOM_ZONE = { living: 'main', foyer: 'main', dining: 'main', kitchen: 'kitchen', hall: 'hall', master: 'master', masterBath: 'masterBath', bedroom: 'bedroom', bath: 'bath', terrace: 'outdoor' };
 let adapt = 1;
@@ -76,12 +85,16 @@ async function init() {
   world = buildWorld({ scene, M, lighting });
   world.toast = toast;
   lighting.setupProbes(ZONES, world.zoneMaterials);
+  setupCustomisation();
   setProgress(0.75, 'Lighting the interiors');
   await nextFrame();
   R.setup(scene, camera);
   if (low) { lighting.sun.shadow.mapSize.set(2048, 2048); }
   if (touch) $('#hint').innerHTML = 'Drag to look &nbsp;·&nbsp; Tap the floor to walk &nbsp;·&nbsp; Tap doors, curtains &amp; switches';
-  const startMode = params.get('mode') || 'sunset';
+  if (params.has('reset')) custom.clearSaved();
+  const saved = params.has('reset') ? null : custom.restore();
+  const startMode = ENVIRONMENTS.some((e) => e.id === params.get('mode')) ? params.get('mode') : (saved || ORIGINAL_ENVIRONMENT);
+  custom.environment = startMode;
   lighting.setMode(startMode, true);
   lighting.update(10, 0);
   for (const r of lighting.rooms.values()) { r.level = r.on ? 1 : 0; }
@@ -95,6 +108,8 @@ async function init() {
   R.render(0);
   setProgress(1, 'Welcome');
   setupUI();
+  setupCustomUI();
+  setupXR();
   await nextFrame();
   $('#loader').classList.add('hidden');
   if (params.has('enter')) enter(true);
@@ -115,8 +130,11 @@ async function bakeMaterials() {
 }
 
 function bakeEnv(zones = null) {
-  const hide = [world.glassMesh, ...world.mirrors];
+  // overlays, outlines and VR widgets must never leak into the reflection probes
+  const hide = [world.glassMesh, ...world.mirrors, walls.overlay, furniture.outline];
   if (floorRing) hide.push(floorRing);
+  if (xr?.ui) hide.push(...xr.ui.panels.map((p) => p.mesh), xr.arc, xr.dest);
+  for (const c of xr?.controllers || []) hide.push(c.reticle);
   lighting.bakeEnvironment(hide, zones);
 }
 
@@ -129,6 +147,75 @@ function setIntroPose(t) {
   lensShift = lerp(a.shift, b.shift, k);
   camera.updateProjectionMatrix();
   camera.userData.applyShift();
+}
+
+// --------------------------------------------------------- customisation
+function setupCustomisation() {
+  walls = new WallSystem({ scene, faceDefs: world.faceDefs, faceRanges: world.faceRanges });
+  furniture = new FurnitureSystem({
+    scene, items: world.items, nav: world.nav,
+    onChange: () => { renderer.shadowMap.needsUpdate = true; },
+  });
+  custom = new Customiser({
+    camera, world, lighting, walls, furniture,
+    getRoom: () => (player ? roomAt(player.pos.x, player.pos.y) : null),
+    getHead: (v) => (xr?.presenting ? xr._headWorld(v) : v.copy(camera.position)),
+    toast: (t) => toast(t),
+  });
+  // everything that can stand in front of a wall: static architecture, doors, curtains, switches
+  const staticOccluders = world.staticMeshes.filter((m) => !m.userData.faceRanges);
+  custom.occluderExtras = () => [...staticOccluders, ...world.interact.targets];
+  custom.on('environment', (id) => markTod(id));
+}
+
+let relockPointer = false;
+function setupCustomUI() {
+  new DomPanel($('#cust-panel'), custom);
+  const prompt = $('#wall-prompt');
+  const showPrompt = (t) => {
+    const on = !!t && mode === 'walk' && !renderer.xr.isPresenting && !custom.state.open && !planOpen;
+    prompt.classList.toggle('hidden', !on);
+    if (t) prompt.querySelector('.wp-wall').textContent = t.label;
+  };
+  custom.on('target', showPrompt);
+  // the prompt is also a button, so touch and mouse users are not forced to use the E key
+  prompt.addEventListener('click', () => { if (custom.target) custom.open({ wallId: custom.target.id }); });
+  custom.on('open', () => {
+    prompt.classList.add('hidden');
+    player.keys.clear();
+    player.cancelRoute();
+    // the panel needs a free cursor: release pointer lock if anything holds it (restored on close)
+    if (document.pointerLockElement) { relockPointer = true; document.exitPointerLock(); }
+    canvas.classList.toggle('furn-edit', custom.state.tab === 'furniture');
+  });
+  custom.on('close', () => {
+    canvas.classList.remove('furn-edit', 'pointer');
+    if (relockPointer) { relockPointer = false; try { canvas.requestPointerLock?.(); } catch { /* needs a user gesture */ } }
+  });
+  custom.on('schema', () => canvas.classList.toggle('furn-edit', custom.state.open && custom.state.tab === 'furniture'));
+  $('#cust-btn').addEventListener('click', () => (custom.state.open ? custom.close() : custom.open({ wallId: custom.target?.id ?? null })));
+}
+
+function setupXR() {
+  xr = new XRManager({
+    renderer, scene, camera, player, nav: world.nav, world, custom, furniture,
+    buttons: [$('#vr-btn'), $('#enter-vr')], message: $('#vr-msg'),
+    hooks: {
+      // entering from the intro or mid-flight must land the visitor inside the house, facing in
+      beforeEnter: () => {
+        togglePlan(false);
+        if (mode === 'intro' || mode === 'loading') { enter(true); }
+        else if (mode === 'transition') {
+          mode = 'walk'; lensShift = 0; camera.updateProjectionMatrix(); camera.userData.applyShift();
+          $('#hud').classList.remove('hidden');
+        }
+        player.cancelRoute();
+        $('#cursor-label').classList.remove('on');
+      },
+      onStart: () => { snapAdapt = true; document.body.classList.add('in-xr'); },
+      onEnd: () => { snapAdapt = true; document.body.classList.remove('in-xr'); fitFov(); renderer.shadowMap.needsUpdate = true; R.resize(); },
+    },
+  });
 }
 
 // ------------------------------------------------------------------ enter
@@ -185,16 +272,34 @@ function setupUI() {
   // keyboard
   window.addEventListener('keydown', (e) => {
     if (mode !== 'walk') { if (e.code === 'Enter' && mode === 'intro') enter(); return; }
+    if (renderer.xr.isPresenting) return;
+    if (e.code === 'Escape') {
+      // innermost layer first: confirmation, then the customise panel, then the floor plan
+      if (custom.state.dialog) custom.cancelDialog();
+      else if (custom.state.open) custom.close();
+      else if (planOpen) togglePlan(false);
+      return;
+    }
+    if (custom.state.open) {
+      // the panel owns the keyboard: no walking, no E, no stray shortcuts
+      if (e.code === 'KeyR' && furniture.selected) { custom.rotate(e.shiftKey ? -1 : 1); e.preventDefault(); }
+      return;
+    }
     player.keys.add(e.code);
-    if (e.code === 'KeyP' || (e.code === 'Escape' && planOpen)) togglePlan();
+    if (e.code === 'KeyP') togglePlan();
     if (e.code === 'KeyL' && currentRoom) {
       const on = lighting.toggleRoom(currentRoom);
       toast(on ? 'Lights on' : 'Lights off');
     }
+    if (planOpen) return;
     if (e.code === 'Digit1') setTimeOfDay('day');
     if (e.code === 'Digit2') setTimeOfDay('sunset');
     if (e.code === 'Digit3') setTimeOfDay('night');
-    if (e.code === 'KeyE') activateCenter();
+    if (e.code === 'KeyE' && !e.repeat) {
+      // a held key is ignored (!e.repeat), so the keyboard needs no activation cooldown
+      if (custom.target) custom.open({ wallId: custom.target.id });
+      else activateCenter();
+    }
   });
   window.addEventListener('keyup', (e) => player.keys.delete(e.code));
   window.addEventListener('blur', () => player.keys.clear());
@@ -207,7 +312,7 @@ function markTod(m) {
 }
 
 function setTimeOfDay(m) {
-  lighting.setMode(m);
+  custom.setEnvironment(m);
   markTod(m);
 }
 
@@ -254,15 +359,33 @@ function setupPointer() {
   let down = null;
   const touches = new Map();
   canvas.addEventListener('pointerdown', (e) => {
-    if (mode !== 'walk') return;
+    if (mode !== 'walk' || renderer.xr.isPresenting) return;
     canvas.setPointerCapture(e.pointerId);
-    down = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, moved: 0, t: performance.now() };
+    down = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, moved: 0, t: performance.now(), furn: null };
     touches.set(e.pointerId, true);
+    // with the furniture tab open, pressing on a piece selects it and starts carrying it
+    if (custom.state.open && custom.state.tab === 'furniture') {
+      const id = pickFurniture(e.clientX, e.clientY);
+      if (id && furniture.items.get(id).movable) {
+        if (custom.selectFurniture(id) || furniture.selectedId === id) {
+          const it = furniture.selected;
+          const f = floorPointRaw(e.clientX, e.clientY);
+          if (furniture.beginDrag(id)) down.furn = { offX: f ? it.cur.x - f.x : 0, offZ: f ? it.cur.z - f.z : 0 };
+        }
+      }
+    }
     canvas.classList.add('dragging');
   });
   canvas.addEventListener('pointermove', (e) => {
     pointer = { x: e.clientX, y: e.clientY, inside: true };
     if (!down || mode !== 'walk') return;
+    if (down.furn) {
+      down.moved += Math.abs(e.clientX - down.lx) + Math.abs(e.clientY - down.ly);
+      down.lx = e.clientX; down.ly = e.clientY;
+      const f = floorPointRaw(e.clientX, e.clientY);
+      if (f && down.moved > 4) furniture.dragTo(f.x + down.furn.offX, f.z + down.furn.offZ);
+      return;
+    }
     const dx = e.clientX - down.lx, dy = e.clientY - down.ly;
     down.lx = e.clientX; down.ly = e.clientY;
     down.moved += Math.abs(dx) + Math.abs(dy);
@@ -276,14 +399,23 @@ function setupPointer() {
     touches.delete(e.pointerId);
     if (!down) return;
     const click = down.moved <= 6 && performance.now() - down.t < 600;
+    const carried = down.furn;
     down = null;
-    if (click && mode === 'walk') handleClick(e.clientX, e.clientY);
+    if (carried) {
+      if (!furniture.endDrag(true)) custom.say("Can't place it there \u2014 moved back");
+      else custom.changed();
+      return;
+    }
+    if (click && mode === 'walk') {
+      if (custom.state.open) { if (custom.state.tab === 'furniture') furniture.deselect(), custom.emit('schema'); }
+      else handleClick(e.clientX, e.clientY);
+    }
   };
   canvas.addEventListener('pointerup', up);
   canvas.addEventListener('pointercancel', up);
   canvas.addEventListener('pointerleave', () => { pointer.inside = false; });
   canvas.addEventListener('wheel', (e) => {
-    if (mode !== 'walk') return;
+    if (mode !== 'walk' || renderer.xr.isPresenting) return;
     userFov = clamp(userFov + Math.sign(e.deltaY) * 2, 40, 75);
     fitFov();
     camera.updateProjectionMatrix();
@@ -323,6 +455,26 @@ function floorPoint(cx, cy) {
   return p;
 }
 
+/** Floor point under the cursor with no walkability test (used to carry furniture). */
+function floorPointRaw(cx, cy) {
+  ndc.set((cx / window.innerWidth) * 2 - 1, -(cy / window.innerHeight) * 2 + 1);
+  raycaster.setFromCamera(ndc, camera);
+  const d = raycaster.ray.direction;
+  if (d.y > -0.02) return null;
+  const t = -raycaster.ray.origin.y / d.y;
+  return t > 40 ? null : raycaster.ray.origin.clone().addScaledVector(d, t);
+}
+
+function pickFurniture(cx, cy) {
+  ndc.set((cx / window.innerWidth) * 2 - 1, -(cy / window.innerHeight) * 2 + 1);
+  raycaster.setFromCamera(ndc, camera);
+  const hit = raycaster.intersectObjects(furniture.pickMeshes(), false)[0];
+  if (!hit || hit.distance > 14) return null;
+  const d = raycaster.ray.direction;
+  if (world.nav.wallBetween(camera.position.x, camera.position.z, hit.point.x - d.x * 0.3, hit.point.z - d.z * 0.3)) return null;
+  return furniture.itemIdOf(hit.object);
+}
+
 function handleClick(cx, cy) {
   const hit = pick(cx, cy);
   if (hit) { hit.item.action(); updateHover(true); return; }
@@ -342,7 +494,7 @@ function activateCenter() {
 
 let hoverTick = 0;
 function updateHover(force = false) {
-  if (mode !== 'walk' || !pointer.inside) {
+  if (mode !== 'walk' || !pointer.inside || custom.state.open || renderer.xr.isPresenting) {
     $('#cursor-label').classList.remove('on');
     return;
   }
@@ -367,15 +519,29 @@ function updateHover(force = false) {
 }
 
 // ------------------------------------------------------------------ loop
+// One animation loop for everything: three.js runs it on requestAnimationFrame on the desktop and on
+// the headset's own frame callback inside a VR session, so there is never a second render loop.
 const still = params.has('still');
 function loop() {
   if (still) return;
-  requestAnimationFrame(loop);
-  frame(Math.min(clock.getDelta(), 0.05));
+  renderer.setAnimationLoop(() => frame(Math.min(clock.getDelta(), 0.05)));
 }
 
+let targetTick = 0;
+/** Desktop wall targeting: the crosshair (view centre) against walls within reach. */
+function updateWallTarget() {
+  if (mode !== 'walk' || renderer.xr.isPresenting) return;
+  if (custom.state.open) return;
+  if (planOpen) { custom.setTarget(null); return; }
+  if (++targetTick % 3) return;
+  const dir = camera.getWorldDirection(new THREE.Vector3());
+  custom.setTarget(custom.queryWall(camera.position, dir));
+}
+
+let frameCount = 0;
 function frame(dt, render = true) {
   time += dt;
+  frameCount++;
 
   if (mode === 'intro') {
     setIntroPose((Math.sin(time * 0.045 - Math.PI / 2) + 1) / 2);
@@ -394,6 +560,7 @@ function frame(dt, render = true) {
   } else if (mode === 'walk') {
     player.update(dt);
     updateHover();
+    updateWallTarget();
     floorRing.material.opacity = Math.max(0, floorRing.material.opacity - dt * (player.route ? 0.6 : 0.2));
     const room = roomAt(player.pos.x, player.pos.y);
     if (room !== currentRoom) {
@@ -416,9 +583,16 @@ function frame(dt, render = true) {
   for (const fn of world.animated) fn(dt, time);
   if (lighting.envDirty) bakeEnv();
   else if (lighting.dirtyZones.size) bakeEnv([...lighting.dirtyZones]);
-  if (mode === 'walk' && !still) R.adapt(dt);
-  if (lighting.t < 1 || world.interact.anims.length || time < 1) renderer.shadowMap.needsUpdate = true;
-  if (render) R.render(time);
+  const presenting = renderer.xr.isPresenting;
+  if (presenting) xr.update(dt);
+  walls.tick(time);
+  if (mode === 'walk' && !still && !presenting) R.adapt(dt);
+  if (lighting.t < 1 || world.interact.anims.length || furniture.drag || time < 1) renderer.shadowMap.needsUpdate = true;
+  if (!render) return;
+  // The post-processing composer cannot draw into a headset's framebuffer, so a VR session
+  // renders the same scene straight to it; the desktop path is unchanged.
+  if (presenting) renderer.render(scene, camera);
+  else R.render(time);
 }
 
 init().catch((e) => {
@@ -427,4 +601,4 @@ init().catch((e) => {
 });
 
 // exposed for debugging / automated captures
-window.__residence = { get mode() { return mode; }, snap: () => { snapAdapt = true; }, step: (n = 1, dt = 1 / 30, render = true) => { for (let i = 0; i < n; i++) frame(dt, render && i === n - 1); }, get player() { return player; }, get lighting() { return lighting; }, get world() { return world; }, camera, setTimeOfDay, goToRoom, scene };
+window.__residence = { get frameCount() { return frameCount; }, get mode() { return mode; }, snap: () => { snapAdapt = true; }, step: (n = 1, dt = 1 / 30, render = true) => { for (let i = 0; i < n; i++) frame(dt, render && i === n - 1); }, get player() { return player; }, get lighting() { return lighting; }, get world() { return world; }, get custom() { return custom; }, get furniture() { return furniture; }, get walls() { return walls; }, get xr() { return xr; }, config: CUSTOMISE, camera, renderer, setTimeOfDay, goToRoom, scene };

@@ -23,6 +23,7 @@ export class Player {
     this.tYaw = 0; this.tPitch = 0;
     this.keys = new Set();
     this.enabled = false;
+    this.xr = false; // true while a headset drives the camera (see xr/xr.js)
     this.bob = 0;
     this.bobAmp = 0;
     this.route = null;
@@ -85,7 +86,7 @@ export class Player {
   }
 
   update(dt) {
-    if (!this.enabled) return;
+    if (!this.enabled || this.xr) return;
     const k = this.keys;
     const fwd = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
     const str = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);

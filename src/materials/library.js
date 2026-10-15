@@ -60,6 +60,9 @@ export function buildMaterials(renderer, onProgress = () => {}) {
   // ---- Architectural surfaces -------------------------------------------
   M.stone = std({ ...tex('stone'), roughness: 1, normalScale: new THREE.Vector2(0.6, 0.6), envMapIntensity: 1.0 });
   M.plaster = std({ ...tex('plaster'), roughness: 1, normalScale: new THREE.Vector2(0.4, 0.4) });
+  // Walls: same plaster maps, tinted per face through vertex colours (white = original),
+  // so repainting one wall never touches another surface that shares the material.
+  M.wallPaint = std({ ...tex('plaster'), roughness: 1, normalScale: new THREE.Vector2(0.4, 0.4), vertexColors: true });
   M.ceiling = std({ ...tex('plaster'), roughness: 1, color: srgb(0xf7f9fc), normalScale: new THREE.Vector2(0.2, 0.2) });
   M.walnut = std({ ...tex('walnut'), roughness: 1, normalScale: new THREE.Vector2(0.5, 0.5) });
   M.walnutDark = std({ ...tex('walnut'), roughness: 1, color: srgb(0x8a7462), normalScale: new THREE.Vector2(0.5, 0.5) });

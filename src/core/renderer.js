@@ -62,7 +62,7 @@ export class Renderer {
   constructor(canvas, { low = false } = {}) {
     this.low = low;
     const renderer = new THREE.WebGLRenderer({
-      canvas, antialias: false, powerPreference: 'high-performance', stencil: false, alpha: false,
+      canvas, antialias: true, powerPreference: 'high-performance', stencil: false, alpha: false,
     });
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { Batcher } from './util.js';
+import { Batcher, CLONES } from './util.js';
 import { NavGrid } from '../nav/grid.js';
 import { buildArchitecture } from './architecture.js';
 import { buildLiving } from './living.js';
@@ -45,6 +45,17 @@ export function buildWorld({ scene, M, lighting }) {
   ctx.interact = new Interactions(ctx);
   ctx.islandMat = M.darkMarble.clone();
   ctx.bronzeMirror = new THREE.MeshStandardMaterial({ color: 0x9c8a74, metalness: 1, roughness: 0.12 });
+
+  /**
+   * Build one individually movable / hideable piece of furniture or decor. Everything the
+   * callback adds to the batch, and every collision shape it records, belongs to the piece.
+   * meta: { name, room, category: 'furniture'|'decor', movable, flat?, finish? }
+   */
+  ctx.item = (id, meta, fn) => {
+    ctx.batch.beginItem(id, meta);
+    ctx.nav.beginRecord();
+    try { fn(); } finally { ctx.batch.endItem(ctx.nav.endRecord()); }
+  };
 
   /** Per-room clone of an emissive material so each room switches independently. */
   ctx.roomMat = (room, kind, intensity) => {
@@ -136,6 +147,15 @@ export function buildWorld({ scene, M, lighting }) {
 
   ctx.staticMeshes = ctx.batch.flush();
   ctx.zoneMaterials = ctx.batch.zoneMaterials;
+  ctx.items = ctx.batch.items;
+  ctx.faceDefs = ctx.batch.faceDefs;
+  ctx.faceRanges = ctx.batch.faces;
+  // clicking a sofa still cycles its upholstery, now on the individual sofa groups
+  const boucle = new Set([M.boucle, ...(CLONES.get(M.boucle) || [])]);
+  for (const it of ctx.items.values()) {
+    if (it.meta.finish !== 'sofa') continue;
+    I.material(it.group.children.filter((m) => boucle.has(m.material)), 'sofa');
+  }
   // parallax-corrected reflections per zone
   for (const [zone, cfg] of Object.entries(ZONES)) {
     if (!cfg.box) continue;

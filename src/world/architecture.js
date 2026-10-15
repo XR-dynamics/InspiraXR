@@ -1,5 +1,5 @@
-import { H, ROOMS, WALLS, DOORS, CURTAIN } from './layout.js';
-import { boxGeo } from './util.js';
+import { H, ROOMS, WALLS, DOORS, CURTAIN, roomAt } from './layout.js';
+import { boxGeo, projectUV, splitBoxFaces } from './util.js';
 
 /*
  * Builds the architectural shell: floors, walls (with openings, glazing and
@@ -24,12 +24,13 @@ export function buildArchitecture(ctx) {
     doorOpenings.get(key).push([d.from, d.to, 0, d.height, 'door']);
   }
 
-  for (const w of WALLS) {
+  WALLS.forEach((w, wi) => {
+    w.index = wi;
     const extra = doorOpenings.get(`${w.axis}:${w.at}`) || [];
     const ops = [...(w.openings || []).map((o) => [...o, w.ext ? 'glazing' : 'open']),
       ...extra.filter((o) => o[0] >= w.from - 1e-3 && o[1] <= w.to + 1e-3)];
     buildWall(ctx, w, ops);
-  }
+  });
 
   buildCurtainWall(ctx);
   buildCeilings(ctx);
@@ -37,10 +38,53 @@ export function buildArchitecture(ctx) {
   buildColumnsAndCladding(ctx);
 }
 
-function wallBox(B, w, a, b, y0, y1, mat, inset = 0) {
-  const h = w.t / 2 - inset;
-  if (w.axis === 'x') B.box(a, y0, w.at - h, b, y1, w.at + h, mat);
-  else B.box(w.at - h, y0, a, w.at + h, y1, b, mat);
+/** Room on one side of a wall at position `t` along it (null = outdoors). */
+function roomOnSide(w, side, t) {
+  return w.axis === 'x'
+    ? roomAt(t, w.at + side * (w.t / 2 + 0.4))
+    : roomAt(w.at + side * (w.t / 2 + 0.4), t);
+}
+
+const COMPASS = {
+  x: { 1: 'North', '-1': 'South' }, // wall runs along x; its +z face is the room's north wall
+  z: { 1: 'West', '-1': 'East' },
+};
+
+/**
+ * One solid piece of wall. It is cut wherever a room boundary crosses it, and each
+ * big face is registered as its own paintable "wall" (wall entry + side + room), so
+ * painting the kitchen side of a partition never touches the hallway side.
+ */
+function wallBox(ctx, w, a, b, y0, y1) {
+  const { batch: B, M } = ctx;
+  const h = w.t / 2;
+  const cuts = new Set([a, b]);
+  for (const r of Object.values(ROOMS)) {
+    for (const v of w.axis === 'x' ? [r.x0, r.x1] : [r.z0, r.z1]) if (v > a + 0.02 && v < b - 0.02) cuts.add(v);
+  }
+  const edges = [...cuts].sort((p, q) => p - q);
+  for (let i = 0; i < edges.length - 1; i++) {
+    const s0 = edges[i], s1 = edges[i + 1];
+    const mid = (s0 + s1) / 2;
+    const geo = w.axis === 'x'
+      ? boxGeo(s0, y0, w.at - h, s1, y1, w.at + h)
+      : boxGeo(w.at - h, y0, s0, w.at + h, y1, s1);
+    projectUV(geo);
+    const parts = splitBoxFaces(geo, w.axis === 'x' ? 'z' : 'x');
+    for (const [key, side] of [['neg', -1], ['pos', 1]]) {
+      if (!parts[key]) continue;
+      const room = roomOnSide(w, side, mid);
+      const id = `w${w.index}${side < 0 ? 'n' : 'p'}:${room || 'out'}`;
+      B.defineFace(id, {
+        id, room, wall: w.index,
+        label: `${room ? ROOMS[room].name : 'Exterior'} \u00b7 ${COMPASS[w.axis][side]} wall`,
+        normal: w.axis === 'x' ? [0, side] : [side, 0],
+      });
+      B.add(parts[key], M.wallPaint, { keepUV: true, face: id });
+    }
+    if (parts.rest) B.add(parts.rest, M.wallPaint, { keepUV: true });
+    geo.dispose();
+  }
 }
 
 function buildWall(ctx, w, openings) {
@@ -52,8 +96,8 @@ function buildWall(ctx, w, openings) {
     const [a, b, oy0, oy1, kind] = o;
     if (a > cursor) solid.push([cursor, a]);
     // below + above the opening
-    if (oy0 > w.y0) wallBox(B, w, a, b, w.y0, oy0, M.plaster);
-    if (oy1 < w.y1) wallBox(B, w, a, b, oy1, w.y1, M.plaster);
+    if (oy0 > w.y0) wallBox(ctx, w, a, b, w.y0, oy0);
+    if (oy1 < w.y1) wallBox(ctx, w, a, b, oy1, w.y1);
     if (kind === 'glazing') buildWindow(ctx, w, a, b, Math.max(oy0, w.y0), Math.min(oy1, w.y1));
     if (kind === 'open' && w.y0 < 1) liningReveal(ctx, w, a, b, oy1);
     if (oy0 > 0.2 && w.y0 < 1.8) blockFootprint(nav, w, a, b);
@@ -62,7 +106,7 @@ function buildWall(ctx, w, openings) {
   }
   if (cursor < w.to) solid.push([cursor, w.to]);
   for (const [a, b] of solid) {
-    wallBox(B, w, a, b, w.y0, w.y1, M.plaster);
+    wallBox(ctx, w, a, b, w.y0, w.y1);
     if (w.y0 < 1.8) blockFootprint(nav, w, a, b);
     if (w.y0 === 0) {
       // recessed shadow-gap skirting on both faces
@@ -153,8 +197,8 @@ function buildCurtainWall(ctx) {
   glass.push(boxGeo(fx - 0.005, 0.06 + sf, fz0 + sf, fx + 0.005, slider.height - 0.02, fz1 - sf));
 
   // curtain wall blocks movement except where the slider opens
-  nav.blockRect(-0.14, CURTAIN.z0, 0.14, slider.moving[0]);
-  nav.blockRect(-0.14, slider.moving[1], 0.14, CURTAIN.z1);
+  nav.wallRect(-0.14, CURTAIN.z0, 0.14, slider.moving[0]);
+  nav.wallRect(-0.14, slider.moving[1], 0.14, CURTAIN.z1);
   nav.allowRect(-0.14, slider.moving[0], 0.14, slider.moving[1]);
 }
 

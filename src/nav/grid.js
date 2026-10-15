@@ -13,6 +13,9 @@ export class NavGrid {
     this.block = new Uint8Array(this.w * this.h); // 1 = static obstacle
     this.door = new Uint16Array(this.w * this.h); // door id + 1 when a door leaf occupies the cell
     this.wall = new Uint8Array(this.w * this.h); // 1 = architectural wall (for line of sight)
+    this.dyn = new Uint8Array(this.w * this.h); // 1 = movable furniture (rebuilt when items move)
+    this.itemNav = new Map(); // item id -> { shapes, home:{x,z}, tf:{x,z,ry}, active }
+    this._rec = null;
     this.doorClosed = new Map();
     this.radius = 0.28;
     this._offsets = null;
@@ -32,7 +35,14 @@ export class NavGrid {
 
   allowRect(x0, z0, x1, z1) { this._rect(x0, z0, x1, z1, (k) => { this.walk[k] = 1; }); this._clear = null; }
   disallowRect(x0, z0, x1, z1) { this._rect(x0, z0, x1, z1, (k) => { this.walk[k] = 0; }); this._clear = null; }
-  blockRect(x0, z0, x1, z1) { this._rect(x0, z0, x1, z1, (k) => { this.block[k] = 1; }); this._clear = null; }
+  /** Start capturing blockers as movable shapes instead of rasterising them as static. */
+  beginRecord() { this._rec = []; }
+  endRecord() { const r = this._rec || []; this._rec = null; return r; }
+
+  blockRect(x0, z0, x1, z1) {
+    if (this._rec) { this._rec.push({ t: 'o', x: (x0 + x1) / 2, z: (z0 + z1) / 2, w: Math.abs(x1 - x0), d: Math.abs(z1 - z0), ry: 0 }); return; }
+    this._rect(x0, z0, x1, z1, (k) => { this.block[k] = 1; }); this._clear = null;
+  }
   wallRect(x0, z0, x1, z1) { this._rect(x0, z0, x1, z1, (k) => { this.block[k] = 1; this.wall[k] = 1; }); this._clear = null; }
 
   /** True when an architectural wall lies on the 2D segment a->b (ignores the ends). */
@@ -50,6 +60,7 @@ export class NavGrid {
     return false;
   }
   blockCircle(x, z, r) {
+    if (this._rec) { this._rec.push({ t: 'c', x, z, r }); return; }
     this._rect(x - r, z - r, x + r, z + r, (k, i, j) => {
       const dx = this.cx(i) - x, dz = this.cz(j) - z;
       if (dx * dx + dz * dz <= r * r) this.block[k] = 1;
@@ -58,6 +69,7 @@ export class NavGrid {
   }
   /** Oriented rectangle centred at (x,z), size (w,d), rotated by ry around y. */
   blockOriented(x, z, w, d, ry) {
+    if (this._rec) { this._rec.push({ t: 'o', x, z, w, d, ry }); return; }
     const c = Math.cos(ry), s = Math.sin(ry);
     const R = Math.hypot(w, d) / 2;
     this._rect(x - R, z - R, x + R, z + R, (k, i, j) => {
@@ -73,8 +85,98 @@ export class NavGrid {
   }
   setDoorClosed(id, closed) { this.doorClosed.set(id, closed); }
 
+  // ---- movable furniture --------------------------------------------------
+
+  /** Visit every cell whose centre lies inside the (transformed, optionally shrunk) shapes. */
+  _rasterShapes(shapes, home, tf, shrink, fn) {
+    const c = Math.cos(tf.ry), s = Math.sin(tf.ry);
+    for (const sh of shapes) {
+      // item rotation is about the home pivot, matching THREE.Object3D.rotation.y
+      const dx = sh.x - home.x, dz = sh.z - home.z;
+      const wx = tf.x + dx * c + dz * s, wz = tf.z - dx * s + dz * c;
+      if (sh.t === 'c') {
+        const r = Math.max(0.02, sh.r - shrink);
+        this._rect(wx - r, wz - r, wx + r, wz + r, (k, i, j) => {
+          const ex = this.cx(i) - wx, ez = this.cz(j) - wz;
+          if (ex * ex + ez * ez <= r * r) fn(k);
+        });
+      } else {
+        const ry = sh.ry + tf.ry;
+        const cc = Math.cos(ry), ss = Math.sin(ry);
+        const w = Math.max(0.04, sh.w - shrink * 2), d = Math.max(0.04, sh.d - shrink * 2);
+        const R = Math.hypot(w, d) / 2;
+        this._rect(wx - R, wz - R, wx + R, wz + R, (k, i, j) => {
+          const ex = this.cx(i) - wx, ez = this.cz(j) - wz;
+          const lx = ex * cc - ez * ss, lz = ex * ss + ez * cc;
+          if (Math.abs(lx) <= w / 2 && Math.abs(lz) <= d / 2) fn(k);
+        });
+      }
+    }
+  }
+
+  registerItem(id, shapes, home) {
+    this.itemNav.set(id, { shapes, home, tf: { x: home.x, z: home.z, ry: 0 }, active: true });
+  }
+  setItemTransform(id, tf) { const it = this.itemNav.get(id); if (it) it.tf = { ...tf }; }
+  setItemActive(id, active) { const it = this.itemNav.get(id); if (it) it.active = active; }
+
+  /** Recompute the movable-furniture layer. `exclude` is the piece being dragged. */
+  rebuildDynamic(exclude = null) {
+    this.dyn.fill(0);
+    for (const [id, it] of this.itemNav) {
+      if (!it.active || id === exclude || it.flat) continue;
+      this._rasterShapes(it.shapes, it.home, it.tf, 0, (k) => { this.dyn[k] = 1; });
+    }
+    this._clear = null;
+  }
+
+  /**
+   * Can this item stand at `tf`? Walls, other furniture and anything non-walkable
+   * (pool, outside the plan) reject it; a few centimetres of contact with a wall
+   * is allowed so pieces can sit flush against it. Flat items (rugs) only avoid walls.
+   */
+  itemFits(id, tf) {
+    const it = this.itemNav.get(id);
+    let ok = true, cells = 0;
+    this._rasterShapes(it.shapes, it.home, tf, 0.08, (k) => {
+      cells++;
+      if (!ok) return;
+      if (!this.walk[k] || this.wall[k]) ok = false;
+      else if (!it.flat && (this.block[k] || this.dyn[k])) ok = false;
+    });
+    // a footprint that lands entirely outside the grid covers no cells at all: that is "outside the plan"
+    return ok && cells > 0;
+  }
+
+  /** True when a wall cell lies on the segment (doorways and furniture do not count). */
+  wallOnSegment(ax, az, bx, bz) {
+    const n = Math.max(1, Math.ceil(Math.hypot(bx - ax, bz - az) / (this.cell * 0.5)));
+    for (let s = 0; s <= n; s++) {
+      const t = s / n;
+      const i = this.ix(ax + (bx - ax) * t), j = this.iz(az + (bz - az) * t);
+      if (i < 0 || j < 0 || i >= this.w || j >= this.h) return true;
+      if (this.wall[j * this.w + i]) return true;
+    }
+    return false;
+  }
+
+  /** True when a wall, void or closed door lies on the straight 2D segment a -> b. */
+  segmentBlocked(ax, az, bx, bz) {
+    const d = Math.hypot(bx - ax, bz - az);
+    const n = Math.max(1, Math.ceil(d / (this.cell * 0.5)));
+    for (let s = 0; s <= n; s++) {
+      const t = s / n;
+      const i = this.ix(ax + (bx - ax) * t), j = this.iz(az + (bz - az) * t);
+      if (i < 0 || j < 0 || i >= this.w || j >= this.h) return true;
+      const k = j * this.w + i;
+      if (!this.walk[k] || this.wall[k]) return true;
+      if (this.door[k] && this.doorClosed.get(this.door[k] - 1)) return true;
+    }
+    return false;
+  }
+
   _solid(k, withDoors) {
-    if (!this.walk[k] || this.block[k]) return true;
+    if (!this.walk[k] || this.block[k] || this.dyn[k]) return true;
     if (withDoors && this.door[k] && this.doorClosed.get(this.door[k] - 1)) return true;
     return false;
   }

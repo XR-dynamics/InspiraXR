@@ -6,12 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "npm run test:logic",
+    "test:logic": "node --test tests/logic.mjs",
+    "test:desktop": "node tests/desktop.e2e.mjs",
+    "test:xr": "node tests/xr.emulated.mjs"
   },
   "dependencies": {
     "three": "0.180.0"
   },
   "devDependencies": {
+    "iwer": "^2.6.0",
+    "playwright-core": "^1.56.1",
     "vite": "^6.3.5"
   }
 }

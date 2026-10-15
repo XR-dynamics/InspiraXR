@@ -48,7 +48,21 @@ export class Batcher {
     this.groups = new Map();
     this.zoneOf = zoneOf; // (x, y, z) => zone name, for per-zone environment probes
     this.zoneMaterials = new Map(); // zone -> Map(baseMaterial -> clone)
+    this.cur = null;        // item currently being recorded (see beginItem)
+    this.itemDefs = [];     // recorded furniture / decor items
+    this.items = new Map(); // id -> built item (after flush)
+    this.faceDefs = new Map(); // wall face id -> metadata
+    this.faces = new Map();    // wall face id -> [{ mesh, start, count }] (after flush)
   }
+
+  /** Everything added until endItem() becomes one individually movable group. */
+  beginItem(id, meta = {}) { this.cur = { id, meta, list: [] }; }
+  endItem(shapes = []) {
+    const it = this.cur;
+    this.cur = null;
+    if (it && it.list.length) this.itemDefs.push({ ...it, shapes });
+  }
+  defineFace(id, meta) { if (!this.faceDefs.has(id)) this.faceDefs.set(id, meta); }
 
   /** Clone of `material` dedicated to a probe zone (shares all textures). */
   zoneMaterial(material, zone) {
@@ -66,13 +80,15 @@ export class Batcher {
   }
 
   /** geometry must already be in world space. */
-  add(geo, material, { cast = true, receive = true, keepUV = false, uvRotate = 0 } = {}) {
+  add(geo, material, { cast = true, receive = true, keepUV = false, uvRotate = 0, face = null } = {}) {
     if (!keepUV) projectUV(geo, { rotate: uvRotate });
     if (geo.index) geo = geo.toNonIndexed();
     for (const k of Object.keys(geo.attributes)) {
       if (k !== 'position' && k !== 'normal' && k !== 'uv') geo.deleteAttribute(k);
     }
     if (!geo.attributes.uv) geo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count * 2), 2));
+    if (face) geo.userData.face = face;
+    if (this.cur) { this.cur.list.push({ geo, material, cast, receive }); return geo; }
     let zone = 'main';
     if (this.zoneOf) {
       geo.computeBoundingBox();
@@ -116,6 +132,21 @@ export class Batcher {
   flush() {
     const meshes = [];
     for (const { material, cast, receive, list } of this.groups.values()) {
+      // Paintable materials carry a per-vertex tint (white = original finish).
+      if (material.vertexColors) {
+        for (const g of list) {
+          if (g.attributes.color) continue;
+          const n = g.attributes.position.count;
+          g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(n * 3).fill(1), 3));
+        }
+      }
+      const ranges = [];
+      let offset = 0;
+      for (const g of list) {
+        const n = g.attributes.position.count;
+        if (g.userData.face) ranges.push({ id: g.userData.face, start: offset, count: n });
+        offset += n;
+      }
       const merged = mergeGeometries(list, false);
       list.forEach((g) => g.dispose());
       merged.computeBoundingSphere();
@@ -127,9 +158,53 @@ export class Batcher {
       mesh.updateMatrix();
       this.scene.add(mesh);
       meshes.push(mesh);
+      if (ranges.length) {
+        mesh.userData.faceRanges = ranges; // sorted by start, used for picking
+        for (const r of ranges) {
+          if (!this.faces.has(r.id)) this.faces.set(r.id, []);
+          this.faces.get(r.id).push({ mesh, start: r.start, count: r.count });
+        }
+      }
     }
     this.groups.clear();
+    for (const def of this.itemDefs) this._buildItem(def);
+    this.itemDefs.length = 0;
     return meshes;
+  }
+
+  /** Turn a recorded item into a Group pivoted at the centre of its footprint. */
+  _buildItem({ id, meta, list, shapes }) {
+    const box = new THREE.Box3();
+    for (const { geo } of list) { geo.computeBoundingBox(); box.union(geo.boundingBox); }
+    const px = (box.min.x + box.max.x) / 2, pz = (box.min.z + box.max.z) / 2;
+    const zone = this.zoneOf ? this.zoneOf(px, Math.min(1, box.max.y), pz) : 'main';
+    const group = new THREE.Group();
+    group.position.set(px, 0, pz);
+    group.name = id;
+    group.userData.itemId = id;
+    const byKey = new Map();
+    for (const e of list) {
+      const key = `${e.material.uuid}|${e.cast}|${e.receive}`;
+      if (!byKey.has(key)) byKey.set(key, { ...e, geos: [] });
+      byKey.get(key).geos.push(e.geo.translate(-px, 0, -pz));
+    }
+    for (const { material, cast, receive, geos } of byKey.values()) {
+      const merged = mergeGeometries(geos, false);
+      geos.forEach((g) => g.dispose());
+      merged.computeBoundingSphere();
+      merged.computeBoundingBox();
+      const mesh = new THREE.Mesh(merged, this.zoneMaterial(material, zone));
+      mesh.castShadow = cast;
+      mesh.receiveShadow = receive;
+      mesh.userData.itemId = id;
+      group.add(mesh);
+    }
+    this.scene.add(group);
+    const local = new THREE.Box3(
+      new THREE.Vector3(box.min.x - px, box.min.y, box.min.z - pz),
+      new THREE.Vector3(box.max.x - px, box.max.y, box.max.z - pz),
+    );
+    this.items.set(id, { id, meta, group, pivot: { x: px, z: pz }, local, shapes });
   }
 }
 
@@ -172,6 +247,36 @@ export function arcShape(r0, r1, a0, a1, seg = 64) {
   }
   s.closePath();
   return s;
+}
+
+/**
+ * Split an axis-aligned box into its two faces whose normal runs along `axis`
+ * ('x' or 'z') and everything else. Used to give each wall face its own
+ * paintable identity while keeping a single merged mesh.
+ */
+export function splitBoxFaces(geo, axis) {
+  const g = geo.index ? geo.toNonIndexed() : geo;
+  const nor = g.attributes.normal;
+  const out = { neg: [], pos: [], rest: [] };
+  const attrs = Object.keys(g.attributes);
+  const buckets = {};
+  for (const k of ['neg', 'pos', 'rest']) buckets[k] = Object.fromEntries(attrs.map((a) => [a, []]));
+  const comp = axis === 'x' ? 'getX' : 'getZ';
+  for (let t = 0; t < g.attributes.position.count / 3; t++) {
+    const n = nor[comp](t * 3);
+    const key = n > 0.5 ? 'pos' : n < -0.5 ? 'neg' : 'rest';
+    for (const a of attrs) {
+      const at = g.attributes[a];
+      for (let v = 0; v < 3; v++) for (let c = 0; c < at.itemSize; c++) buckets[key][a].push(at.array[(t * 3 + v) * at.itemSize + c]);
+    }
+  }
+  for (const k of ['neg', 'pos', 'rest']) {
+    if (!buckets[k].position.length) { out[k] = null; continue; }
+    const bg = new THREE.BufferGeometry();
+    for (const a of attrs) bg.setAttribute(a, new THREE.BufferAttribute(new Float32Array(buckets[k][a]), g.attributes[a].itemSize));
+    out[k] = bg;
+  }
+  return out;
 }
 
 export const lerp = (a, b, t) => a + (b - a) * t;

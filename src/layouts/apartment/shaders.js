@@ -320,12 +320,12 @@ float grain(vec2 uv) {
   float warp = fbm(uv + o, vec2(2.0, 2.0), 5) * 2.4;
   float figure = fbm(vec2(uv.x * 3.0, uv.y) + o * 0.3, vec2(3.0, 3.0), 4);
   float cath = abs(lx - 0.5) * 2.0;
-  return lx * 20.0 + warp * 1.4 + figure * 1.1 + cath * cath * 3.2 * sin(uv.y * PI * 4.0 + o) + o;
+  return lx * 9.0 + warp * 0.9 + figure * 0.7 + cath * cath * 1.1 * sin(uv.y * PI * 2.0 + o) + o;
 }
 vec3 mAlbedo(vec2 uv) {
   float b = board(uv);
   float r = grain(uv);
-  float line = pow(abs(sin(r * PI)), 3.0) * 0.85;
+  float line = pow(abs(sin(r * PI)), 2.0) * 0.55;
   float fine = fbm(vec2(uv.x * 3.0, uv.y), vec2(256.0, 8.0), 3);
   float pores = smoothstep(0.35, 0.6, fbm(uv, vec2(300.0, 40.0), 2) + 0.5);
   vec3 light = vec3(0.58, 0.40, 0.255);

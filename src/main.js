@@ -11,6 +11,8 @@ import { DomPanel } from './custom/panel-dom.js';
 import { ENVIRONMENTS, ORIGINAL_ENVIRONMENT } from './custom/environment.js';
 import { CUSTOMISE } from './custom/config.js';
 import { XRManager } from './xr/xr.js';
+import { Blueprint } from './world/blueprint.js';
+import { WIND } from './world/wind.js';
 
 const $ = (s) => document.querySelector(s);
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
@@ -47,7 +49,7 @@ const setProgress = (p, label) => {
   if (label) $('#loader .status').textContent = label;
 };
 
-let world, lighting, player, plan, walls, furniture, custom, xr;
+let world, lighting, player, plan, walls, furniture, custom, xr, blueprint = null;
 const clock = new THREE.Clock();
 let mode = 'loading';
 
@@ -139,6 +141,39 @@ function setIntroPose(t) {
   camera.userData.applyShift();
 }
 
+// ------------------------------------------------------------------ home
+/** Whole-home controls shown in the "Home" panel (desktop and VR share it). */
+function makeHome() {
+  const curtains = (label) => world.curtains.filter((c) => c.label === label);
+  const group = (label) => ({ open: () => curtains(label).every((c) => c.open), set: (v) => curtains(label).forEach((c) => c.set(v)) });
+  if (world.blueprintRoots) {
+    blueprint = new Blueprint({
+      scene, roots: world.blueprintRoots, extraHide: world.blueprintHide,
+      center: (v) => camera.getWorldPosition(v),
+      onChange: (on) => {
+        document.body.classList.toggle('blueprint', on);
+        $('#bp-btn').classList.toggle('on', on);
+        if (!on) lighting.envDirty = true;
+        if (xr?.ui) xr.ui.toolbar.dirty = true;
+        custom?.emit('schema');
+      },
+    });
+  }
+  return {
+    rooms: () => Object.keys(layout.lightLabels).filter((k) => lighting.rooms.has(k)).map((k) => ({ id: k, label: layout.lightLabels[k], on: lighting.isOn(k) })),
+    toggleRoom: (k) => lighting.toggleRoom(k),
+    allLights: (on) => { for (const r of lighting.rooms.values()) r.user = on; },
+    curtains: group('curtains'),
+    sheers: group('sheers'),
+    wind: { on: () => WIND.strength.value > 0, set: (v) => { WIND.strength.value = v ? 1 : 0; } },
+    door: {
+      open: () => !!world.interact.doors.get(layout.sliderId)?.open,
+      set: (v) => world.interact.doors.get(layout.sliderId)?.set(v),
+    },
+    blueprint: blueprint ? { on: () => blueprint.active, set: (v) => blueprint.set(v) } : null,
+  };
+}
+
 // --------------------------------------------------------- customisation
 function setupCustomisation() {
   walls = new WallSystem({ scene, faceDefs: world.faceDefs, faceRanges: world.faceRanges });
@@ -147,7 +182,7 @@ function setupCustomisation() {
     onChange: () => { renderer.shadowMap.needsUpdate = true; },
   });
   custom = new Customiser({
-    camera, world, lighting, walls, furniture,
+    camera, world, lighting, walls, furniture, home: makeHome(),
     getRoom: () => (player ? roomAt(player.pos.x, player.pos.y) : null),
     getHead: (v) => (xr?.presenting ? xr._headWorld(v) : v.copy(camera.position)),
     toast: (t) => toast(t),
@@ -183,6 +218,11 @@ function setupCustomUI() {
     if (relockPointer) { relockPointer = false; try { canvas.requestPointerLock?.(); } catch { /* needs a user gesture */ } }
   });
   custom.on('schema', () => canvas.classList.toggle('furn-edit', custom.state.open && custom.state.tab === 'furniture'));
+  $('#home-btn').addEventListener('click', () => (custom.state.open && custom.state.tab === 'home' ? custom.close() : custom.open({ wallId: null, tab: 'home' })));
+  if (blueprint) {
+    $('#bp-btn').classList.remove('hidden');
+    $('#bp-btn').addEventListener('click', () => blueprint.toggle());
+  }
   $('#cust-btn').addEventListener('click', () => (custom.state.open ? custom.close() : custom.open({ wallId: custom.target?.id ?? null })));
 }
 
@@ -191,6 +231,8 @@ function setupXR() {
     renderer, scene, camera, player, nav: world.nav, world, custom, furniture,
     buttons: [$('#vr-btn'), $('#enter-vr')], message: $('#vr-msg'),
     hooks: {
+      toggleBlueprint: blueprint ? () => blueprint.toggle() : null,
+      blueprintOn: () => !!blueprint?.active,
       // entering from the intro or mid-flight must land the visitor inside the house, facing in
       beforeEnter: () => {
         togglePlan(false);
@@ -295,6 +337,8 @@ function setupUI() {
     }
     player.keys.add(e.code);
     if (e.code === 'KeyP') togglePlan();
+    if (e.code === 'KeyB' && blueprint) blueprint.toggle();
+    if (e.code === 'KeyH') custom.open({ wallId: null, tab: 'home' });
     if (e.code === 'KeyL' && currentRoom) {
       const on = lighting.toggleRoom(currentRoom);
       toast(on ? 'Lights on' : 'Lights off');
@@ -586,11 +630,15 @@ function frame(dt, render = true) {
   const targetAdapt = layout.ADAPT[lighting.mode]?.[zone] ?? 1;
   adapt = snapAdapt ? targetAdapt : lerp(adapt, targetAdapt, 1 - Math.exp(-dt * 1.4));
   snapAdapt = false;
-  renderer.toneMappingExposure = lighting.baseExposure * adapt;
+  renderer.toneMappingExposure = blueprint?.active ? 1.0 : lighting.baseExposure * adapt;
   R.grade.uniforms.tint.value.copy(lighting.state.tint);
   for (const fn of world.animated) fn(dt, time);
-  if (lighting.envDirty) bakeEnv();
-  else if (lighting.dirtyZones.size) bakeEnv([...lighting.dirtyZones]);
+  blueprint?.update(dt, time);
+  // the blueprint hides the rooms, so reflections are not re-captured until they are back
+  if (!blueprint?.active) {
+    if (lighting.envDirty) bakeEnv();
+    else if (lighting.dirtyZones.size) bakeEnv([...lighting.dirtyZones]);
+  }
   const presenting = renderer.xr.isPresenting;
   if (presenting) xr.update(dt);
   walls.tick(time);

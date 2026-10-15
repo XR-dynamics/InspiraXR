@@ -268,7 +268,7 @@ export class Interactions {
 
   // ------------------------------------------------------------ curtains
   curtain({ axis, at, from, to, y0, y1, material, gather = 'both', open = 1, label = 'curtains', stack = null, pleat = 0.2 }) {
-    const c = { value: open, open: open > 0.5, panels: [] };
+    const c = { value: open, open: open > 0.5, panels: [], label };
     if (gather === 'both') {
       const mid = (from + to) / 2;
       c.panels.push(this._panel({ axis, at, from, to: mid, y0, y1, material, gather: 'from', stack, pleat }));

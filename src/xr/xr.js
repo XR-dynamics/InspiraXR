@@ -207,6 +207,10 @@ export class XRManager {
         if (custom.target && custom.cooldown()) custom.open({ wallId: custom.target.id });
       }),
       toolbar: makeToolbar(renderer, {
+        onHome: () => { if (this.menuReady()) this.custom.open({ wallId: null, tab: 'home' }); },
+        onBlueprint: () => { if (this.menuReady()) { this.hooks.toggleBlueprint?.(); this.ui.toolbar.dirty = true; } },
+        blueprintOn: () => !!this.hooks.blueprintOn?.(),
+        hasBlueprint: !!this.hooks.toggleBlueprint,
         onCustomise: () => this._toggleMenu(),
         onExit: () => this.exit(),
       }),

@@ -47,13 +47,13 @@ const SURFACE = {
   D_Marble: ['marbleCream'], D_MarbleProp: ['marbleStreak'], D_Travertine: ['travertine'],
   D_Plaster: ['plaster', 0.9], D_Ceiling: ['plaster', 0.92],
   D_Veneer: ['walnut', null, [0.8, 0.77, 0.75]], D_Oak: ['oak'], D_Deck: ['deck'],
-  D_Boucle: ['boucle', 0.85], D_Linen: ['linen', 0.8], D_Rug: ['wool', 0.8],
+  D_Boucle: ['boucle', 0.85], D_Linen: ['linen', 0.8], D_Rug: ['wool', 1.0],
   L_Plaster: ['plaster', 0.9], L_PaintTaupe: ['plaster', 0.9], L_Terracotta: ['plaster', 0.9], L_Sage: ['plaster', 0.9],
   L_Relief: ['relief'], L_Cane: ['cane'], L_Fluted: ['flutedWalnut'], L_WalnutWarm: ['walnut'],
   L_BoucleGreen: ['boucle', 0.85], L_BoucleTan: ['boucle', 0.85], L_BoucleRust: ['boucle', 0.85], L_LinenTan: ['boucle', 0.85],
   L_WallpaperRust: ['wallpaper'], L_MarbleTerracotta: ['marbleRosso'], L_MarbleScallop: ['onyx'],
   L_StoneBeige: ['travertine', null, [0.96, 0.93, 0.86]], L_TravertineClad: ['cladding'],
-  L_RugRust: ['wool', 0.8], L_Blind: ['linen', 0.8], L_StripeThrow: ['stripe'],
+  L_RugRust: ['wool', 1.0], L_Blind: ['linen', 0.8], L_StripeThrow: ['stripe'],
   P_Teak: ['oak', null, [0.95, 0.7, 0.45]], P_Gravel: ['gravel'],
 };
 const CLOTH = new Set(['D_Boucle', 'D_Linen', 'D_Rug', 'L_BoucleGreen', 'L_BoucleTan', 'L_BoucleRust', 'L_LinenTan', 'L_RugRust', 'L_Blind', 'L_StripeThrow']);

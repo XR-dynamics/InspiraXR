@@ -138,14 +138,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* ---- VR + customise ------------------------------------------------- */
-.pill-btn, #cust-btn {
+.pill-btn, #cust-btn, #home-btn, #bp-btn {
   height: 36px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   color: var(--muted); background: rgba(12,12,13,0.32); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.06); transition: color 0.4s, background 0.4s, border-color 0.4s;
 }
-#cust-btn { width: 36px; padding: 0; }
+#cust-btn, #home-btn, #bp-btn { width: 36px; padding: 0; }
+#bp-btn.on { color: #7fd0ff; border-color: rgba(80,190,255,0.7); box-shadow: 0 0 14px rgba(40,160,255,0.45); }
+body.blueprint #hud { --paper: #bfe6ff; }
 .pill-btn { padding: 0 16px 0 14px; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; }
-.pill-btn:hover, #cust-btn:hover { color: var(--paper); border-color: rgba(255,255,255,0.18); }
+.pill-btn:hover, #cust-btn:hover, #home-btn:hover, #bp-btn:hover { color: var(--paper); border-color: rgba(255,255,255,0.18); }
 #vr-btn[data-state="unsupported"], #vr-btn[data-state="insecure"] { opacity: 0.72; }
 #vr-btn[data-state="supported"] { color: var(--paper); border-color: rgba(201,164,106,0.45); }
 #vr-btn[data-state="busy"] { pointer-events: none; opacity: 0.6; }

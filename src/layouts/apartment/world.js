@@ -230,6 +230,12 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
     const mats = zone === 'main' ? all.filter((m) => !m.userData.noZone) : [...(ctx.zoneMaterials.get(zone)?.values() || [])];
     for (const m of mats) if (!m.userData.noZone) applyBoxProjection(m, cfg.box[0], cfg.box[1], cfg.pos);
   }
+  // what the blueprint view outlines (the finished rooms) and what it merely hides (sky, sea)
+  ctx.blueprintRoots = () => [
+    ...ctx.staticMeshes, ...[...ctx.items.values()].map((i) => i.group), ctx.glassMesh,
+    ...ctx.interact.items.map((i) => i.object),
+  ];
+  ctx.blueprintHide = () => [lighting.sky, ctx.ocean.group];
   onProgress(1, 'Ready');
   return ctx;
 }
@@ -427,7 +433,7 @@ function buildCurtains(ctx, pack, J, M) {
     const y0 = Math.min(L.min.y, R.min.y), y1 = Math.min(L.max.y, R.max.y);
     const stack = Math.max(alongX ? L.max.x - L.min.x : L.max.z - L.min.z, 0.35);
     const drapeMat = windMaterial(drapeBase, { dir: set.inward, amp: 0.05, top: y1, bottom: y0 });
-    const drapes = I.curtain({ axis, at: centreOf(L), from: lo, to: hi, y0, y1: y1 - 0.02, material: drapeMat, gather: 'both', open: 1, label: 'curtains', stack, pleat: 0.16 });
+    const drapes = I.curtain({ axis, at: centreOf(L), from: lo, to: hi, y0, y1: y1 - 0.02, material: drapeMat, gather: 'both', open: 1, label: 'curtains', stack, pleat: 0.24 });
     ctx.curtains.push(drapes);
     if (set.sheer) {
       const S = bounds(`SM_${set.name}_Sheer`);
@@ -435,7 +441,7 @@ function buildCurtains(ctx, pack, J, M) {
         const sheerMat = windMaterial(sheerBase, { dir: set.inward, amp: 0.16, top: S.max.y, bottom: S.min.y });
         const sh = I.curtain({
           axis, at: centreOf(S), from: alongX ? S.min.x : S.min.z, to: alongX ? S.max.x : S.max.z, y0: S.min.y, y1: S.max.y,
-          material: sheerMat, gather: 'both', open: 0, label: 'sheers', stack: 0.4, pleat: 0.13,
+          material: sheerMat, gather: 'both', open: 0, label: 'sheers', stack: 0.4, pleat: 0.2,
         });
         sh.panels.forEach((p) => { p.mesh.castShadow = false; });
         ctx.curtains.push(sh);

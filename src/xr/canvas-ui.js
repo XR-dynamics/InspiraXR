@@ -396,11 +396,12 @@ export class CanvasPanel {
 const SMALL_PX = [640, 200];
 
 function drawSmall(ctx, items, state) {
-  ctx.clearRect(0, 0, SMALL_PX[0], SMALL_PX[1]);
+  const CW = ctx.canvas.width, CH = ctx.canvas.height;
+  ctx.clearRect(0, 0, CW, CH);
   for (const it of items) {
     const hov = state.hoverSet?.has(it.key), prs = state.pressed === it.key;
     if (it.t === 'plate') {
-      rr(ctx, 4, 4, SMALL_PX[0] - 8, SMALL_PX[1] - 8, 56);
+      rr(ctx, 4, 4, CW - 8, CH - 8, 56);
       ctx.fillStyle = 'rgba(12,12,14,0.92)'; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = it.edge; ctx.stroke();
     } else if (it.t === 'smallbutton') {
       const [x, y, w, h] = it.rect;
@@ -430,14 +431,25 @@ export function makePrompt(renderer, getLabel, onActivate) {
 }
 
 /** Always-available controller menu: Customise + Exit VR. Sits on top of the left controller. */
-export function makeToolbar(renderer, { onCustomise, onExit }) {
+export function makeToolbar(renderer, { onHome, onBlueprint, blueprintOn = () => false, hasBlueprint = false, onCustomise, onExit }) {
+  const TB = [640, 340];
+  const quiet = { fill: 'rgba(242,238,232,0.06)', hoverFill: COL.hover, edge: COL.line, hoverEdge: COL.amber };
   const panel = new CanvasPanel({
-    meters: [0.26, 0.0813], px: SMALL_PX, renderer, drawFn: drawSmall,
-    layout: () => [
-      { t: 'plate', edge: 'rgba(255,255,255,0.28)' },
-      { t: 'smallbutton', key: 'cust', rect: [18, 20, 296, 160], label: 'Customise', fill: 'rgba(242,238,232,0.06)', hoverFill: COL.hover, edge: COL.line, hoverEdge: COL.amber, onClick: onCustomise },
-      { t: 'smallbutton', key: 'exit', rect: [326, 20, 296, 160], label: 'Exit VR', fill: 'rgba(255,107,91,0.14)', hoverFill: 'rgba(255,107,91,0.32)', edge: 'rgba(255,107,91,0.6)', hoverEdge: '#ff8f80', onClick: onExit },
-    ],
+    meters: [0.30, 0.159], px: TB, renderer, drawFn: drawSmall,
+    layout: () => {
+      const on = hasBlueprint && blueprintOn();
+      const items = [
+        { t: 'plate', edge: 'rgba(255,255,255,0.28)' },
+        { t: 'smallbutton', key: 'home', rect: [18, 18, 296, 134], label: 'Home', ...quiet, onClick: onHome },
+        hasBlueprint
+          ? { t: 'smallbutton', key: 'bp', rect: [326, 18, 296, 134], label: on ? 'Blueprint: on' : 'Blueprint',
+            fill: on ? 'rgba(40,160,255,0.28)' : 'rgba(40,160,255,0.08)', hoverFill: 'rgba(40,160,255,0.4)', edge: 'rgba(80,190,255,0.7)', hoverEdge: '#8fd8ff', onClick: onBlueprint }
+          : { t: 'smallbutton', key: 'cust', rect: [326, 18, 296, 134], label: 'Customise', ...quiet, onClick: onCustomise },
+        hasBlueprint ? { t: 'smallbutton', key: 'cust', rect: [18, 188, 296, 134], label: 'Customise', ...quiet, onClick: onCustomise } : null,
+        { t: 'smallbutton', key: 'exit', rect: hasBlueprint ? [326, 188, 296, 134] : [18, 188, 604, 134], label: 'Exit VR', fill: 'rgba(255,107,91,0.14)', hoverFill: 'rgba(255,107,91,0.32)', edge: 'rgba(255,107,91,0.6)', hoverEdge: '#ff8f80', onClick: onExit },
+      ];
+      return items.filter(Boolean);
+    },
   });
   // It rides on a hand-held controller, so it can be approached from any angle: keep it pointable
   // (and visible) from both sides rather than relying on one exact orientation.

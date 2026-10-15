@@ -16,14 +16,14 @@ const PRESETS = {
     turbidity: 2.6, rayleigh: 1.1, mie: 0.004, mieG: 0.82, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0xcfe0ff), hemiGround: new THREE.Color(0xd6d6d6), hemi: 0.42, tint: new THREE.Vector3(1.0, 1.0, 1.02),
     env: 0.85, exposure: 0.6, interior: 0.0,
-    seaHorizon: new THREE.Color(0xcfe3f5), seaZenith: new THREE.Color(0x5b8fd0), seaDeep: new THREE.Color(0x0a4766), seaShallow: new THREE.Color(0x2b8aa0), seaGlint: 1.0,
+    seaHorizon: new THREE.Color(0xcfe3f5), seaZenith: new THREE.Color(0x5b8fd0), seaDeep: new THREE.Color(0x03609e), seaShallow: new THREE.Color(0x12a8d2), seaGlint: 1.0,
   },
   sunset: {
     sun: new THREE.Vector3(-0.9, 0.3, 0.32).normalize(), sunColor: new THREE.Color(0xffbf85), sunIntensity: 3.6,
     turbidity: 4.0, rayleigh: 1.6, mie: 0.006, mieG: 0.9, skyGain: 1.0, night: 0, overcast: 0,
     hemiSky: new THREE.Color(0xc9d3e6), hemiGround: new THREE.Color(0xd2d3d6), hemi: 0.36, tint: new THREE.Vector3(0.94, 0.985, 1.09),
     env: 0.8, exposure: 0.62, interior: 0.75,
-    seaHorizon: new THREE.Color(0xf2b78a), seaZenith: new THREE.Color(0x4f6faa), seaDeep: new THREE.Color(0x123f5c), seaShallow: new THREE.Color(0x4a7c8c), seaGlint: 1.3,
+    seaHorizon: new THREE.Color(0xf2b78a), seaZenith: new THREE.Color(0x4f6faa), seaDeep: new THREE.Color(0x0a5588), seaShallow: new THREE.Color(0x2b96b8), seaGlint: 1.3,
   },
   overcast: {
     sun: new THREE.Vector3(-0.25, 0.85, 0.3).normalize(), sunColor: new THREE.Color(0xe4ebf5), sunIntensity: 0.55,

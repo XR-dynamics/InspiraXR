@@ -39,13 +39,14 @@ export const apartment = {
   ],
   START: { pos: [3.1, -1.5], look: [3.1, 1.5, -6.0] },
   // the sun is turned so that the terrace and the sliding doors face the light
+  defaultEnvironment: 'day',
   lightingConfig: { sunYaw: 2.08, sunTarget: [6, 0, -4], shadowExtent: 11, shadowFar: 160 },
   outdoorRoom: 'terrace',
   sliderId: 'slider',
   lightLabels: { living: 'Living', dining: 'Dining', kitchen: 'Kitchen', entry: 'Entrance', bedroom: 'Bedroom', study: 'Study', bath: 'Bathroom', terrace: 'Terrace' },
   viewFor(key) { return this.VIEWS[key] || null; },
   async load() { pack = await loadPack(`${import.meta.env.BASE_URL}apartment/`); },
-  buildMaterials(renderer, onProgress) { return buildApartmentMaterials(renderer, pack.json.materials, onProgress); },
+  buildMaterials(renderer, onProgress) { return buildApartmentMaterials(renderer, pack.json.materials, onProgress); },   // async: photographs are fetched
   buildWorld(args) { return buildApartmentWorld({ ...args, pack }); },
   createPlan(svg, onSelect) { return new ApartmentPlan(svg, onSelect, pack.json.plan ? pack.json : { plan: pack.json.plan }); },
 };

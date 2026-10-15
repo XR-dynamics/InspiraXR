@@ -9,12 +9,15 @@ import { roomAt } from './data.js';
  */
 
 /** Lumens -> scene intensity (candela-like units; calibrated against the sun at the exposure used). */
-const PER_LUMEN = 0.0045;
+const PER_LUMEN = 0.0042;
 // real lights allowed per room
 const BUDGET = { living: 3, dining: 2, kitchen: 2, entry: 2, bedroom: 2, study: 2, bath: 2, terrace: 1 };
 
 /** Colour of a black body at `k` Kelvin (Tanner Helland's approximation), as a THREE.Color in linear space. */
 export function kelvin(k) {
+  // The plan asks for 2700-3000 K, which a camera (or an eye adapted to the room) would render as orange.
+  // Interiors read as warm white at about 4000 K; the lights keep only a hint of warmth.
+  k = 4000 + (k - 3000) * 0.4;
   const t = k / 100;
   const r = t <= 66 ? 255 : 329.698727446 * Math.pow(t - 60, -0.1332047592);
   const g = t <= 66 ? 99.4708025861 * Math.log(t) - 161.1195681661 : 288.1221695283 * Math.pow(t - 60, -0.0755148492);

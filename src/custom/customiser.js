@@ -34,7 +34,7 @@ export class Customiser {
     };
     this.target = null;           // the wall currently pointed at (not yet opened)
     this.targetLostAt = 0;
-    this.environment = ORIGINAL_ENVIRONMENT;
+    this.environment = activeLayout()?.defaultEnvironment || ORIGINAL_ENVIRONMENT;
     this.lastActivation = 0;
     this.listeners = new Map();
     this.raycaster = new THREE.Raycaster();
@@ -185,8 +185,9 @@ export class Customiser {
     this.emit('environment', id);
     this.changed();
   }
-  restoreEnvironment() { this.setEnvironment(ORIGINAL_ENVIRONMENT); this.say('Original lighting restored'); }
+  restoreEnvironment() { this.setEnvironment(this.originalEnvironment()); this.say('Original lighting restored'); }
 
+  originalEnvironment() { return activeLayout()?.defaultEnvironment || ORIGINAL_ENVIRONMENT; }
   roomName(key) { return roomInfo(key)?.name || 'this area'; }
   currentSpace() { return this.getRoom() || 'terrace'; }
 
@@ -213,8 +214,8 @@ export class Customiser {
   resetRoom() {
     this.walls.restoreAll();
     this.furniture.resetAll();
-    this.environment = ORIGINAL_ENVIRONMENT;
-    this.lighting.setMode(ORIGINAL_ENVIRONMENT);
+    this.environment = this.originalEnvironment();
+    this.lighting.setMode(this.environment);
     this.state.pickHex = '#d4c2a2';
     this.emit('environment', this.environment);
     this.say('Room reset to the original design');
@@ -298,7 +299,7 @@ export class Customiser {
     } else if (S.tab === 'environment') {
       B.push({ t: 'heading', text: 'Lighting and background' });
       B.push({ t: 'presets', items: ENVIRONMENTS, value: this.environment, onPick: (id) => this.setEnvironment(id) });
-      B.push({ t: 'buttons', items: [{ label: 'Restore original', disabled: this.environment === ORIGINAL_ENVIRONMENT, onClick: () => this.restoreEnvironment() }] });
+      B.push({ t: 'buttons', items: [{ label: 'Restore original', disabled: this.environment === this.originalEnvironment(), onClick: () => this.restoreEnvironment() }] });
     } else if (S.tab === 'furniture') {
       const sel = this.furniture.selected;
       B.push({ t: 'heading', text: sel ? sel.name : 'Furniture' });

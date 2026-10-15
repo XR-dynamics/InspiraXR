@@ -394,3 +394,58 @@ vec3 mAlbedo(vec2 uv) {
 float mHeight(vec2 uv) { return 0.5 + ridged(uv, vec2(6.0), 6) * 0.7 + fbm(uv, vec2(60.0), 3) * 0.12; }
 float mRough(vec2 uv) { return 0.9; }
 `;
+
+// Polished cream limestone floor: 0.8 m slabs, soft cloudy tone, faint warm veining, hairline joints.
+// The albedo follows the reference renders (warm sand, lighter at the centre of each slab).
+export const LIMESTONE = /* glsl */ `
+vec2 slab(vec2 uv) { return floor(uv * 2.0); }
+float joint(vec2 uv) {
+  vec2 f = fract(uv * 2.0), d = min(f, 1.0 - f);
+  return 1.0 - smoothstep(0.0004, 0.0012, min(d.x, d.y));
+}
+vec3 mAlbedo(vec2 uv) {
+  vec2 id = slab(uv);
+  vec2 o = vec2(hash1(id), hash1(id + 4.7)) * 21.0;
+  float t = hash1(id + 2.3);
+  float cloud = fbm(uv + o, vec2(3.0), 6);                  // large soft clouds
+  float mid = fbm(uv * 2.0 + o * 0.5, vec2(7.0), 5);
+  vec3 base = mix(vec3(0.835, 0.775, 0.665), vec3(0.870, 0.815, 0.710), t);
+  vec3 col = base * (1.0 + cloud * 0.07 + mid * 0.025);
+  // gentle veining: a few long, faint, warm lines that drift across each slab
+  float w = fbm(uv + o, vec2(2.0), 6) * 3.0;
+  float v = vein(sin((uv.x * 1.3 + uv.y * 2.1 + w) * PI * 2.0), 0.022) * 0.55 + vein(sin((uv.x * 3.1 - uv.y * 1.2 + w * 1.5) * PI * 2.0), 0.012) * 0.35;
+  col = mix(col, vec3(0.70, 0.62, 0.50), v * 0.22);
+  col *= 1.0 - smoothstep(0.55, 0.85, fbm(uv + o, vec2(90.0), 3) + 0.5) * 0.025;     // micro speckle
+  col = mix(col, vec3(0.50, 0.45, 0.38), joint(uv));
+  return srgb(col);
+}
+float mHeight(vec2 uv) { return 0.55 + fbm(uv, vec2(160.0), 2) * 0.012 - joint(uv) * 0.7; }
+float mRough(vec2 uv) {
+  vec2 id = slab(uv);
+  vec2 o = vec2(hash1(id), hash1(id + 4.7)) * 21.0;
+  return clamp(0.20 + fbm(uv + o + 3.0, vec2(4.0), 5) * 0.12 + fbm(uv, vec2(60.0), 3) * 0.04 + joint(uv) * 0.4, 0.08, 0.9);
+}
+`;
+
+// Straight-grained walnut: fine parallel grain with gentle figure; calm, not wavy (doors, wardrobes, tables).
+export const WALNUT_FINE = /* glsl */ `
+float plank(vec2 uv) { return floor(uv.x * 4.0); }
+float seam(vec2 uv) { float f = fract(uv.x * 4.0); float d = min(f, 1.0 - f); return 1.0 - smoothstep(0.0008, 0.0022, d); }
+vec3 mAlbedo(vec2 uv) {
+  float b = plank(uv);
+  float o = hash1(vec2(b, 7.0)) * 40.0;
+  float u = uv.x * 4.0;
+  float drift = fbm(vec2(uv.y * 1.0 + o, u * 0.4), vec2(2.0, 2.0), 4) * 0.8;   // grain wanders slowly along the board
+  float lines = sin((u * 38.0 + drift * 9.0 + o) * PI);
+  float fine = fbm(vec2(u * 2.0 + o, uv.y), vec2(180.0, 6.0), 3);
+  float cathedral = pow(abs(sin((u * 3.0 + drift * 1.4 + o) * PI)), 4.0);
+  float tone = clamp(0.5 + lines * 0.12 + fine * 0.5 + cathedral * 0.18, 0.0, 1.0);
+  vec3 light = vec3(0.50, 0.335, 0.21), dark = vec3(0.285, 0.18, 0.105);
+  vec3 col = mix(light, dark, tone);
+  col *= 0.92 + hash1(vec2(b, 3.0)) * 0.16;
+  col = mix(col, vec3(0.06, 0.04, 0.025), seam(uv) * 0.9);
+  return srgb(col);
+}
+float mHeight(vec2 uv) { float u = uv.x * 4.0; return 0.5 + sin(u * 38.0 * PI) * 0.01 + fbm(uv, vec2(260.0, 24.0), 2) * 0.05 - seam(uv) * 0.5; }
+float mRough(vec2 uv) { return 0.26 + fbm(uv + 2.0, vec2(5.0), 3) * 0.06 + fbm(uv, vec2(220.0, 14.0), 2) * 0.1 + seam(uv) * 0.3; }
+`;

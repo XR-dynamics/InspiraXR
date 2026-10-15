@@ -9,6 +9,8 @@ import { ZONES, ROOM_ZONE } from './zones.js';
 import { buildLights } from './lights.js';
 import { windMaterial, WIND } from '../../world/wind.js';
 import { buildOcean } from './ocean.js';
+import { furnish } from './furnish/index.js';
+import { blockAsset } from './footprint.js';
 
 /*
  * Assembles the apartment from the packed plan: architecture (walls with paintable faces, floors,
@@ -22,39 +24,11 @@ const zoneOf = (x, y, z) => {
   return r ? ROOM_ZONE[r] : 'outdoor';
 };
 
-// Pieces a visitor may move. [placement label, display name, options]
-const ITEMS = [
-  ['Sofa_Sectional', 'Sectional sofa'],
-  ['Rug_Living', 'Living room rug', { flat: true }],
-  ['CoffeeTable_Drum', 'Drum coffee table', { attach: ['Decor_Books', 'Decor_Lantern'] }],
-  ['SideTable_Marble', 'Marble side table'],
-  ['Armchair_Green', 'Green armchair'],
-  ['TV_Unit', 'TV unit', { attach: ['TV_Panel'] }],
-  ['DiningTable_Oval', 'Dining table', { attach: ['PlateSet', 'PlateSet_2', 'PlateSet_3', 'PlateSet_4', 'PlateSet_5', 'PlateSet_6', 'PlateSet_7', 'PlateSet_8', 'TableRunner', 'Candlestick', 'Candlestick_2'] }],
-  ...['', '_2', '_3', '_4', '_5', '_6', '_7', '_8'].map((s, i) => [`DiningChair${s}`, `Dining chair ${i + 1}`]),
-  ...['', '_2', '_3'].map((s, i) => [`BarStool${s}`, `Bar stool ${i + 1}`]),
-  ['Console_Entrance', 'Entrance console', { attach: ['Vase_Console', 'Decor_Bowl_Console', 'Books_Console'] }],
-  ['Rug_Entrance', 'Entrance runner', { flat: true }],
-  ['Bed_Master', 'Bed'],
-  ['Nightstand', 'Nightstand left', { attach: ['Lamp_Bedside'] }],
-  ['Nightstand_2', 'Nightstand right', { attach: ['Lamp_Bedside_2'] }],
-  ['Rug_Bedroom', 'Bedroom rug', { flat: true }],
-  ['Bench_Bed', 'Bed bench'],
-  ['Dresser_Bedroom', 'Dresser'],
-  ['Desk_Study', 'Writing desk', { attach: ['Laptop', 'PenCup', 'Books_Desk'] }],
-  ['DeskChair', 'Desk chair'],
-  ['Rug_Study', 'Study rug', { flat: true }],
-  ['Credenza_Study', 'Credenza'],
-  ['Sofa_Terrace', 'Terrace sofa'],
-  ['CoffeeTable_Faceted', 'Terrace coffee table'],
-  ['DiningTable_Hex', 'Terrace dining table'],
-  ...['', '_2', '_3', '_4'].map((s, i) => [`Chair_Terrace${s}`, `Terrace chair ${i + 1}`]),
-  ['Chest_Teak', 'Teak storage chest'],
-];
-
 // Built-ins and fixtures: they stay put, but they do block walking.
-const BLOCKERS = /^(Kitchen_Run|Kitchen_TallUnit|Kitchen_Island|Closet_Entrance|Wardrobe|Shelving_Study|Shower_Glass|Toilet|Vanity_Floating|Terrace_Parapet|Terrace_Post|Towel_Rail)/;
+const BLOCKERS = /^(Terrace_Parapet|Terrace_Post)/;
 // replaced by generated cloth, doors we animate ourselves, or glass we merge
+// per-placement material swaps (the plan's cane panel is the woven grasscloth on the moodboard)
+const OVERRIDE = { Panel_Cane_Living_West: { L_Cane: 'X_Grasscloth' } };
 const REPLACED = /^(Door_.*_Leaf|DoorKnob_|DoorHinge_|Slider_2|Slider_3|Curtain_.*_(DrapeL|DrapeR|Sheer))/;
 
 export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, onProgress = () => {} }) {
@@ -135,8 +109,9 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
   await tick();
 
   // ---------------------------------------------------------- architecture
-  const J_ITEM = new Set();
-  for (const [label, , o] of ITEMS) { J_ITEM.add(label); (o?.attach || []).forEach((l) => J_ITEM.add(l)); }
+  // The plan's furniture, decor and fixtures are not used: the apartment starts as an empty shell and is
+  // furnished by ./furnish. Only architecture, curtains and recessed downlights are taken from the plan.
+  const keep = (p) => /^Architecture\//.test(p.folder) || p.folder === 'Interior/Curtains' || /^Downlight/.test(p.label);
   const byLabel = new Map(J.placements.map((p) => [p.label, p]));
   const mat4 = (p) => Pack.placement(p.loc, p.yaw);
 
@@ -151,7 +126,7 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
   };
 
   for (const p of J.placements) {
-    if (J_ITEM.has(p.label) || REPLACED.test(p.label)) continue;
+    if (!keep(p) || REPLACED.test(p.label)) continue;
     const asset = p.asset;
     const mt = mat4(p);
     const isWall = /^SM_Wall_/.test(asset);
@@ -163,7 +138,7 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
       if (/^(D_Glass|L_Glass)$/.test(material)) { stripToPosNor(geo); ctx.glass.push(geo); continue; }
       if (isWall && paintables.has(material)) { addWallFaces(ctx, asset, material, geo, paintMat(material)); continue; }
       const castShadow = !/Rug|Floor_ShowerPad/.test(asset);
-      B.add(geo, matAt(material, c.x, c.z), { keepUV: true, cast: castShadow });
+      B.add(geo, matAt(OVERRIDE[p.label]?.[material] || material, c.x, c.z), { keepUV: true, cast: castShadow });
     }
     if (blocker) blockAsset(nav, pack, asset, mt);
   }
@@ -171,26 +146,8 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
   onProgress(0.3, 'Furnishing');
   await tick();
 
-  // ------------------------------------------------------------------- items
-  for (const [label, name, opt = {}] of ITEMS) {
-    const p = byLabel.get(label);
-    if (!p) continue;
-    const mt = mat4(p);
-    const main = pack.geometries(p.asset, mt);
-    const shapes = footprint(main.map((m) => m.geo), opt.flat);
-    const centre = new THREE.Box3();
-    main.forEach((m) => { m.geo.computeBoundingBox(); centre.union(m.geo.boundingBox); });
-    const cx = (centre.min.x + centre.max.x) / 2, cz = (centre.min.z + centre.max.z) / 2;
-    const room = roomAt(cx, cz) || 'terrace';
-    B.beginItem(label, { name, room, category: 'furniture', movable: true, flat: !!opt.flat });
-    for (const { material, geo } of main) B.add(geo, matAt(material, cx, cz), { keepUV: true, cast: !opt.flat });
-    for (const l of opt.attach || []) {
-      const q = byLabel.get(l);
-      if (!q) continue;
-      for (const { material, geo } of pack.geometries(q.asset, mat4(q))) B.add(geo, matAt(material, cx, cz), { keepUV: true });
-    }
-    B.endItem(shapes);
-  }
+  // --------------------------------------------------------------- furnishing
+  furnish(ctx, { matAt, byLabel, mat4 });
 
   onProgress(0.5, 'Hanging doors and curtains');
   await tick();
@@ -298,62 +255,6 @@ function addWallFaces(ctx, asset, materialName, geo, material) {
     B.add(out, material, { keepUV: true, face: id });
   }
   geo.dispose();
-}
-
-/** Oriented bounding rectangle of an asset's placed geometry, as a blocking shape. */
-function blockAsset(nav, pack, asset, mt) {
-  const a = pack.meshes[asset];
-  const lo = new THREE.Vector3(...a.min), hi = new THREE.Vector3(...a.max);
-  const centre = lo.clone().add(hi).multiplyScalar(0.5).applyMatrix4(mt);
-  const q = new THREE.Quaternion().setFromRotationMatrix(mt);
-  const e = new THREE.Euler().setFromQuaternion(q, 'YXZ');
-  nav.blockOriented(centre.x, centre.z, hi.x - lo.x, hi.z - lo.z, e.y);
-}
-
-/**
- * Walking footprint of a piece: every 10 cm cell its geometry covers between 5 cm and 1.5 m above
- * the floor, merged into rectangles (so an L-shaped sofa blocks an L, not its bounding square).
- */
-function footprint(geos, flat) {
-  const cell = 0.1;
-  const occ = new Map();
-  const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
-  let minI = 1e9, minJ = 1e9, maxI = -1e9, maxJ = -1e9;
-  const lo = flat ? -1 : 0.05, hi = flat ? 9 : 1.5;
-  for (const g of geos) {
-    const ng = g.index ? g.toNonIndexed() : g;
-    const p = ng.attributes.position;
-    for (let t = 0; t < p.count; t += 3) {
-      a.fromBufferAttribute(p, t); b.fromBufferAttribute(p, t + 1); c.fromBufferAttribute(p, t + 2);
-      if (Math.max(a.y, b.y, c.y) < lo || Math.min(a.y, b.y, c.y) > hi) continue;
-      const span = Math.max(a.distanceTo(b), b.distanceTo(c), c.distanceTo(a));
-      const n = Math.max(1, Math.ceil(span / 0.04));
-      for (let i = 0; i <= n; i++) for (let j = 0; j <= n - i; j++) {
-        const u = i / n, v = j / n, w = 1 - u - v;
-        const x = a.x * w + b.x * u + c.x * v, z = a.z * w + b.z * u + c.z * v;
-        const ci = Math.floor(x / cell), cj = Math.floor(z / cell);
-        occ.set(ci * 100000 + cj, [ci, cj]);
-        minI = Math.min(minI, ci); maxI = Math.max(maxI, ci); minJ = Math.min(minJ, cj); maxJ = Math.max(maxJ, cj);
-      }
-    }
-  }
-  // greedy merge: grow each unclaimed cell along x, then as far along z as the whole run stays occupied
-  const has = (i, j) => occ.has(i * 100000 + j);
-  const done = new Set();
-  const shapes = [];
-  for (let j = minJ; j <= maxJ; j++) for (let i = minI; i <= maxI; i++) {
-    if (!has(i, j) || done.has(i * 100000 + j)) continue;
-    let w = 1;
-    while (has(i + w, j) && !done.has((i + w) * 100000 + j)) w++;
-    let d = 1;
-    outer: while (true) {
-      for (let k = 0; k < w; k++) if (!has(i + k, j + d) || done.has((i + k) * 100000 + j + d)) break outer;
-      d++;
-    }
-    for (let jj = 0; jj < d; jj++) for (let ii = 0; ii < w; ii++) done.add((i + ii) * 100000 + j + jj);
-    shapes.push({ t: 'o', x: (i + w / 2) * cell, z: (j + d / 2) * cell, w: w * cell, d: d * cell, ry: 0 });
-  }
-  return shapes;
 }
 
 // ----------------------------------------------------------------------- doors

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { buildBackdrop } from './backdrop.js';
 
 /*
  * The setting: the apartment stands on a gravel plateau above the sea. This module builds the ocean
@@ -72,7 +73,8 @@ void main() {
   // body colour: deeper toward the camera's far side, lighter where the surface faces us
   float shallowMix = pow(1.0 - cosT, 2.0) * 0.6 + g.x * 0.5 * detail + 0.15;
   vec3 body = mix(uDeep, uShallow, clamp(shallowMix, 0.0, 1.0));
-  body *= 0.55 + 0.45 * smoothstep(-0.2, 0.9, uSunDir.y);
+  body *= 0.7 + 0.5 * smoothstep(-0.2, 0.9, uSunDir.y);
+  body = mix(vec3(dot(body, vec3(0.33))), body, 1.35);   // keep the water a clear blue after tone mapping
 
   vec3 col = mix(body, refl, clamp(fres * 1.15, 0.0, 1.0));
   // crest whitening where the surface is steep
@@ -107,6 +109,10 @@ export function buildOcean(ctx) {
   sea.renderOrder = -1;
   group.add(sea);
 
+  // ---- distant mountains, forested hills and clouds
+  const backdrop = buildBackdrop();
+  group.add(backdrop.mesh);
+
   // ---- cliff: a displaced grid that is flat under the plateau and falls away to the water
   const cliff = buildCliff(M);
   group.add(cliff);
@@ -124,11 +130,15 @@ export function buildOcean(ctx) {
     if (s.night > 0.5) sunDir.set(-0.35, 0.65, -0.5).normalize();
     uniforms.uSunDir.value.copy(sunDir);
     uniforms.uSunColor.value.copy(s.sunColor).multiplyScalar(Math.max(0.25, Math.min(1.4, s.sunIntensity / 3.4)));
+    const b = backdrop.uniforms;
+    b.uHorizon.value.copy(s.seaHorizon); b.uZenith.value.copy(s.seaZenith);
+    b.uSunDir.value.copy(sunDir); b.uSunColor.value.copy(s.sunColor);
+    b.uNight.value = s.night; b.uOvercast.value = s.overcast; b.uSunI.value = s.sunIntensity;
   };
   sync();
   return {
-    group, sea, cliff, uniforms,
-    animated: [(dt, t) => { uniforms.uTime.value = t; sync(); }],
+    group, sea, cliff, uniforms, backdrop,
+    animated: [(dt, t) => { uniforms.uTime.value = t; backdrop.uniforms.uTime.value = t; sync(); }],
   };
 }
 

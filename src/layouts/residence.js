@@ -25,6 +25,7 @@ export const residence = {
     { pos: new THREE.Vector3(6.6, 1.42, 11.0), look: new THREE.Vector3(3.2, 1.9, 0.0), shift: 0.3 },
   ],
   START: { pos: [6.0, 14.4], look: [4.6, 1.6, 4.0] },
+  defaultEnvironment: 'sunset',
   lightingConfig: {},
   outdoorRoom: 'terrace',
   sliderId: 'slider',

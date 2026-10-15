@@ -57,6 +57,7 @@ let mode = 'loading';
 // toward a per-zone value (layout.ADAPT) as the visitor walks from space to space.
 let layout;
 const roomAt = (x, z) => layout.roomAt(x, z);
+const WB = new THREE.Vector3();
 let adapt = 1;
 let snapAdapt = false;
 let time = 0;
@@ -84,7 +85,7 @@ async function init() {
   if (touch) $('#hint').innerHTML = 'Drag to look &nbsp;·&nbsp; Tap the floor to walk &nbsp;·&nbsp; Tap doors, curtains &amp; switches';
   if (params.has('reset')) custom.clearSaved();
   const saved = params.has('reset') ? null : custom.restore();
-  const startMode = ENVIRONMENTS.some((e) => e.id === params.get('mode')) ? params.get('mode') : (saved || ORIGINAL_ENVIRONMENT);
+  const startMode = ENVIRONMENTS.some((e) => e.id === params.get('mode')) ? params.get('mode') : (saved || layout.defaultEnvironment || ORIGINAL_ENVIRONMENT);
   custom.environment = startMode;
   lighting.setMode(startMode, true);
   lighting.update(10, 0);
@@ -631,7 +632,11 @@ function frame(dt, render = true) {
   adapt = snapAdapt ? targetAdapt : lerp(adapt, targetAdapt, 1 - Math.exp(-dt * 1.4));
   snapAdapt = false;
   renderer.toneMappingExposure = blueprint?.active ? 1.0 : lighting.baseExposure * adapt;
-  R.grade.uniforms.tint.value.copy(lighting.state.tint);
+  // white balance: when warm room lights dominate, a camera (or an adapted eye) cools the picture back toward neutral
+  let lit = 0;
+  for (const r of lighting.rooms.values()) lit = Math.max(lit, r.level);
+  const wb = lit * Math.max(0, 1 - lighting.state.sunIntensity / 3.0) * 0.8 + lit * 0.2;
+  R.grade.uniforms.tint.value.copy(lighting.state.tint).multiply(WB.set(1 - 0.05 * wb, 1 - 0.005 * wb, 1 + 0.07 * wb));
   for (const fn of world.animated) fn(dt, time);
   blueprint?.update(dt, time);
   // the blueprint hides the rooms, so reflections are not re-captured until they are back

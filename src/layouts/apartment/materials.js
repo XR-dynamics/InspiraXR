@@ -107,6 +107,9 @@ export async function buildApartmentMaterials(renderer, specs, onProgress = () =
       const o = { map: t.map, normalMap: t.normal, roughnessMap: t.orm, roughness: 1, metalness: 0, color: tint, normalScale: ns(recipe) };
       if (CLOTH.has(name)) {
         m = new THREE.MeshPhysicalMaterial({ ...o, sheen: RUGS.has(name) ? 0.2 : 0.6, sheenRoughness: 0.55, sheenColor: tint.clone().lerp(new THREE.Color(1, 1, 1), 0.55) });
+      } else if (name === 'D_Travertine' || name === 'L_StoneBeige') {
+        // polished stone: a lacquer-like coat over a honed body gives the soft, wide reflections of a luxury floor
+        m = new THREE.MeshPhysicalMaterial({ ...o, clearcoat: 0.75, clearcoatRoughness: 0.06 });
       } else if ((s.spec ?? 0) >= 0.5 && (s.rough ?? 1) < 0.3) {
         m = new THREE.MeshPhysicalMaterial({ ...o, clearcoat: 0.25, clearcoatRoughness: 0.12 });
       } else {

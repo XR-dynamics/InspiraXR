@@ -1,3 +1,6 @@
 node_modules
 dist
 .DS_Store
+
+# large supplied source models (converted packs are committed instead)
+assets/apartment/source/sofa/sofa.obj

@@ -1,0 +1,1 @@
+{"vertexStride":24,"vertexCount":265611,"units":"metres","meshes":{"sofa":{"parts":[{"m":"fabric","v0":0,"n":173253},{"m":"pillow","v0":173253,"n":92358}],"min":[-1.7116,0,-1.6598],"max":[1.7116,0.941,1.6598]}}}

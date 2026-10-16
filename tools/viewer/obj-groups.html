@@ -1,0 +1,40 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>OBJ group viewer</title>
+<style>html,body{margin:0;background:#cfd3d8}canvas{display:block}</style>
+<canvas id="c"></canvas>
+<script type="module">
+// Renders an OBJ with a distinct flat colour per material group, from several angles, to identify its parts.
+import * as THREE from 'three';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+const url = new URLSearchParams(location.search).get('obj');
+const r = new THREE.WebGLRenderer({ canvas: document.getElementById('c'), antialias: true, preserveDrawingBuffer: true });
+r.setSize(1500, 900);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xcfd3d8);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x666666, 1.2));
+const dl = new THREE.DirectionalLight(0xffffff, 1.5); dl.position.set(1, 2, 1.5); scene.add(dl);
+const pal = [0xe6194b, 0x3cb44b, 0x4363d8, 0xf58231, 0x911eb4, 0x46f0f0, 0xf032e6, 0xbcf60c, 0x008080, 0x9a6324, 0x800000, 0x808000];
+const text = await (await fetch(url)).text();
+const obj = new OBJLoader().parse(text);
+let k = 0; const seen = new Map();
+obj.traverse((o) => {
+  if (!o.isMesh) return;
+  const mats = Array.isArray(o.material) ? o.material : [o.material];
+  o.material = mats.map((m) => { if (!seen.has(m.name)) seen.set(m.name, pal[k++ % pal.length]); return new THREE.MeshStandardMaterial({ color: seen.get(m.name), roughness: 0.7 }); });
+  if (o.material.length === 1) o.material = o.material[0];
+});
+scene.add(obj);
+const box = new THREE.Box3().setFromObject(obj); const size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+window.__info = { size: size.toArray(), center: c.toArray(), groups: [...seen.entries()].map(([n, col]) => [n, col.toString(16)]) };
+const cams = [[1, 1, 1], [0, 1, 0.001], [0, 0.2, 1], [1, 0.2, 0]];
+const W = 750, H = 450;
+r.setScissorTest(true);
+cams.forEach((d, i) => {
+  const cam = new THREE.PerspectiveCamera(35, W / H, 0.1, 5000);
+  const R = Math.max(size.x, size.y, size.z) * 2.3;
+  cam.position.copy(c).add(new THREE.Vector3(...d).normalize().multiplyScalar(R)); cam.lookAt(c);
+  const x = (i % 2) * W, y = (1 - Math.floor(i / 2)) * H;
+  r.setViewport(x, y, W, H); r.setScissor(x, y, W, H); r.render(scene, cam);
+});
+window.__done = true;
+</script>

@@ -40,7 +40,7 @@ export const apartment = {
   START: { pos: [3.1, -1.5], look: [3.1, 1.5, -6.0] },
   // the sun is turned so that the terrace and the sliding doors face the light
   defaultEnvironment: 'day',
-  lightingConfig: { sunYaw: 2.08, sunTarget: [6, 0, -4], shadowExtent: 11, shadowFar: 160 },
+  lightingConfig: { exposureGain: 1.75, sunYaw: 2.08, sunTarget: [6, 0, -4], shadowExtent: 11, shadowFar: 160 },
   outdoorRoom: 'terrace',
   sliderId: 'slider',
   lightLabels: { living: 'Living', dining: 'Dining', kitchen: 'Kitchen', entry: 'Entrance', bedroom: 'Bedroom', study: 'Study', bath: 'Bathroom', terrace: 'Terrace' },

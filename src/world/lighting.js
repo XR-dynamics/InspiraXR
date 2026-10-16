@@ -109,8 +109,9 @@ export class Lighting {
   }
 
   /** Per-layout lighting setup: sun heading, shadow frustum and where the shadow camera looks. */
-  configure({ sunYaw = 0, sunTarget = null, shadowExtent = null, shadowFar = null } = {}) {
+  configure({ sunYaw = 0, sunTarget = null, shadowExtent = null, shadowFar = null, exposureGain = 1 } = {}) {
     this.sunYaw = sunYaw;
+    this.exposureGain = exposureGain;   // layout-wide brightness: a small apartment with fewer windows needs more exposure
     if (sunTarget) this.sun.target.position.set(...sunTarget);
     if (shadowExtent) {
       const sc = this.sun.shadow.camera;
@@ -186,7 +187,7 @@ export class Lighting {
     this.hemi.groundColor.copy(s.hemiGround);
     this.hemi.intensity = s.hemi;
     this.scene.environmentIntensity = s.env;
-    this.baseExposure = s.exposure;
+    this.baseExposure = s.exposure * (this.exposureGain || 1);
     for (const r of this.rooms.values()) {
       r.on = s.interior > 0.5;
     }

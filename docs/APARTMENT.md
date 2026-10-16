@@ -50,3 +50,15 @@ npm run build:apartment      # node tools/build-apartment-pack.mjs [--src dir] [
 - Not measured on a physical Meta Quest: frame rate, comfort, controller models and text legibility need a device.
   See [QUEST-TESTING.md](QUEST-TESTING.md).
 - The blueprint view is x-ray style (no hidden-line removal); lines fade with distance.
+
+## Furnishing (empty shell → furnished)
+
+The apartment is built from the plan's architecture only (walls, floors, doors, curtains, downlights). All furniture is added by
+`src/layouts/apartment/furnish/*` from the moodboard, one module per room, using the small modelling kit in `furnish/kit.js`
+(rounded boxes, lathe, fluted columns, bent panels). The sectional sofa is the model you supplied (`public/apartment/models/sofa.*`,
+built by `tools/build-sofa.mjs`). The dining table has **four** cane-back chairs; the bathroom has a wall-hung toilet with concealed cistern.
+
+Honest limits: the pieces are modelled in code, not downloaded - Poly Haven, Sketchfab and similar hosts are blocked from this build
+environment, so no public meshes could be fetched. They are simpler than hand-sculpted assets. Replace any piece by editing its module,
+or supply a GLB and load it in place of the generated geometry. Nothing here has been tested on a physical Quest; only the emulated
+headset test (`npm run test:xr:apartment`) exists.

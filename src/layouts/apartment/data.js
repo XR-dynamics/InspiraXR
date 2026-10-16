@@ -80,10 +80,10 @@ export function compassOf(nx, nz) {
   return nz > 0 ? 'North' : 'South';
 }
 
-export async function loadPack(base) {
+export async function loadPack(base, name = 'pack') {
   const [json, bin] = await Promise.all([
-    fetch(`${base}pack.json`).then((r) => { if (!r.ok) throw new Error('apartment pack.json missing'); return r.json(); }),
-    fetch(`${base}pack.bin`).then((r) => { if (!r.ok) throw new Error('apartment pack.bin missing'); return r.arrayBuffer(); }),
+    fetch(`${base}${name}.json`).then((r) => { if (!r.ok) throw new Error('apartment pack.json missing'); return r.json(); }),
+    fetch(`${base}${name}.bin`).then((r) => { if (!r.ok) throw new Error('apartment pack.bin missing'); return r.arrayBuffer(); }),
   ]);
   return new Pack(json, bin);
 }

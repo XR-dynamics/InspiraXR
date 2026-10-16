@@ -133,7 +133,7 @@ export class Piece {
   }
   finish() {
     const { batch: B, nav } = this.ctx;
-    const shapes = footprint(this.parts.filter((p) => !p.opts.noFootprint).map((p) => p.geo), this.flat);
+    const shapes = this.flat ? [] : footprint(this.parts.filter((p) => !p.opts.noFootprint).map((p) => p.geo), false);
     if (this.fixed) {
       for (const { geo, material, opts } of this.parts) B.add(geo, material, { cast: true, ...opts });
       for (const s of shapes) nav.blockRect(s.x - s.w / 2, s.z - s.d / 2, s.x + s.w / 2, s.z + s.d / 2);
@@ -143,4 +143,29 @@ export class Piece {
     for (const { geo, material, opts } of this.parts) B.add(geo, material, { cast: !this.flat, ...opts });
     B.endItem(shapes);
   }
+}
+
+/** A box bent about the vertical axis (backrests): z += k * x^2 (k > 0 curls the ends toward +z). */
+export function bent(w, h, d, k, segs = 20, r = 0) {
+  const g = new THREE.BoxGeometry(w, h, d, segs, 2, 1);
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) p.setZ(i, p.getZ(i) + k * p.getX(i) * p.getX(i));
+  g.computeVertexNormals();
+  void r;
+  return g;
+}
+
+/** Upright cylinder standing on y = 0 at (x, z). */
+export function cyl(r, h, x = 0, z = 0, seg = 40, r2 = r, y = 0) {
+  return new THREE.CylinderGeometry(r2, r, h, seg).translate(x, y + h / 2, z);
+}
+
+export const sphere = (r, x, y, z, sx = 1, sy = 1, sz = 1, seg = 24) => new THREE.SphereGeometry(r, seg, seg / 2).scale(sx, sy, sz).translate(x, y, z);
+
+/** Shared furniture helpers: plan coordinates (x east, y north) -> a piece. */
+export function maker(ctx) {
+  const M = ctx.M;
+  const mat = (n) => M.get(n);
+  const piece = (id, name, px, py, yawDeg = 0, o = {}) => new Piece(ctx, { id, name, x: px, z: -py, yaw: THREE.MathUtils.degToRad(yawDeg), ...o });
+  return { mat, piece };
 }

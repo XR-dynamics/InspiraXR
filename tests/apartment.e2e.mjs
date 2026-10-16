@@ -28,7 +28,7 @@ const built = await ev(() => {
   };
 });
 T.check('the apartment layout is active and walking', built.layout === 'apartment' && built.mode === 'walk', JSON.stringify({ l: built.layout, m: built.mode }));
-T.check('the plan\'s furniture became individually movable pieces', built.items >= 30 && built.movable === built.items, `${built.items} pieces`);
+T.check('the furniture became individually movable pieces', built.items >= 24 && built.movable === built.items, `${built.items} pieces`);
 T.check('wall faces are separately paintable', built.interior >= 20, `${built.interior} interior faces of ${built.faces}`);
 T.check('every room has its own light group', built.rooms === 'bath,bedroom,dining,entry,kitchen,living,study,terrace', built.rooms);
 T.check('four hinged doors and the sliding terrace door exist', built.doors === 5, `${built.doors}`);
@@ -113,12 +113,12 @@ const furn = await ev(() => {
   F.select('DiningChair_3'); F.beginDrag('DiningChair_3');
   // somewhere nearby is free: try a ring of offsets and take the first the rules accept
   let free = false;
-  for (const [dx, dz] of [[0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5], [0.8, 0.8], [-0.8, 0.8], [1.2, 0], [-1.2, 0], [0, 1.2]]) { if (F.dragTo(home.x + dx, home.z + dz)) { free = true; break; } }
+  for (const [dx, dz] of [[0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5], [0.8, 0.8], [-0.8, 0.8], [1.2, 0], [-1.2, 0], [0, 1.2], [2, 0], [-2, 0], [0, 2]]) { if (F.dragTo(home.x + dx, home.z + dz)) { free = true; break; } }
   F.endDrag(true);
   const moved = Math.hypot(F.get('DiningChair_3').cur.x - home.x, F.get('DiningChair_3').cur.z - home.z) > 0.1;
   F.select('DiningChair_3'); F.resetItem(); F.deselect();
   // a table's place settings travel with it
-  const table = F.get('DiningTable_Oval');
+  const table = F.get('DiningTable');
   const children = table.group.children.length;
   const pieces = F.countVisible('bedroom');
   const hidden = F.empty('bedroom');

@@ -48,12 +48,12 @@ const RECIPES = {
 const SURFACE = {
   D_Marble: ['marbleCream'], D_MarbleProp: ['marbleStreak'], D_Travertine: ['limestone'],
   D_Plaster: ['plaster', 0.9], D_Ceiling: ['plaster', 0.92],
-  D_Veneer: ['walnut', null, [0.8, 0.77, 0.75]], D_Oak: ['oak'], D_Deck: ['deck'],
+  D_Veneer: ['walnut', null, [1.35, 1.27, 1.22]], D_Oak: ['oak'], D_Deck: ['deck'],
   D_Boucle: ['boucle', 0.85], D_Linen: ['linen', 0.8], D_Rug: ['wool', 1.0],
   L_Plaster: ['plaster', 0.9], L_PaintTaupe: ['plaster', 0.9], L_Terracotta: ['plaster', 0.9], L_Sage: ['plaster', 0.9],
-  L_Cane: ['cane'], L_Fluted: ['flutedWalnut'], L_WalnutWarm: ['walnut'],
+  L_Cane: ['cane'], L_Fluted: ['flutedWalnut', null, [1.55, 1.45, 1.38]], L_WalnutWarm: ['walnut', null, [1.35, 1.27, 1.22]],
   L_BoucleGreen: ['boucle', 0.85], L_BoucleTan: ['boucle', 0.85], L_BoucleRust: ['boucle', 0.85], L_LinenTan: ['boucle', 0.85],
-  L_StoneBeige: ['limestone', null, [0.97, 0.94, 0.88]], L_TravertineClad: ['cladding'],
+  L_StoneBeige: ['limestone', null, [0.98, 0.96, 0.93]], L_TravertineClad: ['cladding'],
   L_Blind: ['linen', 0.8], L_StripeThrow: ['stripe'],
   P_Teak: ['oak', null, [0.95, 0.7, 0.45]], P_Gravel: ['gravel'],
 };
@@ -66,8 +66,8 @@ const RUGS = new Set(['D_Rug', 'L_RugRust']);
 const PHOTO = {
   L_Relief:           { file: 'relief_green.jpg',      w: 1.2,  h: 0.675, normal: 5.0, rough: [0.60, 0.80], blur: 1, cloth: false },
   L_WallpaperRust:    { file: 'crane_rust.jpg',        w: 1.2,  h: 0.675, normal: 1.4, rough: [0.50, 0.68], blur: 1 },
-  L_MarbleTerracotta: { file: 'rosso_marble.jpg',      w: 1.0,  h: 1.446, normal: 0.8, rough: [0.10, 0.20], blur: 2, glossy: true },
-  L_MarbleScallop:    { file: 'onyx.jpg',              w: 1.1,  h: 1.1,   normal: 0.8, rough: [0.08, 0.16], blur: 2, glossy: true },
+  L_MarbleTerracotta: { file: 'rosso_marble.jpg',      w: 1.0,  h: 1.446, normal: 0.15, rough: [0.10, 0.20], blur: 3, glossy: true },
+  L_MarbleScallop:    { file: 'onyx.jpg',              w: 1.1,  h: 1.1,   normal: 0.12, rough: [0.08, 0.16], blur: 3, glossy: true },
   L_RugRust:          { file: 'rug_rust.jpg',          w: 1.0,  h: 1.407, normal: 3.0, rough: [0.88, 1.0],  blur: 1, cloth: true },
   X_Grasscloth:       { file: 'grasscloth_weave.jpg',  w: 0.53, h: 0.655, normal: 3.5, rough: [0.62, 0.86], blur: 1, tile: 0.24 },
   X_GrassStripe:      { file: 'grasscloth_stripe.jpg', w: 0.60, h: 0.747, normal: 3.0, rough: [0.6, 0.85],  blur: 1, tile: 1.0 },

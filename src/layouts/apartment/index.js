@@ -45,7 +45,11 @@ export const apartment = {
   sliderId: 'slider',
   lightLabels: { living: 'Living', dining: 'Dining', kitchen: 'Kitchen', entry: 'Entrance', bedroom: 'Bedroom', study: 'Study', bath: 'Bathroom', terrace: 'Terrace' },
   viewFor(key) { return this.VIEWS[key] || null; },
-  async load() { pack = await loadPack(`${import.meta.env.BASE_URL}apartment/`); },
+  async load() {
+    const base = `${import.meta.env.BASE_URL}apartment/`;
+    pack = await loadPack(base);
+    pack.sofa = await loadPack(`${base}models/`, 'sofa');
+  },
   buildMaterials(renderer, onProgress) { return buildApartmentMaterials(renderer, pack.json.materials, onProgress); },   // async: photographs are fetched
   buildWorld(args) { return buildApartmentWorld({ ...args, pack }); },
   createPlan(svg, onSelect) { return new ApartmentPlan(svg, onSelect, pack.json.plan ? pack.json : { plan: pack.json.plan }); },

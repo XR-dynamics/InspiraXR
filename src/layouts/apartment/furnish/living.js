@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { addModel } from './assets.js';
 import { maker, rbox, at, drum, cyl, rod, cushion, lathe, bar } from './kit.js';
 
 /* Living room: the supplied sectional, a rust wool rug, a travertine coffee table, a brass side table and a lounge chair. */
@@ -21,12 +22,11 @@ export function living(ctx) {
     p.finish();
   }
 
-  // ---- coffee table: a honed travertine drum on a plinth
+  // ---- coffee table: the supplied drum table with a stack of books
   {
-    const p = piece('CoffeeTable', 'Coffee table', 9.55, 6.05);
-    p.add(drum(0.44, 0.07, 0.025), mat('D_Marble')).translate(0, 0.30, 0);
-    p.add(cyl(0.30, 0.30, 0, 0, 64), mat('D_Travertine'));
-    p.add(cyl(0.36, 0.02, 0, 0, 64, 0.36, 0), mat('D_Brass'));
+    const p = piece('CoffeeTable', 'Coffee table', 9.6, 6.0);
+    addModel(p, ctx, 'coffee_drum');
+    addModel(p, ctx, 'books', { scale: 0.8, y: 0.37, x: -0.1, ry: 0.4 });
     p.finish();
   }
 

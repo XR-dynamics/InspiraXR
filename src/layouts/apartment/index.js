@@ -49,6 +49,7 @@ export const apartment = {
     const base = `${import.meta.env.BASE_URL}apartment/`;
     pack = await loadPack(base);
     pack.sofa = await loadPack(`${base}models/`, 'sofa');
+    pack.furn = await loadPack(`${base}models/`, 'furniture');
   },
   buildMaterials(renderer, onProgress) { return buildApartmentMaterials(renderer, pack.json.materials, onProgress); },   // async: photographs are fetched
   buildWorld(args) { return buildApartmentWorld({ ...args, pack }); },

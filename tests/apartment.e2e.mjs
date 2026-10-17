@@ -37,7 +37,7 @@ T.check('eye height is 1.65 m', Math.abs(built.eye - 1.65) < 0.05);
 // ---- every room can be reached on foot from the front door
 const routes = await ev(() => {
   const R = window.__residence, L = R.world;
-  const views = { living: [10.0, -3.2], dining: [10.0, -4.2], kitchen: [9.9, -1.2], entry: [3.1, -1.3], bedroom: [3.9, -4.55], study: [6.6, -5.9], bath: [2.1, -3.7], terrace: [13.3, -4.5] };
+  const views = { living: [10.0, -3.2], dining: [10.0, -4.2], kitchen: [9.9, -1.2], entry: [3.1, -1.3], bedroom: [3.9, -4.55], study: [6.6, -5.9], bath: [2.1, -3.7], terrace: [11.7, -2.4] };
   const out = {};
   for (const [k, [x, z]] of Object.entries(views)) {
     const p = L.nav.findPath(3.1, -1.5, x, z);

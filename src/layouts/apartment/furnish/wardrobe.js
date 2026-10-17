@@ -78,6 +78,7 @@ export function wardrobe(ctx, spec) {
   p.add(rbox(w - 0.02, 0.08, d - 0.04, 0.004).translate(0, 0.04, -0.01), black);
   p.add(rbox(w - 2 * t, h - 0.1, 0.012, 0.002, 1).translate(0, h / 2 + 0.03, -d / 2 + 0.006), inner);
   const iw = w - 2 * t;
+  if (spec.compact) { compactInterior(p, mat, { w, d, h, t, iw, flute, wood }); } else {
   // layout: left bay hangs long things, right bay has shelves, drawers and shoes
   const bay = iw / 2;
   p.add(rbox(0.012, h - 0.12, d - 0.04, 0.002, 1).translate(0, h / 2 + 0.02, -0.005), wood);          // divider
@@ -124,8 +125,23 @@ export function wardrobe(ctx, spec) {
       p.add(rbox(0.3, 0.16, 0.26, 0.02).translate(rcx + rw * 0.2, top + 0.08, 0), mat('D_Linen'), { noFootprint: true });
     }
   });
-  // doors: slim fluted leaves swung open 100 degrees so the contents show
-  if (spec.doors !== 'none') {
+  }
+  // doors
+  if (spec.doors === 'slide1') {
+    const pw = w * 0.5;
+    p.add(rbox(pw, h - 0.12, 0.02, 0.004).translate(w / 2 - pw / 2 - 0.004, h / 2 + 0.03, d / 2 + 0.012), flute);
+    p.add(rbox(0.012, 0.3, 0.012, 0.004).translate(w / 2 - pw + 0.04, 1.1, d / 2 + 0.026), mat('D_Brass'), { noFootprint: true });
+    p.add(rbox(w, 0.02, 0.05, 0.004).translate(0, h - 0.07, d / 2 + 0.02), black);
+  } else if (spec.doors === 'slide') {
+    // sliding panels (no swing, so they suit a narrow nook): one parked at each end, the middle open to show the contents
+    const pw = w * 0.31;
+    for (const [s, dz] of [[-1, 0.012], [1, 0.036]]) {
+      p.add(rbox(pw, h - 0.12, 0.02, 0.004).translate(s * (w / 2 - pw / 2 - 0.004), h / 2 + 0.03, d / 2 + dz), flute);
+      p.add(rbox(0.012, 0.3, 0.012, 0.004).translate(s * (w / 2 - pw - 0.0) + (s > 0 ? 0.03 : -0.03) * -1, 1.1, d / 2 + dz + 0.014), mat('D_Brass'), { noFootprint: true });
+    }
+    p.add(rbox(w, 0.02, 0.07, 0.004).translate(0, h - 0.07, d / 2 + 0.024), black);     // top track
+  } else if (spec.doors !== 'none') {
+    // slim fluted leaves swung open 100 degrees so the contents show
     for (const s of [-1, 1]) {
       const lw = Math.min(0.5, w / 2 - 0.02);
       const hinge = new THREE.Vector3(s * (w / 2 - 0.005), 0, d / 2);
@@ -137,4 +153,32 @@ export function wardrobe(ctx, spec) {
   }
   p.finish();
   void cyl; void at; void WHITE;
+}
+
+/** Interior of a narrow wardrobe: a full-width hanging rail over three full-width shelves and a shoe rack. */
+function compactInterior(p, mat, { w, d, h, t, iw, wood }) {
+  const railY = Math.min(1.72, h - 0.3);
+  p.add(rbox(iw, 0.02, d - 0.05, 0.003).translate(0, h - 0.22, -0.005), wood);
+  p.add(rod([-iw / 2 + 0.03, railY, 0], [iw / 2 - 0.03, railY, 0], 0.0125, 14), mat('D_Brass'), { noFootprint: true });
+  const mats = ['L_Garment0', 'L_Garment1', 'L_Garment2', 'L_Garment3', 'L_Garment4'];
+  const kinds = ['shirt', 'jacket', 'shirt', 'dress', 'shirt', 'jacket', 'shirt'];
+  const n = Math.max(3, Math.floor((iw - 0.1) / 0.085));
+  for (let i = 0; i < n; i++) {
+    const kx = -iw / 2 + 0.06 + (i * (iw - 0.12)) / Math.max(1, n - 1);
+    hangingGarment(p, mat, kinds[i % kinds.length], kx, 0.0, railY + 0.03, mats[(i * 2 + 1) % mats.length], Math.PI / 2 + (i % 3 - 1) * 0.04);
+  }
+  const levels = [0.3, 0.62, 0.94, 1.26];
+  levels.forEach((ly, i) => {
+    p.add(rbox(iw, 0.02, d - 0.05, 0.003).translate(0, ly, -0.005), wood);
+    const top = ly + 0.01;
+    if (i === 0) {
+      const pairs = Math.max(2, Math.floor(iw / 0.17));
+      for (let k = 0; k < pairs; k++) {
+        const sx = -iw / 2 + 0.1 + k * ((iw - 0.2) / Math.max(1, pairs - 1));
+        shoe(p, mat, sx, top, 0.03, 0.05 * (k % 2), k % 3 === 0 ? 'D_Veneer' : 'L_BlackMatte');
+      }
+    } else if (i === 1) foldedStack(p, mat, 0, top, 0, Math.min(0.4, iw - 0.1), 0.3, ['L_Garment2', 'L_Garment4', 'L_Garment1']);
+    else if (i === 2) foldedStack(p, mat, 0, top, 0, Math.min(0.4, iw - 0.1), 0.3, ['L_Towel0', 'L_Towel1', 'L_Towel0']);
+    else p.add(rbox(Math.min(0.4, iw - 0.1), 0.16, 0.3, 0.02).translate(0, top + 0.08, 0), mat('L_BoucleTan'), { noFootprint: true });
+  });
 }

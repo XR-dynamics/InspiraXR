@@ -23,7 +23,7 @@ export const apartment = {
     bedroom: { pos: [3.9, -4.55], look: [1.8, 1.0, -7.9] },
     study: { pos: [6.6, -5.9], look: [5.6, 1.1, -7.8] },
     bath: { pos: [2.1, -3.7], look: [0.9, 1.0, -1.4] },
-    terrace: { pos: [13.3, -4.5], look: [11.4, 1.0, -1.6] },
+    terrace: { pos: [11.7, -2.4], look: [13.6, 1.1, -3.6] },
   },
   SELECTOR: [['living', 'Living Room'], ['kitchen', 'Kitchen'], ['dining', 'Dining'], ['entry', 'Entrance'], ['bedroom', 'Bedroom'], ['study', 'Study'], ['bath', 'Bathroom'], ['terrace', 'Terrace']],
   ADAPT: {

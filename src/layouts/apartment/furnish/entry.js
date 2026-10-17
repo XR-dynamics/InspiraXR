@@ -16,13 +16,15 @@ export function entry(ctx) {
     p.finish();
   }
   {
-    const p = piece('Bench_Entry', 'Entry bench', 3.9, 2.55, -90);
+    const p = piece('Bench_Entry', 'Entry bench', 1.7, 0.5, 0);
     p.add(cushion(1.1, 0.1, 0.38, 0.04, 0.25).translate(0, 0.44, 0), mat('L_BoucleTan'));
     p.add(rbox(1.06, 0.06, 0.34, 0.01).translate(0, 0.39, 0), mat('D_Veneer'));
     for (const sx of [-0.45, 0.45]) p.add(rbox(0.05, 0.36, 0.32, 0.01).translate(sx, 0.18, 0), mat('D_Veneer'));
     p.finish();
   }
-  // coat and shoe wardrobe beside the front door, out of the way of the entrance path
-  wardrobe(ctx, { id: 'Wardrobe_Entry', name: 'Entry wardrobe', x: 4.05, y: 0.52, yaw: 180, w: 1.0, d: 0.5, h: 2.4 });
+  // the entrance wardrobe is the small recess on the left as you come in: a shallow built-in on the bathroom wall
+  // with sliding doors, so nothing swings into the 70 cm nook and the way in from the door stays clear
+  // standing in the recess you face it: its whole 2.3 m length is the aisle
+  wardrobe(ctx, { id: 'Wardrobe_Entry', name: 'Entrance wardrobe', x: 0.25 + 0.275, y: 0.61, yaw: 90, w: 0.72, d: 0.55, h: 2.4, compact: true, doors: 'slide1' });
   void THREE; void rod; void drum;
 }

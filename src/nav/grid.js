@@ -90,7 +90,9 @@ export class NavGrid {
   /** Visit every cell whose centre lies inside the (transformed, optionally shrunk) shapes. */
   _rasterShapes(shapes, home, tf, shrink, fn) {
     const c = Math.cos(tf.ry), s = Math.sin(tf.ry);
-    for (const sh of shapes) {
+    const k = tf.s || 1;   // uniform scale about the pivot
+    for (const sh0 of shapes) {
+      const sh = k === 1 ? sh0 : { ...sh0, w: sh0.w * k, d: sh0.d * k, r: sh0.r * k, x: home.x + (sh0.x - home.x) * k, z: home.z + (sh0.z - home.z) * k };
       // item rotation is about the home pivot, matching THREE.Object3D.rotation.y
       const dx = sh.x - home.x, dz = sh.z - home.z;
       const wx = tf.x + dx * c + dz * s, wz = tf.z - dx * s + dz * c;

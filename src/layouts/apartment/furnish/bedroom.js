@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { addModel } from './assets.js';
+import { wardrobe } from './wardrobe.js';
 import { maker, rbox, rod, cyl, cushion, drum, lathe } from './kit.js';
 
 /* Bedroom: upholstered king bed against the west wall, bedside tables, bench, fluted wardrobe, rug. */
@@ -41,15 +42,8 @@ export function bedroom(ctx) {
     p.finish();
   }
 
-  // wardrobe along the east wall (doors face west)
-  {
-    const p = piece('Wardrobe', 'Wardrobe', 4.12, 6.9, -90, { fixed: true });
-    p.add(rbox(2.8, 2.55, 0.6, 0.012).translate(0, 1.275, 0), flute);
-    p.add(rbox(2.8, 0.08, 0.04, 0.004).translate(0, 0.04, 0.3), mat('L_BlackMatte'));
-    for (const sx of [-0.7, 0.0, 0.7]) p.add(rbox(0.006, 2.4, 0.01, 0.002, 1).translate(sx, 1.25, 0.302), mat('L_BlackMatte'));
-    for (const sx of [-0.04, 0.04, -0.66, 0.66]) p.add(rbox(0.012, 0.5, 0.02, 0.004).translate(sx + (sx > 0 ? 0.0 : 0.0), 1.2, 0.315), mat('D_Brass'));
-    p.finish();
-  }
+  // wardrobe along the east wall (open front; clothes, shelves and shoes inside)
+  wardrobe(ctx, { id: 'Wardrobe_Bedroom', name: 'Wardrobe', x: 4.1, y: 6.9, yaw: -90, w: 2.8, d: 0.62, h: 2.5 });
 
   // reading chair and a floor lamp by the window
   {

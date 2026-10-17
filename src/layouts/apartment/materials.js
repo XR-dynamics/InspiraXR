@@ -51,7 +51,7 @@ const SURFACE = {
   D_Veneer: ['walnut', null, [1.35, 1.27, 1.22]], D_Oak: ['oak'], D_Deck: ['deck'],
   D_Boucle: ['boucle', 0.85], D_Linen: ['linen', 0.8], D_Rug: ['wool', 1.0],
   L_Plaster: ['plaster', 0.9], L_PaintTaupe: ['plaster', 0.9], L_Terracotta: ['plaster', 0.9], L_Sage: ['plaster', 0.9],
-  L_Cane: ['cane'], L_Fluted: ['flutedWalnut', null, [1.55, 1.45, 1.38]], L_WalnutWarm: ['walnut', null, [1.35, 1.27, 1.22]],
+  L_Cane: ['cane'], L_Fluted: ['flutedWalnut', null, [1.3, 1.38, 1.5]], L_WalnutWarm: ['walnut', null, [1.35, 1.27, 1.22]],
   L_BoucleGreen: ['boucle', 0.85], L_BoucleTan: ['boucle', 0.85], L_BoucleRust: ['boucle', 0.85], L_LinenTan: ['boucle', 0.85],
   L_StoneBeige: ['limestone', null, [0.98, 0.96, 0.93]], L_TravertineClad: ['cladding'],
   L_Blind: ['linen', 0.8], L_StripeThrow: ['stripe'],

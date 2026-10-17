@@ -112,6 +112,7 @@ export function buildOcean(ctx) {
   // ---- distant mountains, forested hills and clouds
   const backdrop = buildBackdrop();
   group.add(backdrop.mesh);
+  loadPanorama(group, backdrop, ctx);
 
   // ---- cliff: a displaced grid that is flat under the plateau and falls away to the water
   const cliff = buildCliff(M);
@@ -195,4 +196,35 @@ function buildCliff(M) {
   mesh.castShadow = false;
   mesh.name = 'cliff';
   return mesh;
+}
+
+/**
+ * If public/apartment/backdrop/panorama.jpg exists, show that real photograph (equirectangular, 4K or 8K)
+ * instead of the generated sky and mountains. Without it the generated backdrop stays.
+ */
+async function loadPanorama(group, backdrop, ctx) {
+  const base = `${import.meta.env.BASE_URL}apartment/backdrop/`;
+  try {
+    const head = await fetch(`${base}panorama.jpg`, { method: 'HEAD' });
+    if (!head.ok || !/image/.test(head.headers.get('content-type') || '')) return;
+    let cfg = {};
+    try { const r = await fetch(`${base}panorama.json`); if (r.ok) cfg = await r.json(); } catch { /* optional */ }
+    const tex = await new THREE.TextureLoader().loadAsync(`${base}panorama.jpg`);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 16;
+    tex.wrapS = THREE.RepeatWrapping;
+    const mat = new THREE.MeshBasicMaterial({ map: tex, side: THREE.BackSide, depthWrite: false, fog: false, toneMapped: false });
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(1200, 96, 48), mat);
+    mesh.rotation.y = THREE.MathUtils.degToRad(cfg.yaw || 0);
+    mesh.position.y = (cfg.horizon || 0) * 300;
+    mesh.frustumCulled = false;
+    mesh.renderOrder = -3;
+    mesh.name = 'panorama';
+    mesh.userData.noBlueprint = true;
+    mesh.raycast = () => {};
+    group.add(mesh);
+    backdrop.mesh.visible = false;
+    ctx.lighting.sky && (ctx.lighting.sky.visible = false);
+    ctx.panorama = { mesh, size: [tex.image.width, tex.image.height] };
+  } catch { /* no photograph supplied: keep the generated backdrop */ }
 }

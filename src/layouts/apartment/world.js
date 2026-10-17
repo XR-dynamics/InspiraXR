@@ -10,6 +10,8 @@ import { buildLights } from './lights.js';
 import { windMaterial, WIND } from '../../world/wind.js';
 import { buildOcean } from './ocean.js';
 import { furnish } from './furnish/index.js';
+import { extraMaterials } from './furnish/assets.js';
+import { Surfaces, defineSurfaces } from './surfaces.js';
 import { blockAsset } from './footprint.js';
 
 /*
@@ -29,6 +31,8 @@ const BLOCKERS = /^(Terrace_Parapet|Terrace_Post)/;
 // replaced by generated cloth, doors we animate ourselves, or glass we merge
 // per-placement material swaps (the plan's cane panel is the woven grasscloth on the moodboard)
 const OVERRIDE = { Panel_Cane_Living_West: { L_Cane: 'X_Grasscloth' } };
+// bathroom architecture takes dedicated, re-finishable surfaces
+const BATH_SURFACE = { L_MarbleScallop: 'bathFloor', L_StoneBeige: 'bathWalls', L_MarbleTerracotta: 'showerWall' };
 const REPLACED = /^(Door_.*_Leaf|DoorKnob_|DoorHinge_|Slider_2|Slider_3|Curtain_.*_(DrapeL|DrapeR|Sheer))/;
 
 export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, onProgress = () => {} }) {
@@ -40,6 +44,10 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
     glass: [], animated: [], mirrors: [], roomMats: new Map(), curtains: [], viewer: null,
   };
   ctx.interact = new Interactions(ctx);
+  extraMaterials(M);
+  ctx.surfaces = new Surfaces(M);
+  ctx.surf = defineSurfaces(ctx.surfaces);
+  ctx.surfaces.batch = ctx.batch;
   const B = ctx.batch, nav = ctx.nav;
 
   ctx.roomMat = (room, name) => {
@@ -138,7 +146,8 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
       if (/^(D_Glass|L_Glass)$/.test(material)) { stripToPosNor(geo); ctx.glass.push(geo); continue; }
       if (isWall && paintables.has(material)) { addWallFaces(ctx, asset, material, geo, paintMat(material)); continue; }
       const castShadow = !/Rug|Floor_ShowerPad/.test(asset);
-      B.add(geo, matAt(OVERRIDE[p.label]?.[material] || material, c.x, c.z), { keepUV: true, cast: castShadow });
+      const own = /Bath/.test(p.label) && BATH_SURFACE[material];
+      B.add(geo, own ? ctx.surf[own] : matAt(OVERRIDE[p.label]?.[material] || material, c.x, c.z), { keepUV: true, cast: castShadow });
     }
     if (blocker) blockAsset(nav, pack, asset, mt);
   }
@@ -181,7 +190,7 @@ export async function buildApartmentWorld({ scene, M, lighting, renderer, pack, 
   nav.rebuildDynamic?.();
 
   // parallax-corrected reflections per zone
-  const all = [...new Set([...M.byName.values(), M.wallPaint, ...wallPaintMat.values(), ...ctx.roomMats.values()])].filter((m) => m.isMeshStandardMaterial);
+  const all = [...new Set([...M.byName.values(), M.wallPaint, ...wallPaintMat.values(), ...ctx.roomMats.values(), ...ctx.surfaces.list().map((s) => s.material)])].filter((m) => m.isMeshStandardMaterial);
   for (const [zone, cfg] of Object.entries(ZONES)) {
     if (!cfg.box) continue;
     const mats = zone === 'main' ? all.filter((m) => !m.userData.noZone) : [...(ctx.zoneMaterials.get(zone)?.values() || [])];

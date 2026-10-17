@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { wardrobe } from './wardrobe.js';
 import { maker, rbox, rod, cyl, cushion, lathe, drum } from './kit.js';
 
 /* Entrance: a fluted console with a round brass mirror, a bench and a sculptural vase. */
@@ -21,5 +22,7 @@ export function entry(ctx) {
     for (const sx of [-0.45, 0.45]) p.add(rbox(0.05, 0.36, 0.32, 0.01).translate(sx, 0.18, 0), mat('D_Veneer'));
     p.finish();
   }
+  // coat and shoe wardrobe beside the front door, out of the way of the entrance path
+  wardrobe(ctx, { id: 'Wardrobe_Entry', name: 'Entry wardrobe', x: 4.05, y: 0.52, yaw: 180, w: 1.0, d: 0.5, h: 2.4 });
   void THREE; void rod; void drum;
 }

@@ -134,6 +134,11 @@ export function buildOcean(ctx) {
     const b = backdrop.uniforms;
     b.uHorizon.value.copy(s.seaHorizon); b.uZenith.value.copy(s.seaZenith);
     b.uSunDir.value.copy(sunDir); b.uSunColor.value.copy(s.sunColor);
+    if (ctx.panorama) {   // the real photograph follows the time of day: dimmer and warmer at sunset, dark and blue at night
+      const k = (1 - s.night) * (0.5 + 0.5 * Math.min(1, s.sunIntensity / 3.4)) + s.night * 0.06;
+      const warm = new THREE.Color(1, 1, 1).lerp(s.sunColor, 0.5);
+      ctx.panorama.mesh.material.color.copy(warm).lerp(new THREE.Color(0.55, 0.65, 1), s.night).multiplyScalar(k);
+    }
     b.uNight.value = s.night; b.uOvercast.value = s.overcast; b.uSunI.value = s.sunIntensity;
   };
   sync();

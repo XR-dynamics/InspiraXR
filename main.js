@@ -164,7 +164,7 @@ $("#catGrid").innerHTML = CATEGORIES.map(c => `
   <button class="cat rv" data-id="${c.id}" aria-label="${c.name}. ${c.short}">
     <div class="media"><img src="${c.image}" alt="" loading="lazy" width="1600" height="900"></div>
     <span class="cat-go">${arrow}</span>
-    <div class="cat-in"><span class="cat-no">${c.no}</span><h3>${c.name}</h3><p>${c.short}</p></div>
+    <div class="cat-in"><h3>${c.name}</h3><p>${c.short}</p></div>
   </button>`).join("");
 $$("#catGrid .cat").forEach(b => b.addEventListener("click", () => openCategory(b.dataset.id)));
 

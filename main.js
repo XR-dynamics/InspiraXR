@@ -47,7 +47,7 @@ const PROJECTS = [
   { id: "p1", t: "Cantilevered Retreat at Dusk", cat: "architecture", img: "assets/img/cat-architecture.webp", d: "A glass and walnut pavilion above an infinity pool, explored at blue hour.", tech: ["VR walkthrough", "Real-time lighting", "Unreal Engine"] },
   { id: "p2", t: "Wireframe to Walkthrough", cat: "architecture", img: "assets/img/proj-wireframe.webp", d: "A design review that starts as a line drawing and ends inside the space.", tech: ["Mixed reality", "3D spatial visualization", "Design review"] },
   { id: "p3", t: "Penthouse at Sunset", cat: "real-estate", img: "assets/img/cat-realestate.webp", d: "A skyline penthouse shown to buyers before it is built.", tech: ["Off-plan visualization", "VR property tour", "Real-time customization"] },
-  { id: "p4", t: "Concrete & Walnut Residence", cat: "real-estate", img: "assets/img/blueprint-real.webp", d: "A double-height living space with a floating staircase, from blueprint to finished room.", tech: ["Interactive 3D", "Material swapping", "Web viewer"] },
+  { id: "p4", t: "Concrete & Walnut Residence", cat: "real-estate", img: "assets/img/concrete-walnut.webp", d: "A double-height living space with a floating staircase, finished and ready to walk through.", tech: ["Interactive 3D", "Material swapping", "Web viewer"] },
   { id: "p5", t: "Stone Wonders Gallery", cat: "museums", img: "assets/img/cat-museums.webp", d: "Ancient artefacts and projected landscapes in a single immersive hall.", tech: ["AR-enhanced exhibition", "Interactive storytelling"] },
   { id: "p6", t: "Classroom of the Future", cat: "education", img: "assets/img/cat-education.webp", d: "A classroom where a hologram of the Earth becomes the lesson.", tech: ["Virtual classroom", "Mixed reality", "Collaborative learning"] },
   { id: "p7", t: "Coastal Sunset Retreat", cat: "tourism", img: "assets/img/cat-tourism.webp", d: "A hotel terrace and infinity pool previewed before the guest arrives.", tech: ["Destination preview", "Hospitality visualization", "VR"] },
@@ -190,16 +190,7 @@ $$("#catGrid .cat").forEach(b => b.addEventListener("click", () => openCategory(
   items[0].classList.add("active");
 })();
 
-/* ------------------------------------------------------------ compare slider */
-(function (box) {
-  const r = $(".cmp-range", box), set = v => box.style.setProperty("--pos", v + "%");
-  r.addEventListener("input", () => set(r.value)); set(r.value);
-  if (!reduce) new IntersectionObserver((es, o) => {
-    if (!es[0].isIntersecting) return; o.disconnect(); let t0;
-    const step = n => { t0 ??= n; const k = Math.min((n - t0) / 2200, 1), v = 50 + 30 * Math.sin(k * Math.PI * 2) * (1 - k); r.value = v; set(v); if (k < 1) requestAnimationFrame(step); };
-    requestAnimationFrame(step);
-  }, { threshold: .6 }).observe(box);
-})($("#compare-box"));
+
 
 /* --------------------------------------------------------------- tech/approach */
 $("#techGrid").innerHTML = TECH.map(([h, p], i) => `<div class="tc rv" style="--d:${(i % 3) * .08}s"><i>0${i + 1}</i><h3>${h}</h3><p>${p}</p></div>`).join("");

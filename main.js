@@ -66,6 +66,12 @@ const TECH = [
 const APPROACH = [["Discover", "Understand the vision, audience and experience goals."], ["Design", "Develop the visual and interactive concept."], ["Create", "Build the immersive environment."], ["Experience", "Deliver engaging interactive experiences."]];
 
 /* =========================================================================== */
+import { ES } from "./i18n.js";
+let LANG = "en";                                   // English is the default; the visitor's choice is remembered
+try { if (localStorage.getItem("ixr-lang") === "es") LANG = "es"; } catch (_) {}
+const t = s => (LANG === "es" && ES[s] !== undefined) ? ES[s] : s;
+let booted = false;
+const rvc = () => booted ? "rv in rdy" : "rv";        // after boot, re-rendered cards appear without replaying the reveal
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -91,6 +97,7 @@ function splitWords(el) {
   });
   walk(el);
 }
+$$("[data-t]").forEach(el => { el.dataset.en = el.innerHTML.trim(); });
 $$(".display").forEach(splitWords);
 
 /* ----------------------------------------------------------- scroll reveal */
@@ -115,13 +122,13 @@ const onScroll = () => {
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 const nav = $("#nav"), burger = $("#burger"), menu = $("#expMenu"), expBtn = $("#expBtn");
-menu.innerHTML = CATEGORIES.map(c => `<a role="menuitem" href="#/experience/${c.id}"><i>${c.no}</i>${c.name}</a>`).join("");
+const renderMenu = () => { menu.innerHTML = CATEGORIES.map(c => `<a role="menuitem" href="#/experience/${c.id}"><i>${c.no}</i>${t(c.name)}</a>`).join(""); };
 const setMenu = o => { menu.classList.toggle("open", o); expBtn.setAttribute("aria-expanded", String(o)); };
 expBtn.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
 const hm = $(".has-menu");
 if (matchMedia("(hover:hover) and (min-width:901px)").matches) { hm.addEventListener("mouseenter", () => setMenu(true)); hm.addEventListener("mouseleave", () => setMenu(false)); }
 document.addEventListener("click", e => { if (!hm.contains(e.target)) setMenu(false); });
-const setNav = o => { nav.classList.toggle("open", o); burger.setAttribute("aria-expanded", String(o)); burger.setAttribute("aria-label", o ? "Close menu" : "Open menu"); document.body.style.overflow = o ? "hidden" : ""; if (o) setMenu(false); };
+const setNav = o => { nav.classList.toggle("open", o); burger.setAttribute("aria-expanded", String(o)); burger.setAttribute("aria-label", t(o ? "Close menu" : "Open menu")); document.body.style.overflow = o ? "hidden" : ""; if (o) setMenu(false); };
 burger.addEventListener("click", () => setNav(!nav.classList.contains("open")));
 nav.addEventListener("click", e => { if (e.target.closest("a")) setNav(false); });
 addEventListener("keydown", e => { if (e.key === "Escape") { setMenu(false); setNav(false); } });
@@ -160,13 +167,15 @@ if (fine && !reduce) {                       // gentle 3D tilt of the glass pane
 }
 
 /* -------------------------------------------------------- experiences grid */
-$("#catGrid").innerHTML = CATEGORIES.map(c => `
-  <button class="cat rv" data-id="${c.id}" aria-label="${c.name}. ${c.short}">
+const renderCats = () => {
+  $("#catGrid").innerHTML = CATEGORIES.map(c => `
+  <button class="cat ${rvc()}" data-id="${c.id}" aria-label="${t(c.name)}. ${t(c.short)}">
     <div class="media"><img src="${c.image}" alt="" loading="lazy" width="1600" height="900"></div>
     <span class="cat-go">${arrow}</span>
-    <div class="cat-in"><h3>${c.name}</h3><p>${c.short}</p></div>
+    <div class="cat-in"><h3>${t(c.name)}</h3><p>${t(c.short)}</p></div>
   </button>`).join("");
-$$("#catGrid .cat").forEach(b => b.addEventListener("click", () => openCategory(b.dataset.id)));
+  $$("#catGrid .cat").forEach(b => b.addEventListener("click", () => openCategory(b.dataset.id)));
+};
 
 /* ----------------------------------------------- journey: video + 4 steps */
 (function () {
@@ -193,31 +202,33 @@ $$("#catGrid .cat").forEach(b => b.addEventListener("click", () => openCategory(
 
 
 /* --------------------------------------------------------------- tech/approach */
-$("#techGrid").innerHTML = TECH.map(([h, p], i) => `<div class="tc rv" style="--d:${(i % 3) * .08}s"><i>0${i + 1}</i><h3>${h}</h3><p>${p}</p></div>`).join("");
-$("#approach").innerHTML = `<p class="approach-title rv">Imagine. Design. Experience.</p>` + APPROACH.map(([h, p], i) => `<div class="ap rv" style="--d:${i * .08}s"><i>0${i + 1}</i><h3>${h}</h3><p>${p}</p></div>`).join("");
+const renderTech = () => {
+  $("#techGrid").innerHTML = TECH.map(([h, p], i) => `<div class="tc ${rvc()}" style="--d:${(i % 3) * .08}s"><i>0${i + 1}</i><h3>${t(h)}</h3><p>${t(p)}</p></div>`).join("");
+  $("#approach").innerHTML = `<p class="approach-title ${rvc()}">${t("Imagine. Design. Experience.")}</p>` + APPROACH.map(([h, p], i) => `<div class="ap ${rvc()}" style="--d:${i * .08}s"><i>0${i + 1}</i><h3>${t(h)}</h3><p>${t(p)}</p></div>`).join("");
+};
 
 /* ----------------------------------------------------------------- projects */
 const chips = $("#chips"), grid = $("#projGrid");
-chips.innerHTML = FILTERS.map(([k, l], i) => `<button class="chip" role="tab" data-k="${k}" aria-selected="${i === 0}">${l}</button>`).join("");
+let curFilter = "all";
+const renderChips = () => { chips.innerHTML = FILTERS.map(([k, l]) => `<button class="chip" role="tab" data-k="${k}" aria-selected="${k === curFilter}">${t(l)}</button>`).join(""); };
 function renderProjects(k) {
   const list = PROJECTS.filter(p => k === "all" || p.cat === k);
   grid.innerHTML = list.map((p, i) => `
-    <button class="proj" style="animation-delay:${i * .05}s" data-id="${p.id}" aria-label="${p.t}, ${catById(p.cat).name}. Open preview.">
+    <button class="proj" style="animation-delay:${i * .05}s" data-id="${p.id}" aria-label="${t(p.t)}, ${t(catById(p.cat).name)}. ${t("Open preview.")}">
       <div class="media"><img src="${p.img}" alt="" loading="lazy" width="1600" height="900"></div>
-      <div class="proj-in"><small>${catById(p.cat).name}</small><h3>${p.t}</h3><p>${p.d}</p></div></button>`).join("");
+      <div class="proj-in"><small>${t(catById(p.cat).name)}</small><h3>${t(p.t)}</h3><p>${t(p.d)}</p></div></button>`).join("");
   $$(".proj", grid).forEach(b => { const p = PROJECTS.find(x => x.id === b.dataset.id); b.addEventListener("click", () => openLightbox(p)); });
 }
-chips.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; $$(".chip", chips).forEach(x => x.setAttribute("aria-selected", String(x === b))); renderProjects(b.dataset.k); });
-renderProjects("all");
+chips.addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; $$(".chip", chips).forEach(x => x.setAttribute("aria-selected", String(x === b))); curFilter = b.dataset.k; renderProjects(curFilter); });
 
 /* ----------------------------------------------------------------- lightbox */
 const lb = $("#lightbox"), lbIn = $("#lbIn"); let lbFocus = null;
 function openLightbox(p) {
   lbFocus = document.activeElement;
-  lbIn.innerHTML = `<div class="lb-media"><img src="${p.img}" alt="${p.t}"></div>
-    <div class="lb-copy"><small>${catById(p.cat).name}</small><h3>${p.t}</h3><p>${p.d}</p><div class="pills">${p.tech.map(t => `<span class="pill">${t}</span>`).join("")}</div>
-    <p class="fine">Demonstration concept created by InspiraXR. Not a completed commercial project.</p>
-    <p style="margin-top:22px"><a class="btn solid" href="#/experience/${p.cat}">View ${catById(p.cat).name} ${arrow}</a></p></div>`;
+  lbIn.innerHTML = `<div class="lb-media"><img src="${p.img}" alt="${t(p.t)}"></div>
+    <div class="lb-copy"><small>${t(catById(p.cat).name)}</small><h3>${t(p.t)}</h3><p>${t(p.d)}</p><div class="pills">${p.tech.map(x => `<span class="pill">${t(x)}</span>`).join("")}</div>
+    <p class="fine">${t("Demonstration concept created by InspiraXR. Not a completed commercial project.")}</p>
+    <p style="margin-top:22px"><a class="btn solid" href="#/experience/${p.cat}">${t("View")} ${t(catById(p.cat).name)} ${arrow}</a></p></div>`;
   lb.hidden = false; requestAnimationFrame(() => lb.classList.add("show")); document.body.style.overflow = "hidden"; $("#lbClose").focus();
   $(".btn", lbIn).addEventListener("click", closeLightbox);
 }
@@ -240,11 +251,11 @@ function openSheet(id) {
   const nx = CATEGORIES[(CATEGORIES.indexOf(c) + 1) % CATEGORIES.length];
   body.innerHTML = `
     <div class="sh-hero"><div class="media"><img src="${c.image}" alt=""></div>
-      <div class="wrap sh-title"><p class="eyebrow">${c.no} · Experience</p><h1 id="sheetTitle">${c.name}</h1></div></div>
-    <div class="wrap sh-main"><div><p class="sh-head">${c.headline}</p><p class="sh-desc">${c.desc}</p>
-      <div class="sh-cta"><button class="btn solid" id="shCta">Discuss a project ${arrow}</button><a class="btn ghost" href="#projects" data-close>See related work</a></div></div>
-      <div class="sh-services"><h4>Services</h4><ul>${c.services.map(s => `<li>${s}</li>`).join("")}</ul></div></div>
-    <div class="wrap sh-next-wrap"><button class="sh-next" id="shNext"><img src="${nx.image}" alt=""><div><small>Next experience</small><h5>${nx.name}</h5></div>${arrow}</button></div>`;
+      <div class="wrap sh-title"><p class="eyebrow">${c.no} · ${LANG === "es" ? "Experiencia" : "Experience"}</p><h1 id="sheetTitle">${t(c.name)}</h1></div></div>
+    <div class="wrap sh-main"><div><p class="sh-head">${t(c.headline)}</p><p class="sh-desc">${t(c.desc)}</p>
+      <div class="sh-cta"><button class="btn solid" id="shCta">${t("Discuss a project")} ${arrow}</button><a class="btn ghost" href="#projects" data-close>${t("See related work")}</a></div></div>
+      <div class="sh-services"><h4>${t("Services")}</h4><ul>${c.services.map(s => `<li>${t(s)}</li>`).join("")}</ul></div></div>
+    <div class="wrap sh-next-wrap"><button class="sh-next" id="shNext"><img src="${nx.image}" alt=""><div><small>${t("Next experience")}</small><h5>${t(nx.name)}</h5></div>${arrow}</button></div>`;
   sheet.hidden = false; sheet.scrollTop = 0; document.body.style.overflow = "hidden";
   requestAnimationFrame(() => sheet.classList.add("show"));
   $("#shCta").addEventListener("click", () => { $("#f-cat").value = c.id; closeSheet("#contact"); });
@@ -275,10 +286,10 @@ document.addEventListener("click", e => { const a = e.target.closest('a[href^="#
 
 /* ------------------------------------------------------------------ contact */
 const sel = $("#f-cat");
-sel.innerHTML = `<option value="" disabled selected>Choose a category</option>` + CATEGORIES.map(c => `<option value="${c.id}">${c.name}</option>`).join("") + `<option value="other">Something else</option>`;
+const renderSelect = () => { const v = sel.value; sel.innerHTML = `<option value="" disabled ${v ? "" : "selected"}>${t("Choose a category")}</option>` + CATEGORIES.map(c => `<option value="${c.id}">${t(c.name)}</option>`).join("") + `<option value="other">${t("Something else")}</option>`; if (v) sel.value = v; };
 const form = $("#contactForm"), status = $("#formStatus");
 const rules = { "f-name": v => v.trim().length > 1 || "Please tell us your name.", "f-email": v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) || "Please enter a valid email address.", "f-cat": v => !!v || "Please choose a category.", "f-msg": v => v.trim().length > 9 || "Please describe your project in a few words.", "f-ok": (v, el) => el.checked || "Please confirm so we can reply." };
-function check(id) { const el = document.getElementById(id), ok = rules[id](el.value, el), msg = $(`.err[data-for="${id}"]`); const bad = ok !== true; msg.textContent = bad ? ok : ""; el.closest(".field")?.classList.toggle("bad", bad); el.setAttribute("aria-invalid", String(bad)); return !bad; }
+function check(id) { const el = document.getElementById(id), ok = rules[id](el.value, el), msg = $(`.err[data-for="${id}"]`); const bad = ok !== true; msg.textContent = bad ? t(ok) : ""; el.closest(".field")?.classList.toggle("bad", bad); el.setAttribute("aria-invalid", String(bad)); return !bad; }
 Object.keys(rules).forEach(id => { const el = document.getElementById(id); el.addEventListener("blur", () => check(id)); el.addEventListener("input", () => { if (el.getAttribute("aria-invalid") === "true") check(id); }); });
 form.addEventListener("submit", async e => {
   e.preventDefault(); status.className = "form-status wide"; status.textContent = "";
@@ -286,15 +297,15 @@ form.addEventListener("submit", async e => {
   const d = Object.fromEntries(new FormData(form)); if (d.website) return;     // honeypot
   const data = { name: d.name, email: d.email, organization: d.organization || "", category: (catById(d.category)?.name) || "Other", message: d.message };
   if (CONFIG.formEndpoint) {
-    const btn = $("button[type=submit]", form); btn.disabled = true; status.textContent = "Sending…";
-    try { const r = await fetch(CONFIG.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) }); if (!r.ok) throw new Error(r.status); status.className = "form-status wide ok"; status.textContent = "Thank you. Your inquiry has been sent and we will reply soon."; form.reset(); }
-    catch (err) { status.className = "form-status wide bad"; status.textContent = `Sorry, that did not send. Please email ${CONFIG.contactEmail} directly.`; }
+    const btn = $("button[type=submit]", form); btn.disabled = true; status.textContent = t("Sending…");
+    try { const r = await fetch(CONFIG.formEndpoint, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) }); if (!r.ok) throw new Error(r.status); status.className = "form-status wide ok"; status.textContent = t("Thank you. Your inquiry has been sent and we will reply soon."); form.reset(); }
+    catch (err) { status.className = "form-status wide bad"; status.textContent = LANG === "es" ? `${t("Sorry, that did not send. Please email")} ${CONFIG.contactEmail}.` : `Sorry, that did not send. Please email ${CONFIG.contactEmail} directly.`; }
     btn.disabled = false;
   } else {
     // Honest fallback: no backend configured, so hand the message to the visitor's email app.
     const subject = encodeURIComponent(`InspiraXR inquiry: ${data.category}`);
     const text = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\nOrganization: ${data.organization}\nCategory: ${data.category}\n\n${data.message}`);
-    status.className = "form-status wide warn"; status.textContent = `The form is not connected to a server yet, so we opened your email app with the message ready to send to ${CONFIG.contactEmail}.`;
+    status.className = "form-status wide warn"; status.textContent = `${t("The form is not connected to a server yet, so we opened your email app with the message ready to send to")} ${CONFIG.contactEmail}.`;
     location.href = `mailto:${CONFIG.contactEmail}?subject=${subject}&body=${text}`;
   }
 });
@@ -324,4 +335,46 @@ if (fine && !reduce) {
 }
 
 /* --------------------------------------------------------------------- boot */
-observe(document); route();
+
+/* ------------------------------------------------------------------ language */
+const meta = { en: ["InspiraXR — The Next Dimension of Immersive Experience", "InspiraXR is an immersive experience studio. We turn spaces, stories and ideas into VR, AR, MR and interactive 3D experiences for architecture, real estate, museums, education, tourism and entertainment."],
+               es: ["InspiraXR — La siguiente dimensión de la experiencia inmersiva", "InspiraXR es un estudio de experiencias inmersivas. Convertimos espacios, historias e ideas en experiencias de VR, AR, MR y 3D interactivo para arquitectura, inmobiliaria, museos, educación, turismo y entretenimiento."] };
+function applyStatic() {
+  document.documentElement.lang = LANG;
+  document.title = meta[LANG][0];
+  $('meta[name="description"]').content = meta[LANG][1];
+  $$("[data-t]").forEach(el => {
+    const en = el.dataset.en, out = LANG === "es" && ES[en] !== undefined ? ES[en] : en;
+    if (el.innerHTML.trim() === out) return;
+    el.innerHTML = out;
+    if (el.classList.contains("display")) splitWords(el);
+  });
+  $$("[aria-label],[alt]").forEach(el => {
+    for (const a of ["aria-label", "alt"]) {
+      if (!el.hasAttribute(a) || el.closest(".cat,.proj")) continue;
+      const k = "data-en-" + a;
+      if (!el.hasAttribute(k)) el.setAttribute(k, el.getAttribute(a));
+      el.setAttribute(a, t(el.getAttribute(k)));
+    }
+  });
+  burger.setAttribute("aria-label", t(burger.getAttribute("aria-expanded") === "true" ? "Close menu" : "Open menu"));
+  $$(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === LANG)));
+}
+function renderAll() {
+  renderMenu(); renderCats(); renderTech(); renderChips(); renderProjects(curFilter); renderSelect();
+  applyStatic();
+  if (!sheet.hidden && openId) { const id = openId; openId = null; const top = sheet.scrollTop; openSheet(id); sheet.scrollTop = top; }
+  if (!lb.hidden) closeLightbox();
+  observe(document);
+}
+$$(".lang button").forEach(b => b.addEventListener("click", () => {
+  if (b.dataset.lang === LANG) return;
+  LANG = b.dataset.lang; try { localStorage.setItem("ixr-lang", LANG); } catch (_) {}
+  renderAll();
+}));
+// animate the headline gradient only while a heading is on screen
+const liveIO = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("live", e.isIntersecting)));
+$$(".display,.hp-head,.approach-title").forEach(el => liveIO.observe(el));
+new MutationObserver(() => $$(".approach-title:not(.lv)").forEach(el => { el.classList.add("lv"); liveIO.observe(el); })).observe($("#approach"), { childList: true });
+
+renderAll(); booted = true; route();

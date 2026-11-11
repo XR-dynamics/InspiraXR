@@ -408,3 +408,16 @@ section{position:relative}
 .contact-list .v{font-weight:inherit}
 
 .sheet-bar .lang{margin:0 14px 0 auto}
+
+/* header: logo left, menu truly centred, language + CTA right */
+.site-header{display:grid;grid-template-columns:1fr auto 1fr;gap:24px}
+.site-header .brand{justify-self:start}
+.site-header .nav{justify-self:center}
+.head-right{display:flex;align-items:center;justify-content:flex-end;gap:14px}
+.head-right .lang{margin:0}
+@media (max-width:900px){
+  .site-header{display:flex;justify-content:space-between}
+  .head-right{margin-left:auto}.head-right .head-cta{display:none}
+}
+.head-cta{white-space:nowrap}
+@media (max-width:1180px){.head-right .head-cta{display:none}}

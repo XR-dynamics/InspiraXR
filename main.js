@@ -122,7 +122,23 @@ const onScroll = () => {
 };
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 const nav = $("#nav"), burger = $("#burger"), menu = $("#expMenu"), expBtn = $("#expBtn");
-const renderMenu = () => { menu.innerHTML = CATEGORIES.map(c => `<a role="menuitem" href="#/experience/${c.id}"><i>${c.no}</i>${t(c.name)}</a>`).join(""); };
+const ICONS = {
+  "architecture": '<path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/>',
+  "real-estate": '<path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/>',
+  "museums": '<path d="M3 9l9-5 9 5M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 21h18"/>',
+  "education": '<path d="M2 9l10-5 10 5-10 5-10-5zM6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/>',
+  "tourism": '<path d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.500" r="2.500"/>',
+  "entertainment": '<path d="M12 3l2.300 5.700L20 11l-5.700 2.300L12 19l-2.300-5.700L4 11l5.700-2.300z"/>'
+};
+const ico = id => `<svg class="mi" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[id] || ""}</svg>`;
+const renderMenu = () => {
+  menu.innerHTML = `<div class="mm"><div class="mm-main"><h4>${t("Experiences")}</h4><div class="mm-grid">${
+    CATEGORIES.map(c => `<a role="menuitem" href="#/experience/${c.id}">${ico(c.id)}<span>${t(c.name)}</span></a>`).join("")}</div></div>
+    <div class="mm-side"><h4>${t("Explore")}</h4>
+      <a role="menuitem" href="#projects">${t("All Projects")}</a>
+      <a role="menuitem" href="#technology">${t("Technology")}</a>
+      <a role="menuitem" href="#contact">${t("Start a project")}</a></div></div>`;
+};
 const setMenu = o => { menu.classList.toggle("open", o); expBtn.setAttribute("aria-expanded", String(o)); };
 expBtn.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
 const hm = $(".has-menu");

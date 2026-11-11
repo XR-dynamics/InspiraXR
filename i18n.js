@@ -3,7 +3,7 @@
 export const ES = {
 /* nav + header */
 "Skip to main content": "Saltar al contenido principal",
-"Home": "Inicio", "Experiences": "Experiencias", "Projects": "Proyectos", "About": "Nosotros", "Contact": "Contacto",
+"Explore": "Explorar", "Home": "Inicio", "Experiences": "Experiencias", "Projects": "Proyectos", "About": "Nosotros", "Contact": "Contacto",
 "Start a project": "Empieza un proyecto",
 "Open menu": "Abrir menú", "Close menu": "Cerrar menú", "Main": "Principal", "Language": "Idioma",
 "InspiraXR, home": "InspiraXR, inicio", "InspiraXR, back to top": "InspiraXR, volver arriba",

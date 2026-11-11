@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InspiraXR — The Next Dimension of Immersive Experience</title>
+<meta name="description" content="InspiraXR is an immersive experience studio. We turn spaces, stories and ideas into VR, AR, MR and interactive 3D experiences for architecture, real estate, museums, education, tourism and entertainment.">
+<meta name="theme-color" content="#08090B">
+<meta property="og:type" content="website">
+<meta property="og:title" content="InspiraXR — The Next Dimension of Immersive Experience">
+<meta property="og:description" content="Experience the space before it exists. Immersive VR, AR, MR and real-time 3D experiences.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="assets/img/favicon.png"><link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="preload" href="assets/fonts/manrope-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-poster.jpg" fetchpriority="high">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js","three/addons/":"./assets/vendor/three/jsm/"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/><path d="M10 10l12 12M22 10L10 22" stroke="url(#mg)" stroke-width="2.2" stroke-linecap="round"/><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9fe3d3"/><stop offset="1" stop-color="#86b4f0"/></linearGradient></defs></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="#top" aria-label="InspiraXR, home">
+    <img class="brand-mark" src="assets/img/logo-mark.webp" alt="" width="36" height="40"><img class="brand-word" src="assets/img/logo-word.webp" alt="InspiraXR" width="120" height="26">
+  </a>
+  <nav class="nav" id="nav" aria-label="Main">
+    <a href="#top">Home</a>
+    <div class="has-menu">
+      <button class="menu-btn" aria-expanded="false" aria-haspopup="true" id="expBtn">Experiences
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+      <div class="menu" id="expMenu" role="menu"></div>
+    </div>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="head-cta" href="#contact">Start a project</a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+</header>
+
+<main id="main">
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="assets/img/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+    <source src="assets/video/hero-720.mp4" type="video/mp4" media="(max-width: 900px)">
+    <source src="assets/video/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-shade"></div>
+  <div class="hero-copy">
+    <p class="eyebrow rv">Immersive experience studio</p>
+    <h1 class="hero-title rv"><span class="sr-only">InspiraXR</span><span aria-hidden="true">INSPIRA<b>XR</b></span></h1>
+    <p class="hero-tag rv">The Next Dimension of <em>Immersive Experience</em></p>
+    <p class="hero-lede rv">We transform the way people explore spaces, experience stories, and interact with the world through immersive digital technology.</p>
+    <div class="hero-actions rv">
+      <a class="btn solid" href="#experiences">Explore Experiences <svg width="18" height="18"><use href="#arrow"/></svg></a>
+      <a class="btn ghost" href="#projects">Discover Our Work</a>
+    </div>
+  </div>
+  <p class="hero-note">Experience the space before it exists.</p>
+  <a class="scroll-cue" href="#intro" aria-label="Scroll down"><span></span></a>
+</section>
+
+<!-- ============ TICKER ============ -->
+<div class="ticker" aria-hidden="true"><div class="ticker-in">
+  <span>Virtual Reality</span><i></i><span>Augmented Reality</span><i></i><span>Mixed Reality</span><i></i><span>Interactive 3D</span><i></i><span>Real-time Visualization</span><i></i><span>Spatial Interaction</span><i></i>
+  <span>Virtual Reality</span><i></i><span>Augmented Reality</span><i></i><span>Mixed Reality</span><i></i><span>Interactive 3D</span><i></i><span>Real-time Visualization</span><i></i><span>Spatial Interaction</span><i></i>
+</div></div>
+
+<!-- ============ INTRO ============ -->
+<section class="intro wrap" id="intro">
+  <p class="eyebrow rv">Why immersive</p>
+  <h2 class="display rv">Why imagine when you can <em>experience</em> and feel?</h2>
+  <p class="lead rv">InspiraXR transforms spaces, stories and ideas into extraordinary immersive experiences using virtual reality, augmented reality, mixed reality, interactive 3D and real-time visualization. A drawing can be read. A space has to be <em>walked</em>.</p>
+</section>
+
+<!-- ============ EXPERIENCES ============ -->
+<section class="experiences wrap" id="experiences">
+  <div class="sec-head">
+    <p class="eyebrow rv">Our experiences</p>
+    <h2 class="display rv">Six ways to step <em>inside</em>.</h2>
+    <p class="lead rv">Each category has its own way of working, its own audience and its own kind of wow. Choose one to see what we build.</p>
+  </div>
+  <div class="cat-grid" id="catGrid"></div>
+</section>
+
+<!-- ============ JOURNEY ============ -->
+<section class="journey wrap" id="journey">
+  <div class="sec-head">
+    <p class="eyebrow rv">From plans to real experience</p>
+    <h2 class="display rv">Four steps from a <em>drawing</em> to a feeling.</h2>
+  </div>
+  <ol class="steps" id="steps">
+    <li class="step rv"><img src="assets/img/step-01.webp" alt="Step 1, Your blueprint: a top-down architectural plan of a villa with pool, start with your plans." loading="lazy" width="1536" height="1024"></li>
+    <li class="step rv"><img src="assets/img/step-02.webp" alt="Step 2, Your layout: the same plan rendered as a 3D cutaway model, see it come to life in 3D." loading="lazy" width="1536" height="1024"></li>
+    <li class="step rv"><img src="assets/img/step-03.webp" alt="Step 3, Step inside: a woman in a VR headset standing in a finished living room, walk through and experience your home in VR." loading="lazy" width="1536" height="1024"></li>
+    <li class="step rv"><img src="assets/img/step-04.webp" alt="Step 4, Make it yours: a woman choosing sofa styles on a floating interface, customize, try different styles and finishes." loading="lazy" width="1536" height="1024"></li>
+  </ol>
+</section>
+
+<!-- ============ BLUEPRINT SLIDER ============ -->
+<section class="compare-sec wrap" id="compare">
+  <div class="sec-head center">
+    <p class="eyebrow rv">Before and after</p>
+    <h2 class="display rv">See the plan become a <em>place</em>.</h2>
+    <p class="lead rv">Drag the handle. The same villa, first as a flat blueprint, then as a space you can read at a glance.</p>
+  </div>
+  <div class="compare rv" id="compare-box" style="--pos:50%">
+    <img class="cmp-after" src="assets/img/step-02.webp" alt="The villa as a 3D cutaway layout" loading="lazy" width="1536" height="1024">
+    <div class="cmp-before"><img src="assets/img/step-01.webp" alt="The villa as a flat blueprint" loading="lazy" width="1536" height="1024"></div>
+    <span class="cmp-tag l">Blueprint</span><span class="cmp-tag r">Layout</span>
+    <div class="cmp-handle" aria-hidden="true"><span><svg width="22" height="22" viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+    <input class="cmp-range" type="range" min="0" max="100" value="50" aria-label="Compare blueprint and 3D layout">
+  </div>
+</section>
+
+<!-- ============ MAKE IT YOURS BANNER ============ -->
+<section class="banner" id="finishes">
+  <img src="assets/img/swatches.webp" alt="A woman in a VR headset reaches for floating material swatches in a luxury lounge" loading="lazy" width="1920" height="1081">
+  <div class="banner-copy wrap">
+    <p class="eyebrow rv">Real-time customization</p>
+    <h2 class="display rv">Change the room.<br>Not the <em>meeting</em>.</h2>
+    <p class="lead rv">Floors, walls, furniture and lighting change in front of the client, in the same session. One conversation, one decision.</p>
+    <a class="btn ghost rv" href="#explorer">Try it yourself <svg width="18" height="18"><use href="#arrow"/></svg></a>
+  </div>
+</section>
+
+<!-- ============ 3D EXPLORER ============ -->
+<section class="explorer wrap" id="explorer">
+  <div class="exp-copy">
+    <p class="eyebrow rv">Interactive demo</p>
+    <h2 class="display sm rv">Finish <em>explorer</em></h2>
+    <p class="lead rv">A small real-time 3D room, running in your browser. Drag to look around, then change the finishes and the light.</p>
+    <div id="expControls" class="exp-controls rv"></div>
+    <p class="fine rv">A simplified demonstration scene. Client experiences use full-fidelity scenes built in Unreal Engine.</p>
+  </div>
+  <div class="exp-stage rv" id="expStage">
+    <canvas id="expCanvas" aria-label="Interactive 3D room. Drag to rotate."></canvas>
+    <div class="exp-load" id="expLoad">Loading 3D scene…</div>
+    <div class="exp-hint">Drag to orbit · scroll to zoom</div>
+  </div>
+</section>
+
+<!-- ============ FILM STRIP ============ -->
+<section class="film" id="film">
+  <div class="wrap sec-head">
+    <p class="eyebrow rv">One session</p>
+    <h2 class="display rv">Ten seconds that <em>sell</em> a space.</h2>
+    <p class="lead rv">This is what a typical session looks like, from putting on the headset to standing in the finished room.</p>
+  </div>
+  <div class="film-track" id="filmTrack" tabindex="0" aria-label="Storyboard of an InspiraXR session"></div>
+</section>
+
+<!-- ============ TECHNOLOGY ============ -->
+<section class="tech wrap" id="technology">
+  <div class="sec-head">
+    <p class="eyebrow rv">Technology</p>
+    <h2 class="display rv">Technology that makes experiences <em>possible</em>.</h2>
+    <p class="lead rv">We combine immersive technologies, real-time visualization and interactive design to create digital experiences that connect people with spaces, stories and ideas.</p>
+  </div>
+  <div class="tech-grid" id="techGrid"></div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="projects wrap" id="projects">
+  <div class="sec-head">
+    <p class="eyebrow rv">Projects</p>
+    <h2 class="display rv">Selected <em>Experiences</em></h2>
+    <p class="lead rv">Exploring new possibilities through immersive design, interactive environments and experiential storytelling.</p>
+  </div>
+  <div class="chips rv" id="chips" role="tablist" aria-label="Filter projects"></div>
+  <div class="proj-grid" id="projGrid"></div>
+  <p class="fine center">All items shown are demonstration concepts created by InspiraXR, not completed commercial projects.</p>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about wrap" id="about">
+  <div class="about-l">
+    <p class="eyebrow rv">About InspiraXR</p>
+    <h2 class="display rv">We create worlds worth <em>experiencing</em>.</h2>
+  </div>
+  <div class="about-r">
+    <p class="lead rv">InspiraXR is an immersive experience studio dedicated to transforming how people visualize, explore, learn and connect with the world around them.</p>
+    <p class="rv">By combining creative design with immersive technology, we develop interactive environments that bring architectural visions to life, make cultural stories accessible, enhance education and redefine digital experiences.</p>
+    <p class="rv">Our approach brings together design, storytelling and technology to create experiences that are meaningful, intuitive and memorable.</p>
+  </div>
+  <div class="approach" id="approach"></div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <img class="contact-bg" src="assets/img/lounge.webp" alt="" loading="lazy" width="1920" height="1079">
+  <div class="contact-shade"></div>
+  <div class="wrap contact-in">
+    <div class="contact-l">
+      <p class="eyebrow rv">Contact</p>
+      <h2 class="display rv">Let’s create something <em>extraordinary</em>.</h2>
+      <p class="lead rv">Have a space, story or idea you want to bring to life? Let’s explore how immersive technology can transform your vision.</p>
+      <ul class="contact-list rv">
+        <li><span>Email</span><a href="mailto:techlead@iverseai.com">techlead@iverseai.com</a></li>
+        <li><span>Phone</span><a href="tel:+34614036329">+34 614 036 329</a></li>
+        <li><span>Studio</span>Marbella, Málaga, Spain</li>
+      </ul>
+    </div>
+    <form class="form rv" id="contactForm" novalidate>
+      <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required><small class="err" data-for="f-name"></small></div>
+      <div class="field"><label for="f-email">Email address</label><input id="f-email" name="email" type="email" autocomplete="email" required><small class="err" data-for="f-email"></small></div>
+      <div class="field"><label for="f-org">Company / organization</label><input id="f-org" name="organization" type="text" autocomplete="organization"></div>
+      <div class="field"><label for="f-cat">Project category</label><select id="f-cat" name="category" required></select><small class="err" data-for="f-cat"></small></div>
+      <div class="field wide"><label for="f-msg">Project description</label><textarea id="f-msg" name="message" rows="4" required></textarea><small class="err" data-for="f-msg"></small></div>
+      <label class="check wide"><input type="checkbox" id="f-ok" required><span>I agree that InspiraXR may use these details to reply to my enquiry.</span></label>
+      <small class="err wide" data-for="f-ok"></small>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+      <button class="btn solid wide" type="submit">Submit inquiry <svg width="18" height="18"><use href="#arrow"/></svg></button>
+      <p class="form-status wide" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap foot-in">
+    <a class="brand" href="#top" aria-label="InspiraXR, back to top"><img class="brand-mark" src="assets/img/logo-mark.webp" alt="" width="36" height="40"><img class="brand-word" src="assets/img/logo-word.webp" alt="InspiraXR" width="120" height="26"></a>
+    <p>Experience the space before it exists.</p>
+    <p class="fine">© 2026 InspiraX. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- ============ CATEGORY SHEET (page-like view) ============ -->
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden>
+  <div class="sheet-bar">
+    <button class="sheet-close" id="sheetClose" aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>Close</span></button>
+    <div class="sheet-nav"><button id="sheetPrev" aria-label="Previous category">←</button><button id="sheetNext" aria-label="Next category">→</button></div>
+  </div>
+  <div class="sheet-body" id="sheetBody"></div>
+</div>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project preview" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close preview"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+  <div class="lb-in" id="lbIn"></div>
+</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>

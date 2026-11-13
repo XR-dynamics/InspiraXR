@@ -8,6 +8,14 @@ export const ES = {
 "Open menu": "Abrir menú", "Close menu": "Cerrar menú", "Main": "Principal", "Language": "Idioma",
 "InspiraXR, home": "InspiraXR, inicio", "InspiraXR, back to top": "InspiraXR, volver arriba",
 "Scroll down": "Desplázate hacia abajo",
+
+/* yacht sequence */
+"From Blueprint to Immersive Yacht Experience": "De los planos a la experiencia náutica inmersiva",
+"Blueprint Sketch": "Boceto del plano",
+"Photorealistic 3D Render": "Render 3D fotorrealista",
+"Walkable Interior": "Interior recorrible",
+"XR Experience": "Experiencia XR",
+"Interactive Control": "Control interactivo",
 /* hero */
 "InspiraXR: The Next Dimension of Immersive Experience": "InspiraXR: La siguiente dimensión de la experiencia inmersiva",
 "Immersive experience studio": "Estudio de experiencias inmersivas",

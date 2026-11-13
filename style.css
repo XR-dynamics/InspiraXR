@@ -489,37 +489,3 @@ html,body{background:#040405}
 .chip[aria-selected=true]{background:#fff;color:#07090b}
 .head-cta:hover{border-color:#fff;color:#fff}
 em,.lead em,.hp-head em,.display em{font-family:inherit;font-weight:inherit;font-size:inherit}
-
-/* ===== yacht film: glass sequence panel + intro backdrop ===== */
-.yacht-panel{position:absolute;left:0;right:0;bottom:clamp(70px,11vh,130px);padding:clamp(22px,2.6vw,38px) clamp(22px,3vw,44px) clamp(20px,2.4vw,34px);border-radius:30px;
-  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.2);
-  -webkit-backdrop-filter:blur(3px) saturate(130%);backdrop-filter:blur(3px) saturate(130%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 40px 100px rgba(0,0,0,.5);
-  opacity:0;visibility:hidden;transform:translateY(26px) scale(.98);pointer-events:none;
-  transition:opacity .9s var(--ease),transform .9s var(--ease),visibility 0s linear .9s}
-.hero.ph-y .yacht-panel{opacity:1;visibility:visible;transform:none;transition-delay:.15s,.15s,0s}
-.hero.ph-y .hero-panel{opacity:0!important;visibility:hidden;transform:translateY(-18px) scale(.98)!important;pointer-events:none;transition:opacity .6s var(--ease),transform .6s var(--ease),visibility 0s linear .6s}
-.yp-title{font-family:var(--sans,inherit);font-weight:600;font-size:clamp(22px,3vw,44px);letter-spacing:-.03em;line-height:1.1;color:#fff;text-align:center;text-shadow:0 2px 24px rgba(0,0,0,.6)}
-.yp-line{display:block;height:2px;width:min(520px,60%);margin:clamp(12px,1.6vw,20px) auto clamp(16px,2vw,28px);background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent)}
-.yp-steps{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(8px,1vw,14px);margin:0;padding:0}
-.yp-steps li{display:flex;align-items:center;gap:clamp(8px,.9vw,14px);padding:clamp(11px,1.3vw,18px) clamp(12px,1.3vw,20px);border-radius:14px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));color:rgba(255,255,255,.6);position:relative;
-  transition:transform .6s var(--ease),border-color .6s,background .6s,color .6s,box-shadow .6s}
-.yp-steps li+li::before{content:"";position:absolute;left:calc(clamp(8px,1vw,14px) / -2 - 4px);top:50%;width:8px;height:8px;border-top:2px solid rgba(255,255,255,.5);border-right:2px solid rgba(255,255,255,.5);transform:translateY(-50%) rotate(45deg)}
-.yn{font-size:clamp(15px,1.5vw,22px);font-weight:300;letter-spacing:.04em;opacity:.8;padding-right:clamp(8px,.9vw,14px);border-right:1px solid rgba(255,255,255,.25)}
-.yl{font-size:clamp(12px,1.2vw,17px);font-weight:600;line-height:1.2;letter-spacing:-.01em}
-.yp-steps li.on{color:#fff;transform:scale(1.045);border-color:rgba(255,255,255,.55);background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 34px -4px rgba(150,205,255,.5)}
-.yp-steps li.done{color:rgba(255,255,255,.85)}
-@media(max-width:760px){
-  .yacht-panel{bottom:84px;padding:18px 16px;border-radius:22px}
-  .yp-steps{grid-template-columns:1fr;gap:6px}
-  .yp-steps li{padding:8px 12px}
-  .yp-steps li::before{display:none}
-  .yp-steps li.on{transform:none}
-}
-@media(prefers-reduced-motion:reduce){.yacht-panel{display:none}}
-
-.intro-band{position:relative;overflow:hidden;isolation:isolate}
-.intro-bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
-.intro-bg video{width:100%;height:100%;object-fit:cover;opacity:.3;filter:saturate(.85)}
-.intro-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg,#040405) 0%,rgba(4,4,5,0) 22%,rgba(4,4,5,0) 78%,var(--bg,#040405) 100%),radial-gradient(70% 70% at 50% 50%,rgba(4,4,5,.12),rgba(4,4,5,.45))}
-@media(prefers-reduced-motion:reduce){.intro-bg video{display:none}}

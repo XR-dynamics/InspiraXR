@@ -154,15 +154,6 @@ addEventListener("keydown", e => { if (e.key === "Escape") { setMenu(false); set
    words arrive as the film plays. Once shown, everything stays visible. */
 const hv = $("#heroVideo"), panel = $("#heroPanel"), sts = $$(".st", panel);
 let shown = 0, vSeen = false; const T0 = performance.now();
-const heroEl = $("#top"), ysteps = $$("#yachtPanel .yp-steps li"), YS = [8.76, 11.2, 13.5, 15.8, 18.0, 20.4];   // yacht film scene starts on the hero clock
-let yIdx = -2;
-function yacht(t, playing) {
-  let i = -1;
-  if (playing && t >= YS[0] && t < YS[5]) { i = 0; while (i < 4 && t >= YS[i + 1]) i++; }
-  if (i === yIdx) return; yIdx = i;
-  heroEl.classList.toggle("ph-y", i >= 0);
-  ysteps.forEach((li, k) => { li.classList.toggle("on", k === i); li.classList.toggle("done", i >= 0 && k < i); });
-}
 function story() {
   const wall = (performance.now() - T0) / 1000;
   const playing = !hv.paused && hv.readyState >= 2 && hv.currentTime > 0.05;
@@ -170,8 +161,7 @@ function story() {
   const t = playing ? hv.currentTime : (vSeen ? 0 : Math.max(0, wall - 2.2));   // fallback clock if video cannot play
   if (!panel.classList.contains("on") && (t >= .2 || wall > 3)) { panel.classList.add("on"); setTimeout(() => panel.classList.add("rdy"), 1300); }
   while (shown < sts.length && t >= +sts[shown].dataset.at) { sts[shown].classList.add("on"); shown++; }
-  yacht(t, playing);
-  requestAnimationFrame(story);
+  if (shown < sts.length) requestAnimationFrame(story);
 }
 if (reduce) {
   hv.removeAttribute("autoplay"); hv.pause(); panel.classList.add("on", "rdy"); sts.forEach(s => s.classList.add("on")); shown = sts.length;
@@ -179,8 +169,6 @@ if (reduce) {
   hv.play().catch(() => {});
   requestAnimationFrame(story);
   new IntersectionObserver(es => { es[0].isIntersecting ? hv.play().catch(() => {}) : hv.pause(); }).observe(hv);
-  const iv = $("#introVideo");
-  if (iv) new IntersectionObserver(es => { es[0].isIntersecting ? iv.play().catch(() => {}) : iv.pause(); }, { rootMargin: "200px" }).observe(iv);
   let tick = false;
   addEventListener("scroll", () => { if (tick || scrollY > innerHeight) return; tick = true; requestAnimationFrame(() => { hv.style.transform = `scale(1.04) translateY(${scrollY * .1}px)`; tick = false; }); }, { passive: true });
 }

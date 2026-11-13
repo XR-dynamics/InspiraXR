@@ -203,7 +203,7 @@ const renderCats = () => {
     const d = sv.duration || 10, t = sv.currentTime; let a = 0;
     from.forEach((f, i) => { if (t >= f) a = i; });
     bar.style.transform = `scaleX(${Math.min(t / d, 1)})`;
-    items.forEach((li, i) => { li.classList.toggle("active", i === a); li.style.setProperty("--f", i < a ? 1 : i > a ? 0 : Math.min((t - from[a]) / ((from[a + 1] ?? d) - from[a]), 1).toFixed(3)); });
+    items.forEach((li, i) => { li.classList.toggle("active", i === a); li.style.setProperty("--f", i < a ? 1 : i > a ? 0 : Math.min(Math.max((t - from[a]) / ((from[a + 1] ?? 9.2) - from[a]), 0), 1).toFixed(3)); });
     if (!sv.paused) raf = requestAnimationFrame(paint);
   };
   sv.addEventListener("play", () => { cancelAnimationFrame(raf); paint(); });

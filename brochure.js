@@ -27,6 +27,14 @@ function lib() {
     const s = document.createElement("script"); s.src = "assets/vendor/page-flip.browser.js"; s.onload = ok; s.onerror = no; document.head.appendChild(s);
   }));
 }
+const imgs = [];
+function preload() {
+  lib().catch(() => {});
+  for (let i = 0; i < N; i++) if (!imgs[i]) { const im = new Image(); im.decoding = "async"; im.src = SRC(i); imgs[i] = im; }
+}
+const idle = window.requestIdleCallback || (f => setTimeout(f, 1200));
+addEventListener("load", () => idle(preload));
+document.addEventListener("pointerover", e => { if (e.target.closest && e.target.closest("[data-brochure]")) preload(); }, { passive: true });
 function dims() {
   const bar = bk.querySelector(".bk-bar").offsetHeight, foot = bk.querySelector(".bk-foot").offsetHeight;
   const availH = innerHeight - bar - foot - 24, availW = innerWidth - (innerWidth < 600 ? 24 : 80);
@@ -45,7 +53,7 @@ function build(startPage) {
     const pg = document.createElement("div");
     pg.className = "bk-pg" + (i % 2 ? "" : " r");
     if (i === 0 || i === N - 1) pg.dataset.density = "hard";
-    const im = new Image(); im.alt = `Page ${i + 1}`; im.draggable = false; im.src = SRC(i); pg.appendChild(im); host.appendChild(pg);
+    const im = imgs[i] ? imgs[i].cloneNode() : new Image(); im.alt = `Page ${i + 1}`; im.draggable = false; if (!im.src) im.src = SRC(i); pg.appendChild(im); host.appendChild(pg);
   }
   pf = new St.PageFlip(host, {
     width: 794, height: 1123, size: "stretch",
@@ -84,20 +92,26 @@ function chapters() {
   });
 }
 async function open(from) {
-  opener = from || document.activeElement; chapters();
+  opener = from || document.activeElement; chapters(); preload();
   bk.hidden = false; document.documentElement.style.overflow = "hidden";
+  bk.classList.add("loading");
+  requestAnimationFrame(() => bk.classList.add("show"));
   closeBtn.focus({ preventScroll: true });
   if (location.hash !== "#brochure") history.replaceState(null, "", "#brochure");
-  try { await lib(); } catch (_) { return; }
-  if (bk.hidden) return;
-  build(0);
-  requestAnimationFrame(() => bk.classList.add("show"));
-  // open the cover after a beat so the page turn is seen
-  setTimeout(() => { if (!bk.hidden && pf && cur === 0) pf.flipNext(); }, reduce ? 0 : 900);
+  try {
+    await lib();
+    await Promise.race([Promise.all(imgs.slice(0, 3).map(im => im.decode ? im.decode().catch(() => {}) : 0)), new Promise(r => setTimeout(r, 1500))]);
+    if (bk.hidden) return;
+    build(0);
+    bk.classList.remove("loading");
+    setTimeout(() => { if (!bk.hidden && pf && cur === 0) pf.flipNext(); }, reduce ? 0 : 450);
+  } catch (err) {
+    console.error(err); bk.classList.remove("loading"); bk.classList.add("failed");
+  }
 }
 function close() {
   bk.classList.remove("show"); document.documentElement.style.overflow = "";
-  setTimeout(() => { bk.hidden = true; if (pf) { try { pf.destroy(); } catch (_) {} pf = null; book.innerHTML = ""; } }, 400);
+  bk.classList.remove("failed","loading"); setTimeout(() => { bk.hidden = true; if (pf) { try { pf.destroy(); } catch (_) {} pf = null; book.innerHTML = ""; } }, 400);
   if (location.hash === "#brochure") history.replaceState(null, "", location.pathname + location.search);
   if (opener && opener.focus) opener.focus({ preventScroll: true });
 }

@@ -14,7 +14,7 @@ export const ES = {
 "The Next Dimension of <em>Immersive Experience</em>": "La siguiente dimensión de la <em>experiencia inmersiva</em>",
 "We transform the way people explore spaces, experience stories, and interact with the world through immersive digital technology.": "Transformamos la forma en que las personas exploran espacios, viven historias e interactúan con el mundo a través de la tecnología digital inmersiva.",
 "Experience the space before it exists.": "Vive el espacio antes de que exista.",
-"Explore Experiences": "Explora las experiencias", "View brochure": "Ver folleto", "Download PDF": "Descargar PDF", "Discover Our Work": "Descubre nuestro trabajo",
+"Explore Experiences": "Explora las experiencias", "View brochure": "Ver folleto", "The brochure could not be loaded.": "No se pudo cargar el folleto.", "Open the PDF": "Abrir el PDF", "Download PDF": "Descargar PDF", "Discover Our Work": "Descubre nuestro trabajo",
 /* intro */
 "Why immersive": "Por qué inmersivo",
 "Why imagine when you can <em>experience</em> and feel?": "¿Para qué imaginar cuando puedes <em>vivir</em> y sentir?",

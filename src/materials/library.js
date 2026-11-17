@@ -58,17 +58,17 @@ export function buildMaterials(renderer, onProgress = () => {}) {
   const M = {};
 
   // ---- Architectural surfaces -------------------------------------------
-  M.stone = std({ ...tex('stone'), roughness: 1, normalScale: new THREE.Vector2(0.6, 0.6), envMapIntensity: 1.0 });
+  M.stone = phys({ ...tex('stone'), roughness: 0.42, color: srgb(0xeceae6), normalScale: new THREE.Vector2(0.35, 0.35), envMapIntensity: 1.0, clearcoat: 0.6, clearcoatRoughness: 0.12 });
   M.plaster = std({ ...tex('plaster'), roughness: 1, normalScale: new THREE.Vector2(0.4, 0.4) });
   // Walls: same plaster maps, tinted per face through vertex colours (white = original),
   // so repainting one wall never touches another surface that shares the material.
   M.wallPaint = std({ ...tex('plaster'), roughness: 1, normalScale: new THREE.Vector2(0.4, 0.4), vertexColors: true });
   M.ceiling = std({ ...tex('plaster'), roughness: 1, color: srgb(0xf7f9fc), normalScale: new THREE.Vector2(0.2, 0.2) });
-  M.walnut = std({ ...tex('walnut'), roughness: 1, normalScale: new THREE.Vector2(0.5, 0.5) });
+  M.walnut = phys({ ...tex('walnut'), roughness: 0.62, normalScale: new THREE.Vector2(0.6, 0.6), clearcoat: 0.25, clearcoatRoughness: 0.35 });
   M.walnutDark = std({ ...tex('walnut'), roughness: 1, color: srgb(0x8a7462), normalScale: new THREE.Vector2(0.5, 0.5) });
-  M.oak = std({ ...tex('oak'), roughness: 1, normalScale: new THREE.Vector2(0.5, 0.5) });
-  M.darkMarble = std({ ...tex('darkMarble'), roughness: 1, normalScale: new THREE.Vector2(0.3, 0.3) });
-  M.whiteMarble = std({ ...tex('whiteMarble'), roughness: 1, normalScale: new THREE.Vector2(0.3, 0.3) });
+  M.oak = phys({ ...tex('oak'), roughness: 0.6, normalScale: new THREE.Vector2(0.5, 0.5), clearcoat: 0.35, clearcoatRoughness: 0.3 });
+  M.darkMarble = phys({ ...tex('darkMarble'), roughness: 0.35, normalScale: new THREE.Vector2(0.2, 0.2), clearcoat: 1, clearcoatRoughness: 0.05 });
+  M.whiteMarble = phys({ ...tex('whiteMarble'), roughness: 0.35, normalScale: new THREE.Vector2(0.2, 0.2), clearcoat: 1, clearcoatRoughness: 0.05 });
   M.slate = std({ ...tex('slate'), roughness: 1 });
   M.fluted = std({ ...tex('fluted'), roughness: 1, normalScale: new THREE.Vector2(1.6, 1.6) });
   M.deck = std({ ...tex('deck'), roughness: 1 });

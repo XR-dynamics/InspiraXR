@@ -15,6 +15,7 @@ import { Blueprint } from './world/blueprint.js';
 import { WIND } from './world/wind.js';
 import { LOOK } from './world/look.js';
 import { SkyDome } from './world/skydome.js';
+import { FloorReflection } from './world/floorreflect.js';
 
 const $ = (s) => document.querySelector(s);
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
@@ -52,7 +53,7 @@ const setProgress = (p, label) => {
   if (label) $('#loader .status').textContent = label;
 };
 
-let world, lighting, player, plan, walls, furniture, custom, xr, blueprint = null, skyDome = null;
+let world, lighting, player, plan, walls, furniture, custom, xr, blueprint = null, skyDome = null, floorRefl = null;
 const clock = new THREE.Clock();
 let mode = 'loading';
 
@@ -84,6 +85,7 @@ async function init() {
   world = await layout.buildWorld({ scene, M, lighting, renderer, onProgress: (p, label) => setProgress(0.62 + p * 0.12, label) });
   world.toast = toast;
   lighting.setupProbes(layout.ZONES, world.zoneMaterials);
+  if (layout.lightingConfig?.look && LOOK.qualityPresets[LOOK.quality].floorReflections) setupFloorReflections(M);
   setupCustomisation();
   setProgress(0.75, 'Lighting the interiors');
   await nextFrame();
@@ -117,6 +119,18 @@ async function init() {
   else { $('#intro').classList.remove('hidden'); mode = 'intro'; }
   if (mode === 'loading') mode = 'intro';
   loop();
+}
+
+/** Polished floors reflect the room (stone, oak and marble floors, including their per-zone clones). */
+function setupFloorReflections(M) {
+  floorRefl = new FloorReflection(renderer, scene, camera, { y: 0, scale: 0.5 });
+  const bases = ['stone', 'oak', 'whiteMarble'].map((k) => M[k]).filter(Boolean);
+  const mats = new Set(bases);
+  for (const byMat of world.zoneMaterials.values()) for (const b of bases) if (byMat.get(b)) mats.add(byMat.get(b));
+  mats.forEach((m) => floorRefl.add(m));
+  const meshes = [];
+  scene.traverse((o) => { if (o.isMesh && mats.has(o.material)) meshes.push(o); });
+  floorRefl.setHidden(meshes);
 }
 
 async function bakeMaterials() {
@@ -663,7 +677,10 @@ function frame(dt, render = true) {
   // The post-processing composer cannot draw into a headset's framebuffer, so a VR session
   // renders the same scene straight to it; the desktop path is unchanged.
   if (presenting) renderer.render(scene, camera);
-  else R.render(time);
+  else {
+    floorRefl?.update(blueprint?.active ? 0 : lighting.state.mirror ?? 0);
+    R.render(time);
+  }
 }
 
 init().catch((e) => {

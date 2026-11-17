@@ -234,7 +234,8 @@ export class Lighting {
       }
       const k = smooth(r.level);
       for (const l of r.lights) l.intensity = l.userData.base * k;
-      for (const e of r.emissive) e.material.emissiveIntensity = e.intensity * k;
+      const glow = this.state.glow ?? 1;
+      for (const e of r.emissive) e.material.emissiveIntensity = e.intensity * k * glow;
     }
     for (const f of this.flickers) {
       const n = Math.sin(time * 13.1) * 0.5 + Math.sin(time * 7.3 + 1.3) * 0.3 + Math.sin(time * 23.7) * 0.2;

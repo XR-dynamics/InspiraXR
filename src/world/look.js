@@ -12,12 +12,13 @@ export const LOOK = {
     night: 'hdri/night.hdr',
   },
   modes: {
-    //         exposure  sun (lux-ish)    ambient fill   reflections      bloom        AO          sky brightness
-    day:      { exposure: 0.66, sunIntensity: 3.6, hemi: 0.75, env: 1.0, bloom: 0.16, ao: 0.85, sky: 1.0 },
-    sunset:   { exposure: 0.7, sunIntensity: 3.9, hemi: 0.55, env: 0.95, bloom: 0.34, ao: 0.85, sky: 1.0 },
-    night:    { exposure: 0.8, sunIntensity: 0.05, hemi: 0.16, env: 0.75, bloom: 0.6, ao: 0.75, sky: 1.0 },
-    overcast: { exposure: 0.8, hemi: 1.05, bloom: 0.14, ao: 0.9, sky: 1.0 },
-    evening:  { exposure: 0.84, hemi: 0.3, bloom: 0.5, ao: 0.8, sky: 1.0 },
+    // exposure, sun, ambient fill (hemi), probe reflections (env), bloom, AO, sky brightness,
+    // mirror = glossy floor reflection strength, glow = multiplier on lamps, coves and LED strips
+    day:      { exposure: 0.66, sunIntensity: 3.6, hemi: 0.5, env: 1.0, bloom: 0.16, ao: 0.9, sky: 1.0, mirror: 0.55, glow: 1.0 },
+    sunset:   { exposure: 0.7, sunIntensity: 3.9, hemi: 0.4, env: 0.95, bloom: 0.42, ao: 0.9, sky: 1.0, mirror: 0.65, glow: 1.7 },
+    night:    { exposure: 0.8, sunIntensity: 0.05, hemi: 0.12, env: 0.75, bloom: 0.7, ao: 0.8, sky: 1.0, mirror: 0.8, glow: 2.0 },
+    overcast: { exposure: 0.8, hemi: 0.9, bloom: 0.14, ao: 0.9, sky: 1.0, mirror: 0.45, glow: 1.0 },
+    evening:  { exposure: 0.84, hemi: 0.3, bloom: 0.6, ao: 0.8, sky: 1.0, mirror: 0.7, glow: 1.8 },
   },
   // warm bounce instead of a navy fill: sky colour above, sun-lit floor colour below (sRGB hex)
   fill: {
@@ -28,7 +29,7 @@ export const LOOK = {
     evening: { sky: 0x707aa0, ground: 0x4a3c30, tint: [1.02, 1.0, 0.98] },
   },
   qualityPresets: {
-    high: { ao: true, smaa: true, bloom: true, shadowMap: 4096 },
-    low: { ao: false, smaa: false, bloom: true, shadowMap: 2048 },
+    high: { ao: true, smaa: true, bloom: true, shadowMap: 4096, floorReflections: true },
+    low: { ao: false, smaa: false, bloom: true, shadowMap: 2048, floorReflections: false },
   },
 };

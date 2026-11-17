@@ -1,17 +1,17 @@
 /* InspiraXR brochure: realistic page-turn reader (StPageFlip, MIT, vendored in assets/vendor).
    Pages are images in assets/img/brochure/p1..p8.webp. Two-page spread on wide screens, single page on narrow ones.
    Drag a page corner, click a page, swipe, or use the arrows / keyboard. */
-const N = 8;
+const N = 7;
 const SRC = i => `assets/img/brochure/p${i + 1}.webp`;
 const ES = {
-  chap: ["Portada", "Por qué inmersivo", "Los problemas que resolvemos", "Experiencias", "De los planos a la experiencia", "Yates", "Contacto"],
+  chap: ["Portada", "Por qué inmersivo", "Los problemas que resolvemos", "Experiencias", "De los planos a la experiencia", "Yates"],
   page: (a, b) => b ? `Páginas ${a}–${b} de ${N}` : `Página ${a} de ${N}`,
 };
 const EN = {
-  chap: ["Cover", "Why immersive", "The problems we solve", "Experiences", "Plans to experience", "Yacht use case", "Contact"],
+  chap: ["Cover", "Why immersive", "The problems we solve", "Experiences", "Plans to experience", "Yacht use case"],
   page: (a, b) => b ? `Pages ${a}–${b} of ${N}` : `Page ${a} of ${N}`,
 };
-const CHAP_PAGE = [0, 1, 2, 4, 5, 6, 7];   // first page index of each chapter
+const CHAP_PAGE = [0, 1, 2, 3, 4, 5];   // first page index of each chapter
 const HOT = 2;                              // chapter to highlight (the pain points)
 const L = () => (document.documentElement.lang === "es" ? ES : EN);
 

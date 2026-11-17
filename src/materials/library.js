@@ -66,7 +66,7 @@ export function buildMaterials(renderer, onProgress = () => {}) {
   M.ceiling = std({ ...tex('plaster'), roughness: 1, color: srgb(0xf7f9fc), normalScale: new THREE.Vector2(0.2, 0.2) });
   M.walnut = phys({ ...tex('walnut'), roughness: 0.62, normalScale: new THREE.Vector2(0.6, 0.6), clearcoat: 0.25, clearcoatRoughness: 0.35 });
   M.walnutDark = std({ ...tex('walnut'), roughness: 1, color: srgb(0x8a7462), normalScale: new THREE.Vector2(0.5, 0.5) });
-  M.oak = phys({ ...tex('oak'), roughness: 0.6, normalScale: new THREE.Vector2(0.5, 0.5), clearcoat: 0.35, clearcoatRoughness: 0.3 });
+  M.oak = phys({ ...tex('oak'), roughness: 0.78, normalScale: new THREE.Vector2(0.5, 0.5), clearcoat: 0.35, clearcoatRoughness: 0.3 });
   M.darkMarble = phys({ ...tex('darkMarble'), roughness: 0.35, normalScale: new THREE.Vector2(0.2, 0.2), clearcoat: 1, clearcoatRoughness: 0.05 });
   M.whiteMarble = phys({ ...tex('whiteMarble'), roughness: 0.35, normalScale: new THREE.Vector2(0.2, 0.2), clearcoat: 1, clearcoatRoughness: 0.05 });
   M.slate = std({ ...tex('slate'), roughness: 1 });

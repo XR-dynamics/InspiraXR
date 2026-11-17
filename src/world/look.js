@@ -14,7 +14,7 @@ export const LOOK = {
   modes: {
     // exposure, sun, ambient fill (hemi), probe reflections (env), bloom, AO, sky brightness,
     // mirror = glossy floor reflection strength, glow = multiplier on lamps, coves and LED strips
-    day:      { exposure: 0.66, sunIntensity: 3.6, hemi: 0.5, env: 1.0, bloom: 0.16, ao: 0.9, sky: 1.0, mirror: 0.55, glow: 1.0 },
+    day:      { exposure: 0.6, sunIntensity: 3.6, hemi: 0.5, env: 1.0, bloom: 0.16, ao: 0.9, sky: 1.0, mirror: 0.55, glow: 1.0 },
     sunset:   { exposure: 0.7, sunIntensity: 3.9, hemi: 0.4, env: 0.95, bloom: 0.42, ao: 0.9, sky: 1.0, mirror: 0.65, glow: 1.7 },
     night:    { exposure: 0.8, sunIntensity: 0.05, hemi: 0.12, env: 0.75, bloom: 0.7, ao: 0.8, sky: 1.0, mirror: 0.8, glow: 2.0 },
     overcast: { exposure: 0.8, hemi: 0.9, bloom: 0.14, ao: 0.9, sky: 1.0, mirror: 0.45, glow: 1.0 },

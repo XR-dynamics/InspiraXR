@@ -146,7 +146,7 @@ if (matchMedia("(hover:hover) and (min-width:901px)").matches) { hm.addEventList
 document.addEventListener("click", e => { if (!hm.contains(e.target)) setMenu(false); });
 const setNav = o => { nav.classList.toggle("open", o); burger.setAttribute("aria-expanded", String(o)); burger.setAttribute("aria-label", t(o ? "Close menu" : "Open menu")); document.body.style.overflow = o ? "hidden" : ""; if (o) setMenu(false); };
 burger.addEventListener("click", () => setNav(!nav.classList.contains("open")));
-nav.addEventListener("click", e => { if (e.target.closest("a")) setNav(false); });
+nav.addEventListener("click", e => { if (e.target.closest("a,.nav-brochure")) setNav(false); });
 addEventListener("keydown", e => { if (e.key === "Escape") { setMenu(false); setNav(false); } });
 
 /* -------------------------------------------------------------------- hero

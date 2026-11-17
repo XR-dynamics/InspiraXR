@@ -44,7 +44,7 @@ export class FloorReflection {
   vReflWN = normalize( mat3( modelMatrix ) * objectNormal );`);
       shader.fragmentShader = FRAG_DECL + shader.fragmentShader.replace('#include <opaque_fragment>', `{
     // planar reflection: only on up-facing surfaces at floor level
-    float onFloor = smoothstep( 0.92, 0.99, vReflWN.y ) * ( 1.0 - smoothstep( 0.02, 0.08, abs( vReflWorld.y - ${y.toFixed(3)} ) ) );
+    float onFloor = smoothstep( 0.92, 0.99, vReflWN.y ) * ( 1.0 - smoothstep( 0.02, 0.08, abs( vReflWorld.y - ${this.y.toFixed(3)} ) ) );
     if ( onFloor > 0.0 && uReflStrength > 0.0 ) {
       vec2 ruv = vReflUv.xy / vReflUv.w + ( normal.xy - vec3( 0.0, 0.0, 1.0 ).xy ) * 0.03;
       float lod = clamp( roughnessFactor * roughnessFactor * 9.0, 0.0, uReflMaxLod );

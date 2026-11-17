@@ -26,7 +26,8 @@ export const residence = {
   ],
   START: { pos: [6.0, 14.4], look: [4.6, 1.6, 4.0] },
   defaultEnvironment: 'sunset',
-  lightingConfig: {},
+  // realism pass: LOOK settings per time of day and photographic HDRI skies (see world/look.js, world/skydome.js)
+  lightingConfig: { look: true, hdri: true },
   outdoorRoom: 'terrace',
   sliderId: 'slider',
   /** Where the room selector walks to (a few rooms are reachable but not in the selector). */

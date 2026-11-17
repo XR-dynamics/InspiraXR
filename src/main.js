@@ -13,6 +13,8 @@ import { CUSTOMISE } from './custom/config.js';
 import { XRManager } from './xr/xr.js';
 import { Blueprint } from './world/blueprint.js';
 import { WIND } from './world/wind.js';
+import { LOOK } from './world/look.js';
+import { SkyDome } from './world/skydome.js';
 
 const $ = (s) => document.querySelector(s);
 const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
@@ -22,6 +24,7 @@ const canvas = $('#view');
 const touch = window.matchMedia('(pointer: coarse)').matches;
 // Phones and tablets get a lighter pipeline (no screen-space AO, smaller buffers).
 const low = params.get('quality') === 'low' || (touch && params.get('quality') !== 'high');
+LOOK.quality = low ? 'low' : 'high';
 const R = new Renderer(canvas, { low });
 const renderer = R.renderer;
 const scene = new THREE.Scene();
@@ -49,7 +52,7 @@ const setProgress = (p, label) => {
   if (label) $('#loader .status').textContent = label;
 };
 
-let world, lighting, player, plan, walls, furniture, custom, xr, blueprint = null;
+let world, lighting, player, plan, walls, furniture, custom, xr, blueprint = null, skyDome = null;
 const clock = new THREE.Clock();
 let mode = 'loading';
 
@@ -74,6 +77,10 @@ async function init() {
   await nextFrame();
   lighting = new Lighting(renderer, scene);
   lighting.configure(layout.lightingConfig);
+  if (layout.lightingConfig?.hdri) {
+    skyDome = new SkyDome(lighting, renderer);
+    lighting.onModeChange = (m, instant) => skyDome.setMode(m, instant);
+  }
   world = await layout.buildWorld({ scene, M, lighting, renderer, onProgress: (p, label) => setProgress(0.62 + p * 0.12, label) });
   world.toast = toast;
   lighting.setupProbes(layout.ZONES, world.zoneMaterials);
@@ -82,6 +89,7 @@ async function init() {
   await nextFrame();
   R.setup(scene, camera);
   if (low) { lighting.sun.shadow.mapSize.set(2048, 2048); }
+  else if (layout.lightingConfig?.look) { const s = LOOK.qualityPresets.high.shadowMap; lighting.sun.shadow.mapSize.set(s, s); }
   if (touch) $('#hint').innerHTML = 'Drag to look &nbsp;·&nbsp; Tap the floor to walk &nbsp;·&nbsp; Tap doors, curtains &amp; switches';
   if (params.has('reset')) custom.clearSaved();
   const saved = params.has('reset') ? null : custom.restore();
@@ -638,6 +646,8 @@ function frame(dt, render = true) {
   const wb = lit * Math.max(0, 1 - lighting.state.sunIntensity / 3.0) * 0.8 + lit * 0.2;
   R.grade.uniforms.tint.value.copy(lighting.state.tint).multiply(WB.set(1 - 0.05 * wb, 1 - 0.005 * wb, 1 + 0.07 * wb));
   for (const fn of world.animated) fn(dt, time);
+  skyDome?.update(dt);
+  if (layout.lightingConfig?.look && !blueprint?.active) R.applyLook(lighting.state);
   blueprint?.update(dt, time);
   // the blueprint hides the rooms, so reflections are not re-captured until they are back
   if (!blueprint?.active) {

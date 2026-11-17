@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Sky } from 'three/examples/jsm/objects/Sky.js';
 import { lerp, smooth } from './util.js';
+import { LOOK } from './look.js';
 
 /*
  * Natural light (sun + atmospheric sky), time-of-day presets, image-based
@@ -55,7 +56,9 @@ export class Lighting {
     this.rooms = new Map();
     this.flickers = [];
     this.mode = 'sunset';
-    this.state = this._copy(PRESETS.sunset);
+    this.presets = Object.fromEntries(Object.entries(PRESETS).map(([k, v]) => [k, this._copy(v)]));   // per-layout copies
+    this.onModeChange = null;   // (mode, instant) => void, e.g. the HDRI sky
+    this.state = this._copy(this.presets.sunset);
     this.from = null; this.to = null; this.t = 1; this.dur = 3.0;
     this.envDirty = true;
     this.onEnvBaked = null;
@@ -109,8 +112,9 @@ export class Lighting {
   }
 
   /** Per-layout lighting setup: sun heading, shadow frustum and where the shadow camera looks. */
-  configure({ sunYaw = 0, sunTarget = null, shadowExtent = null, shadowFar = null, exposureGain = 1 } = {}) {
+  configure({ sunYaw = 0, sunTarget = null, shadowExtent = null, shadowFar = null, exposureGain = 1, look = false } = {}) {
     this.sunYaw = sunYaw;
+    if (look) this._applyLook();
     this.exposureGain = exposureGain;   // layout-wide brightness: a small apartment with fewer windows needs more exposure
     if (sunTarget) this.sun.target.position.set(...sunTarget);
     if (shadowExtent) {
@@ -120,6 +124,17 @@ export class Lighting {
       sc.updateProjectionMatrix();
     }
     this._apply();
+  }
+
+  /** Take exposure, sun, fill, reflections, bloom, AO and sky brightness for every time of day from LOOK. */
+  _applyLook() {
+    for (const [mode, p] of Object.entries(this.presets)) {
+      Object.assign(p, LOOK.modes[mode] || {});
+      const f = LOOK.fill[mode];
+      if (f) { p.hemiSky.setHex(f.sky); p.hemiGround.setHex(f.ground); p.tint.set(...f.tint); }
+    }
+    this.dur = LOOK.fade;
+    this.state = this._copy(this.presets[this.mode]);
   }
 
   /** The preset sun direction after the layout's heading rotation. */
@@ -158,11 +173,12 @@ export class Lighting {
   isOn(key) { const r = this.rooms.get(key); return r ? (r.user ?? r.on) : false; }
 
   setMode(mode, instant = false) {
-    if (!PRESETS[mode]) return;
+    if (!this.presets[mode]) return;
     this.mode = mode;
     for (const r of this.rooms.values()) r.user = null;
     this.from = this._copy(this.state);
-    this.to = this._copy(PRESETS[mode]);
+    this.to = this._copy(this.presets[mode]);
+    this.onModeChange?.(mode, instant);
     this.t = instant ? 1 : 0;
     if (instant) { this.state = this._copy(this.to); this._apply(); this.envDirty = true; }
   }

@@ -5,6 +5,8 @@ import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { SMAAPass } from 'three/examples/jsm/postprocessing/SMAAPass.js';
+import { LOOK } from '../world/look.js';
 
 /** GTAO that ignores transparent surfaces (glass, sheers, water, flames). */
 class ArchGTAOPass extends GTAOPass {
@@ -110,6 +112,11 @@ export class Renderer {
     this.grade = new ShaderPass(GradeShader);
     composer.addPass(this.grade);
     composer.addPass(new OutputPass());
+    // SMAA after tone mapping cleans the edges post-processing softens (specular sparkle, AO, bloom halos)
+    if (LOOK.qualityPresets[LOOK.quality]?.smaa) {
+      this.smaa = new SMAAPass(w * this.pixelRatio, h * this.pixelRatio);
+      composer.addPass(this.smaa);
+    }
     this.grain = new ShaderPass(GrainShader);
     composer.addPass(this.grain);
 
@@ -137,6 +144,13 @@ export class Renderer {
     if (avg > 1 / 38 && pr > 0.6) pr = Math.max(0.6, pr - 0.15);
     else if (avg < 1 / 57 && pr < this.maxPixelRatio) pr = Math.min(this.maxPixelRatio, pr + 0.1);
     if (Math.abs(pr - this.pixelRatio) > 0.01) { this.pixelRatio = pr; this.resize(); }
+  }
+
+  /** Per-time-of-day post settings (bloom strength, AO strength) from the interpolated lighting state. */
+  applyLook(state) {
+    const q = LOOK.qualityPresets[LOOK.quality] || {};
+    if (state.bloom !== undefined) { this.bloom.strength = state.bloom; this.bloom.enabled = q.bloom !== false; }
+    if (state.ao !== undefined && this.gtao) { this.gtao.blendIntensity = state.ao; this.gtao.enabled = !this.low && q.ao !== false; }
   }
 
   render(time) {

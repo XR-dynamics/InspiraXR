@@ -1,5 +1,6 @@
-/* InspiraXR brochure: page-flip reader. Pages are images in assets/img/brochure/p1..p8.webp.
-   Two-page spread on wide screens, single page on narrow ones. */
+/* InspiraXR brochure: realistic page-turn reader (StPageFlip, MIT, vendored in assets/vendor).
+   Pages are images in assets/img/brochure/p1..p8.webp. Two-page spread on wide screens, single page on narrow ones.
+   Drag a page corner, click a page, swipe, or use the arrows / keyboard. */
 const N = 8;
 const SRC = i => `assets/img/brochure/p${i + 1}.webp`;
 const ES = {
@@ -17,127 +18,100 @@ const L = () => (document.documentElement.lang === "es" ? ES : EN);
 const bk = document.getElementById("bk"), book = document.getElementById("bkBook"), stage = document.getElementById("bkStage");
 const chap = document.getElementById("bkChap"), count = document.getElementById("bkCount");
 const prev = document.getElementById("bkPrev"), next = document.getElementById("bkNext"), closeBtn = document.getElementById("bkClose");
-let mode = "", cur = 0, leaves = [], opener = null, loaded = false;
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let pf = null, cur = 0, opener = null, libP = null, mode = "";
 
-function leafCount() { return mode === "spread" ? N / 2 : N; }
-function pageToCur(idx) { return mode === "spread" ? Math.ceil(idx / 2) : idx; }
-function curToPage() { return mode === "spread" ? Math.max(0, cur * 2 - 1) : cur; }   // first visible page index
-
-function build() {
-  const want = innerWidth > 820 && innerWidth / innerHeight > 1.05 ? "spread" : "single";
-  if (want !== mode) {
-    const idx = mode ? curToPage() : 0;
-    mode = want; book.className = "bk-book " + mode; book.innerHTML = ""; leaves = [];
-    const n = leafCount();
-    for (let i = 0; i < n; i++) {
-      const leaf = document.createElement("div"); leaf.className = "bk-leaf";
-      const f = (src, cls, alt) => { const d = document.createElement("div"); d.className = "bk-face " + cls; if (src) { const im = new Image(); im.alt = alt; im.draggable = false; im.decoding = "async"; im.src = src; d.appendChild(im); } return d; };
-      if (mode === "spread") { leaf.append(f(SRC(i * 2), "front", `Page ${i * 2 + 1}`), f(SRC(i * 2 + 1), "back", `Page ${i * 2 + 2}`)); }
-      else leaf.append(f(SRC(i), "front", `Page ${i + 1}`), f("", "back", ""));
-      book.appendChild(leaf); leaves.push(leaf);
-    }
-    cur = pageToCur(idx);
-  }
-  size(); paint(false);
+function lib() {
+  if (window.St) return Promise.resolve();
+  return libP || (libP = new Promise((ok, no) => {
+    const s = document.createElement("script"); s.src = "assets/vendor/page-flip.browser.js"; s.onload = ok; s.onerror = no; document.head.appendChild(s);
+  }));
 }
-function size() {
+function dims() {
   const bar = bk.querySelector(".bk-bar").offsetHeight, foot = bk.querySelector(".bk-foot").offsetHeight;
   const availH = innerHeight - bar - foot - 24, availW = innerWidth - (innerWidth < 600 ? 24 : 80);
-  const r = 794 / 1123, cols = mode === "spread" ? 2 : 1;
-  let ph = Math.min(availH, availW / (cols * r)); ph = Math.max(ph, 200);
-  book.style.setProperty("--bh", ph + "px"); book.style.setProperty("--bw", ph * r * cols + "px");
+  const spread = innerWidth > 820 && innerWidth / innerHeight > 1.05, r = 794 / 1123, cols = spread ? 2 : 1;
+  const ph = Math.max(200, Math.min(availH, availW / (cols * r)));
+  return { spread, pw: ph * r, ph };
 }
-function paint(animate) {
-  const n = leaves.length;
-  leaves.forEach((lf, i) => {
-    const flipped = i < cur;
-    lf.classList.toggle("flip", flipped);
-    lf.style.zIndex = flipped ? i : n - i;
+function build(startPage) {
+  if (pf) { try { pf.destroy(); } catch (_) {} pf = null; }
+  book.innerHTML = "";
+  const d = dims(); mode = d.spread ? "spread" : "single";
+  const w = Math.round(d.pw * (d.spread ? 2 : 1)), h = Math.round(d.ph);
+  book.style.setProperty("--bw", w + "px"); book.style.setProperty("--bh", h + "px");
+  const host = document.createElement("div"); book.appendChild(host);
+  for (let i = 0; i < N; i++) {
+    const pg = document.createElement("div");
+    pg.className = "bk-pg" + (i % 2 ? "" : " r");
+    if (i === 0 || i === N - 1) pg.dataset.density = "hard";
+    const im = new Image(); im.alt = `Page ${i + 1}`; im.draggable = false; im.src = SRC(i); pg.appendChild(im); host.appendChild(pg);
+  }
+  pf = new St.PageFlip(host, {
+    width: 794, height: 1123, size: "stretch",
+    minWidth: d.spread ? 100 : Math.round(d.pw) + 1, maxWidth: 2400, minHeight: 100, maxHeight: 3400,
+    showCover: true, usePortrait: true, startPage: startPage || 0, drawShadow: true, maxShadowOpacity: 0.55,
+    flippingTime: reduce ? 30 : 1100, swipeDistance: 25, mobileScrollSupport: false, clickEventForward: false, useMouseEvents: true,
   });
-  if (mode === "spread") book.style.transform = cur === 0 ? "translateX(-25%)" : cur === n ? "translateX(25%)" : "translateX(0)";
-  else book.style.transform = "none";
-  const first = curToPage();
-  const showTwo = mode === "spread" && cur > 0 && cur < n;
-  count.textContent = L().page(first + 1, showTwo ? first + 2 : 0);
-  prev.disabled = cur === 0; next.disabled = cur === n;
-  marks();
+  pf.loadFromHTML([...host.querySelectorAll(".bk-pg")]);
+  cur = pf.getCurrentPageIndex();
+  pf.on("flip", e => { cur = e.data; ui(); });
+  pf.on("changeOrientation", () => ui());
+  ui();
 }
-function marks() {
-  const n = leaves.length, first = curToPage(), vis = mode === "spread" ? (cur === 0 ? [0] : cur === n ? [N - 1] : [first, first + 1]) : [first];
+function visible() {
+  const portrait = pf && pf.getOrientation() === "portrait";
+  if (portrait) return [cur];
+  if (cur === 0) return [0];
+  if (cur >= N - 1) return [N - 1];
+  return [cur, cur + 1];
+}
+function ui() {
+  const v = visible();
+  count.textContent = L().page(v[0] + 1, v[1] !== undefined ? v[1] + 1 : 0);
+  prev.disabled = cur === 0; next.disabled = v[v.length - 1] >= N - 1;
   [...chap.children].forEach((b, i) => {
-    const a = CHAP_PAGE[i], z = (CHAP_PAGE[i + 1] ?? N) - 1, on = vis.some(p => p >= a && p <= z);
+    const a = CHAP_PAGE[i], z = (CHAP_PAGE[i + 1] ?? N) - 1, on = v.some(p => p >= a && p <= z);
     b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on));
   });
-}
-function turn(to) {
-  const n = leaves.length; to = Math.max(0, Math.min(n, to)); if (to === cur) return;
-  const lo = Math.min(cur, to), hi = Math.max(cur, to);
-  for (let i = lo; i < hi; i++) { const lf = leaves[i]; lf.classList.add("turn"); lf.style.zIndex = 200; setTimeout(() => lf.classList.remove("turn"), reduce ? 20 : 950); }
-  const dir = to > cur ? 1 : -1; cur = to;
-  // restore stacking order once the leaf has landed
-  setTimeout(() => paint(false), reduce ? 20 : 920);
-  // start the flip now (without resetting z-index immediately)
-  leaves.forEach((lf, i) => lf.classList.toggle("flip", i < cur));
-  const nn = leaves.length;
-  if (mode === "spread") book.style.transform = cur === 0 ? "translateX(-25%)" : cur === nn ? "translateX(25%)" : "translateX(0)";
-  const first = curToPage(), showTwo = mode === "spread" && cur > 0 && cur < nn;
-  count.textContent = L().page(first + 1, showTwo ? first + 2 : 0);
-  prev.disabled = cur === 0; next.disabled = cur === nn;
-  marks(); void dir;
 }
 function chapters() {
   chap.innerHTML = "";
   L().chap.forEach((name, i) => {
     const b = document.createElement("button"); b.type = "button"; b.className = "bk-tab" + (i === HOT ? " hot" : ""); b.textContent = name; b.setAttribute("role", "tab");
-    b.addEventListener("click", () => turn(pageToCur(CHAP_PAGE[i])));
+    b.addEventListener("click", () => { if (pf) pf.flip(CHAP_PAGE[i]); });
     chap.appendChild(b);
   });
 }
-function open(from) {
+async function open(from) {
   opener = from || document.activeElement; chapters();
-  if (!loaded) { loaded = true; }
-  bk.hidden = false; build(); cur = 0; paint(false);
-  requestAnimationFrame(() => bk.classList.add("show"));
-  document.documentElement.style.overflow = "hidden";
+  bk.hidden = false; document.documentElement.style.overflow = "hidden";
   closeBtn.focus({ preventScroll: true });
   if (location.hash !== "#brochure") history.replaceState(null, "", "#brochure");
-  // open the book on the first spread after a beat, so the page turn is seen
-  setTimeout(() => { if (!bk.hidden && cur === 0) turn(1); }, reduce ? 0 : 700);
+  try { await lib(); } catch (_) { return; }
+  if (bk.hidden) return;
+  build(0);
+  requestAnimationFrame(() => bk.classList.add("show"));
+  // open the cover after a beat so the page turn is seen
+  setTimeout(() => { if (!bk.hidden && pf && cur === 0) pf.flipNext(); }, reduce ? 0 : 900);
 }
 function close() {
   bk.classList.remove("show"); document.documentElement.style.overflow = "";
-  setTimeout(() => { bk.hidden = true; }, 400);
+  setTimeout(() => { bk.hidden = true; if (pf) { try { pf.destroy(); } catch (_) {} pf = null; book.innerHTML = ""; } }, 400);
   if (location.hash === "#brochure") history.replaceState(null, "", location.pathname + location.search);
   if (opener && opener.focus) opener.focus({ preventScroll: true });
 }
 document.addEventListener("click", e => { const t = e.target.closest("[data-brochure]"); if (t) { e.preventDefault(); open(t); } });
 closeBtn.addEventListener("click", close);
-next.addEventListener("click", () => turn(cur + 1));
-prev.addEventListener("click", () => turn(cur - 1));
+next.addEventListener("click", () => pf && pf.flipNext());
+prev.addEventListener("click", () => pf && pf.flipPrev());
 addEventListener("keydown", e => {
   if (bk.hidden) return;
   if (e.key === "Escape") close();
-  else if (e.key === "ArrowRight" || e.key === "PageDown") turn(cur + 1);
-  else if (e.key === "ArrowLeft" || e.key === "PageUp") turn(cur - 1);
+  else if (e.key === "ArrowRight" || e.key === "PageDown") pf && pf.flipNext();
+  else if (e.key === "ArrowLeft" || e.key === "PageUp") pf && pf.flipPrev();
 });
-// click left/right half of the book, or swipe
-let sx = null, sy = 0;
-stage.addEventListener("pointerdown", e => { sx = e.clientX; sy = e.clientY; });
-stage.addEventListener("pointerup", e => {
-  if (sx === null) return; const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
-  if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { turn(cur + (dx < 0 ? 1 : -1)); return; }
-  if (Math.abs(dx) < 8 && Math.abs(dy) < 8) {
-    const r = book.getBoundingClientRect();
-    if (e.clientX < r.left || e.clientX > r.right) return;
-    const mid = mode === "spread" ? r.left + r.width / 2 : r.left + r.width * 0.5;
-    turn(cur + (e.clientX > mid ? 1 : -1));
-  }
-});
-stage.addEventListener("pointercancel", () => { sx = null; });
-let rt; addEventListener("resize", () => { if (bk.hidden) return; clearTimeout(rt); rt = setTimeout(build, 120); });
-// language switch while open
-new MutationObserver(() => { if (!bk.hidden) { chapters(); paint(false); } }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
-// deep link
+let rt; addEventListener("resize", () => { if (bk.hidden || !pf) return; clearTimeout(rt); rt = setTimeout(() => build(cur), 150); });
+new MutationObserver(() => { if (!bk.hidden) { chapters(); ui(); } }).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 const hash = () => { if (location.hash === "#brochure" && bk.hidden) open(null); };
 addEventListener("hashchange", hash); addEventListener("DOMContentLoaded", hash); if (document.readyState !== "loading") hash();

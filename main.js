@@ -9,7 +9,7 @@ const CONFIG = {
   // It receives a JSON POST: { name, email, organization, category, message }.
   // While empty, the form opens the visitor's email app instead and says so.
   formEndpoint: "",
-  contactEmail: "techlead@iverseai.com"
+  contactEmail: "info@iverseai.com"
 };
 
 /* -------------------------------------------------------------- CATEGORIES

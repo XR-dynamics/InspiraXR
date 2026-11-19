@@ -2,7 +2,7 @@
    Pages are images in assets/img/brochure/p1..p8.webp. Two-page spread on wide screens, single page on narrow ones.
    Drag a page corner, click a page, swipe, or use the arrows / keyboard. */
 const N = 7;
-const SRC = i => `assets/img/brochure/p${i + 1}.webp`;
+const SRC = i => `assets/img/brochure/p${i + 1}.webp?v=2`;
 const ES = {
   chap: ["Portada", "Por qué inmersivo", "Los problemas que resolvemos", "Experiencias", "De los planos a la experiencia", "Yates"],
   page: (a, b) => b ? `Páginas ${a}–${b} de ${N}` : `Página ${a} de ${N}`,
